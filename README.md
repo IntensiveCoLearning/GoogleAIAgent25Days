@@ -35,7 +35,7 @@ AI Agent
 - Email：st99005912@gmail.com
 ## 发起组织
 
-  [LXDAO](https://x.com/LXDAO_Official) <img alt="organization-logo" height="60px" width="60px" src="https://cdn.lxdao.io/bafkreiay6vxsvv3ksxr75lzzt3iqy3zja3o2epuxh47ivs24p2xs3awexm.png" />
+  [LXDAO](https://lxdao.io/) <img alt="organization-logo" height="60px" width="60px" src="https://cdn.lxdao.io/bafkreiay6vxsvv3ksxr75lzzt3iqy3zja3o2epuxh47ivs24p2xs3awexm.png" />
 
 
 ## 请假规则
@@ -49,6 +49,7 @@ Telegram：
 ## 学习资料/课程安排
 
 课程中文翻译：https://www.notion.so/Google-25-AI-Agent-2d26fba5a2d38037ad5dcb5141935cc2?source=copy_link
+
 以下模块僅供參考，以[Google Advent of Agents](https://adventofagents.com/)為準
 #### **模块 0：环境与工具准备 (Days 1, 2, 4, 6)**
 
@@ -134,8 +135,8 @@ Telegram：
 
 ---
 #### 补充
-已有大神做了个笔记：https://github.com/anxiong2025/25-Day-Agents-Course-by-Google?tab=readme-ov-file
-Google AI Agent 5天基础学习：https://github.com/sdivyanshu90/5-Day-AI-Agents-Intensive-Course-with-Google
+* 已有大神做了个笔记：https://github.com/anxiong2025/25-Day-Agents-Course-by-Google?tab=readme-ov-file
+* Google AI Agent 5天基础学习：https://github.com/sdivyanshu90/5-Day-AI-Agents-Intensive-Course-with-Google
 
 祝你在 Google Cloud 的 Agent 探险中好运！
 
