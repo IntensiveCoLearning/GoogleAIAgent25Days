@@ -35,12 +35,12 @@ AI Agent
 - Email：st99005912@gmail.com
 ## 发起组织
 
-  [LXDAO](https://lxdao.io/) <img alt="organization-logo" height="60px" width="60px" src="https://cdn.lxdao.io/bafkreiay6vxsvv3ksxr75lzzt3iqy3zja3o2epuxh47ivs24p2xs3awexm.png" />
+  [LXDAO](lxdao.io) <img alt="organization-logo" height="60px" width="60px" src="https://cdn.lxdao.io/bafkreiay6vxsvv3ksxr75lzzt3iqy3zja3o2epuxh47ivs24p2xs3awexm.png" />
 
 
 ## 请假规则
 
-每周请假 2 次
+每周请假 3 次
 
 
 ## 社群
