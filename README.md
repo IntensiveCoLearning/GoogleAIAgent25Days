@@ -2,11 +2,11 @@
 
 ## 介绍
 
-### **Google Cloud Advent of Agents 学习计划 (25 Days)**
+**Google Cloud Advent of Agents 学习计划 (25 Days)**
 
 **Advent of Agents (Google Cloud Edition)** 是一个专注于在 Google Cloud 上使用 **ADK (Agent Development Kit)** 和 **Gemini 3** 模型构建生产级 Agent 的系列挑战，从零开始构建生产级 Google Cloud AI Agent 的完整路径。
 
-#### 課程亮點
+課程亮點
 * 🎯 每天一項功能，每項功能只需不到 5 分鐘即可體驗
 * 📋 開箱即用的複製貼上命令
 * 📚 官方文件鏈接
@@ -36,11 +36,6 @@ AI Agent
 ## 发起组织
 
 
-
-
-## 共学激励
-
-学到知识就是最大的福利！
 
 
 ## 更多信息
