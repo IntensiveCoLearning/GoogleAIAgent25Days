@@ -40,7 +40,7 @@ AI Agent
 
 ## 请假规则
 
-每周请假 3 次
+每周请假 2 次
 
 
 ## 社群
@@ -62,13 +62,6 @@ Telegram：
 * **YAML 配置**：使用配置文件快速定义 Agent 行为。
 * **IDE 集成**：在 Cursor、Antigravity 或 Gemini CLI 中配置开发环境。
 * **Source-Based Deployment**：直接从源码部署 Agent (Agent Engine)。
-
-**参考文档**
-
-* Advent of Agents 主页：[https://adventofagents.com/](https://adventofagents.com/)
-* Google Cloud Vertex AI Agent Builder：[https://cloud.google.com/products/agent-builder](https://cloud.google.com/products/agent-builder)
-* ADK (Agent Development Kit) 官方文档：*(建议在活动页面查找 GitHub 链接)*
-
 ---
 
 #### **模块 1：Agent 核心能力开发 (Days 3, 7, 8, 9, 10)**
@@ -85,12 +78,6 @@ Telegram：
 * **Context Management**：理解 ADK 的上下文分层设计 (Layers)，像编译视图一样管理 Context。
 * **Context Caching & Compaction**：解决长对话中的“Lost in the middle”问题，优化延迟和成本。
 * **Time Travel (Undo)**：利用 ADK 内置机制实现对话的“撤回”和“重成”，无需复杂的数据库回滚。
-
-**推荐文档**
-
-* Gemini Function Calling：[https://cloud.google.com/vertex-ai/docs/generative-ai/multimodal/function-calling](https://cloud.google.com/vertex-ai/docs/generative-ai/multimodal/function-calling)
-* Vertex AI Context Caching：[https://cloud.google.com/vertex-ai/generative-ai/docs/context-cache/overview](https://www.google.com/search?q=https://cloud.google.com/vertex-ai/generative-ai/docs/context-cache/overview)
-
 ---
 
 #### **模块 2：连接、协议与多模态 (Days 11, 12, 13, 14)**
@@ -107,11 +94,6 @@ Telegram：
 * **Gemini Live API (Bi-Directional Streaming)**：通过 WebSocket 实现实时的语音/视频多模态交互。
 * **Interactions API**：构建有状态的自动化工作流。
 * **A2A (Agent-to-Agent) Protocol**：让不同的 Agent 之间可以互相发现、通信和协作。
-
-**推荐文档**
-
-* Model Context Protocol (MCP)：[https://modelcontextprotocol.io/](https://modelcontextprotocol.io/)
-* Gemini API Multimodal Live：[https://ai.google.dev/gemini-api/docs/imggen](https://www.google.com/search?q=https://ai.google.dev/gemini-api/docs/imggen)
 
 ---
 
@@ -130,11 +112,6 @@ Telegram：
 * **Gemini 3 Flash**：使用更快的模型，并配置 Thinking Levels (思考层级)。
 * **A2A Extensions (Sidecar)**：在标准协议下扩展自定义数据字段 (Sidecar pattern)。
 
-**推荐文档**
-
-* LangGraph Google Vertex AI Integration：[https://langchain-ai.github.io/langgraph/](https://langchain-ai.github.io/langgraph/)
-* Generative UI 概念参考 (类似 Vercel AI SDK)：[https://sdk.vercel.ai/docs/concepts/ui-generation](https://www.google.com/search?q=https://sdk.vercel.ai/docs/concepts/ui-generation)
-
 ---
 
 #### **模块 4：企业级生产、运维与安全 (Days 5, 18, 19, 21, 22)**
@@ -152,10 +129,6 @@ Telegram：
 * **Gemini Enterprise**：将你的 Agent 注册到企业目录，使组织内全员可见。
 * **Model Armor & Security**：学习 Guardrails (护栏)，不仅靠 Prompt 提示，而是用策略层拦截 PII (个人隐私信息) 和恶意攻击。
 
-**推荐文档**
-
-* Vertex AI Evaluation & Observability：[https://cloud.google.com/vertex-ai/generative-ai/docs/model-garden/explore-models](https://cloud.google.com/vertex-ai/generative-ai/docs/model-garden/explore-models)
-* Google Cloud Security for AI：[https://cloud.google.com/security/ai](https://cloud.google.com/security/ai)
 
 ---
 #### 补充
