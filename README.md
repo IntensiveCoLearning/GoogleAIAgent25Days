@@ -48,6 +48,8 @@ AI Agent
 Telegram：
 ## 学习资料/课程安排
 
+课程中文翻译：https://www.notion.so/Google-25-AI-Agent-2d26fba5a2d38037ad5dcb5141935cc2?source=copy_link
+以下模块僅供參考，以[Google Advent of Agents](https://adventofagents.com/)為準
 #### **模块 0：环境与工具准备 (Days 1, 2, 4, 6)**
 
 **目标**
