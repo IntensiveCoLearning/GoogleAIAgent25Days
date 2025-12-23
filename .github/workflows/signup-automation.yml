@@ -1,0 +1,167 @@
+name: Signup Issue Automation
+
+on:
+  issues:
+    types: [closed]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  process-signup:
+    runs-on: ubuntu-latest
+    if: github.event.action == 'closed' && github.event.issue.state_reason == 'completed' && startsWith(github.event.issue.title, 'Signup - ')
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT_WITH_INVITE_PERMISSIONS }}
+
+      - name: Extract GitHub ID and process signup
+        id: extract-info
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.PAT_WITH_INVITE_PERMISSIONS }}
+          script: |
+            const { owner, repo } = context.repo;
+            const issue = context.payload.issue;
+
+            console.log('Processing signup issue:', issue.title);
+            console.log('Issue body:', issue.body);
+
+            // Extract GitHub ID from issue body
+            const githubIdMatch = issue.body.match(/GitHub\s+ID\s*:\s*([^\s\n]+)/i);
+            if (!githubIdMatch) {
+              console.error('GitHub ID not found in issue body');
+              core.setFailed('GitHub ID not found in issue body');
+              return;
+            }
+
+            const githubId = githubIdMatch[1].trim();
+            console.log('Extracted GitHub ID:', githubId);
+
+            // Validate GitHub username
+            try {
+              const { data: user } = await github.rest.users.getByUsername({
+                username: githubId
+              });
+              console.log('GitHub user found:', user.login);
+            } catch (error) {
+              console.error('Invalid GitHub username:', githubId);
+              core.setFailed(`Invalid GitHub username: ${githubId}`);
+              return;
+            }
+
+            // Extract information from issue body for creating user file
+            const nameMatch = issue.body.match(/\*\*(?:姓名|Name)[\s:：]*\*\*\s*([^\n]+)/i) || 
+                             issue.body.match(/(?:姓名|Name)[\s:：]+([^\n]+)/i);
+            const timezoneMatch = issue.body.match(/\*\*(?:时区|Timezone)[\s:：]*\*\*\s*([^\n]+)/i) ||
+                                 issue.body.match(/(?:时区|Timezone)[\s:：]+([^\n]+)/i);
+            const contactMatch = issue.body.match(/\*\*(?:Telegram)[\s:：]*\*\*\s*([^\n]+)/i) ||
+                                issue.body.match(/(?:Telegram)[\s:：]+([^\n]+)/i);
+            // Capture multi-line self-introduction until next section (**, ##) or end
+            // Capture multi-line self-introduction until next section, disclaimer, or end
+            // Stop before lines like "本 Issue 由系统自动创建" or "This issue was automatically created"
+            const stopPattern = /\n\s*(?:```\s*\n\s*)?(?:本\s*Issue|该\s*Issue|This\s+Issue|This\s+issue|由系统自动创建|系统自动创建)/i;
+            const introMatch = issue.body.match(new RegExp(String.raw`\*\*(?:自我介绍|Self-introduction)[\\s:：]*\*\*[\t ]*([\s\S]*?)(?=\n\s*##|${stopPattern.source}|$)`, 'i')) ||
+                                issue.body.match(new RegExp(String.raw`(?:自我介绍|Self-introduction)[\\s:：]+([\s\S]*?)(?=\n\s*##|${stopPattern.source}|$)`, 'i'));
+
+            const userName = nameMatch ? nameMatch[1].trim() : githubId;
+            const userTimezone = timezoneMatch ? timezoneMatch[1].trim() : 'UTC+8';
+            const userContact = contactMatch ? contactMatch[1].trim() : '';
+            let userIntro = introMatch ? introMatch[1].trim() : '';
+            // If intro ends with an unmatched code-fence line (``` or more), drop that trailing fence
+            const fenceLineRe = /(\n\s*`{3,}[^\n]*\s*)$/;
+            const fenceCount = (userIntro.match(/(^|\n)\s*`{3,}[^\n]*\s*(?=\n|$)/g) || []).length;
+            if (fenceLineRe.test(userIntro) && fenceCount % 2 === 1) {
+              userIntro = userIntro.replace(fenceLineRe, '').replace(/\n+$/,'').trim();
+            }
+
+            // Set output for next step
+            core.setOutput('github_id', githubId);
+            core.setOutput('user_name', userName);
+            core.setOutput('user_timezone', userTimezone);
+            core.setOutput('user_contact', userContact);
+            core.setOutput('user_intro', userIntro);
+            core.setOutput('issue_body', issue.body);
+
+      - name: Create user markdown file
+        env:
+          GITHUB_ID: ${{ steps.extract-info.outputs.github_id }}
+          USER_NAME: ${{ steps.extract-info.outputs.user_name }}
+          USER_TIMEZONE: ${{ steps.extract-info.outputs.user_timezone }}
+          USER_CONTACT: ${{ steps.extract-info.outputs.user_contact }}
+          USER_INTRO: ${{ steps.extract-info.outputs.user_intro }}
+        run: |
+          # Create filename
+          FILENAME="${GITHUB_ID}.md"
+
+          # Check if file already exists
+          if [ -f "$FILENAME" ]; then
+            echo "File $FILENAME already exists, skipping creation"
+            exit 0
+          fi
+
+          # Create the markdown file with formatted content based on template
+          cat > "$FILENAME" << EOF
+          ---
+          timezone: ${USER_TIMEZONE}
+          ---
+
+          # ${USER_NAME}
+
+          **GitHub ID:** ${GITHUB_ID}
+
+          **Telegram:** ${USER_CONTACT}
+
+          ## Self-introduction
+
+          ${USER_INTRO}
+
+          ## Notes
+
+          <!-- Content_START -->
+
+
+          <!-- Content_END -->
+          EOF
+
+          echo "Created file: $FILENAME"
+
+          # Configure git
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+          # Add and commit the file
+          git add "$FILENAME"
+          git commit -m "Add signup file for user: $GITHUB_ID"
+          git push
+
+      - name: Comment on issue
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { owner, repo } = context.repo;
+            const issue_number = context.payload.issue.number;
+            const githubId = '${{ steps.extract-info.outputs.github_id }}';
+
+            try {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number,
+                body: `✅ Signup processed successfully!
+
+                - ✅ @${githubId} has been invited as a collaborator with write permissions
+                - ✅ User file \`${githubId}.md\` has been created
+                - 📧 Please check your email for the collaboration invitation
+
+                Welcome to the project! 🎉`
+              });
+              console.log(`Comment posted on issue #${issue_number}`);
+            } catch (error) {
+              console.error(`Error posting comment: ${error.message}`);
+              core.setFailed(`Error posting comment: ${error.message}`);
+            }
