@@ -38,11 +38,6 @@ AI Agent
 
 
 
-## 更多信息
-
-更多信息内容
-
-
 ## 报名和打卡规则
 
 - 报名：https://www.notion.so/lxdao/232dceffe40b8030993ad26f2eb6bed2
