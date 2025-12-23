@@ -250,6 +250,39 @@ def extract_name_from_row(row):
             return parts[1].strip()
         return None
 
+def extract_allowed_leave_quota(content, default_quota=2):
+    """
+    从 README 内容中解析“请假规则”下的“每周请假 X 次”并返回 X 作为每周可请假次数。
+    若未解析到，返回默认值 default_quota（保持向后兼容，默认为 2）。
+    """
+    try:
+        # 定位到“## 请假规则”标题所在的段落
+        header_pattern = re.compile(r"^##\s*请假规则\s*$", re.MULTILINE)
+        header_match = header_pattern.search(content)
+        if not header_match:
+            logging.info("请假规则标题未找到，使用默认请假次数")
+            return default_quota
+
+        section_start = header_match.end()
+        # 找到下一个以“## ”开头的标题，作为本节结束位置
+        next_header_pattern = re.compile(r"^##\s+", re.MULTILINE)
+        next_header_match = next_header_pattern.search(content, section_start)
+        section_end = next_header_match.start() if next_header_match else len(content)
+        section_text = content[section_start:section_end]
+
+        # 解析“每周请假 3 次”中的数字，允许可选空格
+        quota_match = re.search(r"每周请假\s*([0-9]+)\s*次", section_text)
+        if quota_match:
+            quota = int(quota_match.group(1))
+            logging.info(f"解析到每周请假次数: {quota}")
+            return quota
+
+        logging.info("未在请假规则中解析到具体次数，使用默认请假次数")
+        return default_quota
+    except Exception as e:
+        logging.error(f"解析请假规则失败: {str(e)}，使用默认请假次数")
+        return default_quota
+
 def update_readme(content):
     try:
         start_index = content.find(TABLE_START_MARKER)
@@ -257,6 +290,9 @@ def update_readme(content):
         if start_index == -1 or end_index == -1:
             logging.error("Error: Couldn't find the table markers in README.md")
             return content
+
+        # 读取README中的请假次数配置
+        allowed_leave_quota = extract_allowed_leave_quota(content, default_quota=2)
 
         new_table = [
             f'{TABLE_START_MARKER}\n',
@@ -272,14 +308,14 @@ def update_readme(content):
             user_name = extract_name_from_row(row)
             if user_name:
                 existing_users.add(user_name)
-                new_table.append(generate_user_row(user_name))
+                new_table.append(generate_user_row(user_name, allowed_leave_quota))
             else:
                 logging.warning(f"Skipping invalid row: {row}")
 
         new_users = set(get_all_user_files()) - existing_users
         for user in new_users:
             if user.strip():
-                new_table.append(generate_user_row(user))
+                new_table.append(generate_user_row(user, allowed_leave_quota))
                 logging.info(f"Added new user: {user}")
             else:
                 logging.warning(f"Skipping empty user: '{user}'")
@@ -289,7 +325,7 @@ def update_readme(content):
         logging.error(f"Error in update_readme: {str(e)}")
         return content
 
-def generate_user_row(user):
+def generate_user_row(user, allowed_leave_quota):
     user_status = get_user_study_status(user)
     owner, repo = get_repo_info()
     if owner and repo:
@@ -355,8 +391,8 @@ def generate_user_row(user):
         # 获取当前日期的状态
         current_status = user_status.get(start_utc, "⭕️")
         
-        # 如果当前周期缺席超过2天，标记为失败
-        if absent_count > 2:
+        # 如果当前周期缺席超过配置的请假次数，标记为失败
+        if absent_count > allowed_leave_quota:
             is_eliminated = True
             new_row += " ❌ |"
         else:
