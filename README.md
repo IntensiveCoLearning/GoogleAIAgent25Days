@@ -177,7 +177,9 @@ Telegram：https://t.me/+3wGYldnFuFZkZjE1
 | [lingyuzz](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/lingyuzz.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 | [0xInco](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/0xInco.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 | [ARZER-TW](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/ARZER-TW.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
+| [surongga930-cell](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/surongga930-cell.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 <!-- END_COMMIT_TABLE -->
+
 
 
 
