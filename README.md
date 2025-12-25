@@ -166,7 +166,9 @@ Telegram：https://t.me/+3wGYldnFuFZkZjE1
 | ------------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | [Toby1009](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/Toby1009.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 | [SU-AN-coder](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/SU-AN-coder.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
+| [lebronboy500](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/lebronboy500.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 <!-- END_COMMIT_TABLE -->
+
 
 
 
