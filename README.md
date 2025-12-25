@@ -173,7 +173,9 @@ Telegram：https://t.me/+3wGYldnFuFZkZjE1
 | [StellaWang5209](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/StellaWang5209.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 | [DrakenZeng](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/DrakenZeng.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 | [nocb](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/nocb.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
+| [debugzhao](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/debugzhao.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 <!-- END_COMMIT_TABLE -->
+
 
 
 
