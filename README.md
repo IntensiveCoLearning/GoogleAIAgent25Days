@@ -170,7 +170,10 @@ Telegram：https://t.me/+3wGYldnFuFZkZjE1
 | [ShihaoZhou-NEU](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/ShihaoZhou-NEU.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 | [Easycoder-lin](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/Easycoder-lin.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 | [hello2sherlei](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/hello2sherlei.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
+| [StellaWang5209](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/StellaWang5209.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
+| [DrakenZeng](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/DrakenZeng.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 <!-- END_COMMIT_TABLE -->
+
 
 
 
