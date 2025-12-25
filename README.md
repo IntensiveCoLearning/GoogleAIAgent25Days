@@ -168,7 +168,9 @@ Telegram：https://t.me/+3wGYldnFuFZkZjE1
 | [SU-AN-coder](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/SU-AN-coder.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 | [lebronboy500](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/lebronboy500.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 | [ShihaoZhou-NEU](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/ShihaoZhou-NEU.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
+| [Easycoder-lin](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/Easycoder-lin.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 <!-- END_COMMIT_TABLE -->
+
 
 
 
