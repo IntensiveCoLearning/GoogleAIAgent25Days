@@ -198,7 +198,9 @@ Telegram：https://t.me/+3wGYldnFuFZkZjE1
 | [RSXLX](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/RSXLX.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 | [zhaoyang231](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/zhaoyang231.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 | [OVO96](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/OVO96.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
+| [xinyuuum2](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/xinyuuum2.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 <!-- END_COMMIT_TABLE -->
+
 
 
 
