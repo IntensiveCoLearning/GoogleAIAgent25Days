@@ -195,7 +195,9 @@ Telegram：https://t.me/+3wGYldnFuFZkZjE1
 | [EY-hungry](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/EY-hungry.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 | [ProfGamer](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/ProfGamer.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 | [wisegale](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/wisegale.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
+| [RSXLX](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/RSXLX.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 <!-- END_COMMIT_TABLE -->
+
 
 
 
