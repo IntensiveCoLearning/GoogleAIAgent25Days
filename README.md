@@ -193,7 +193,10 @@ Telegram：https://t.me/+3wGYldnFuFZkZjE1
 | [panchengliang407](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/panchengliang407.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 | [rabbitponzi](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/rabbitponzi.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 | [EY-hungry](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/EY-hungry.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
+| [ProfGamer](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/ProfGamer.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
+| [wisegale](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/wisegale.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 <!-- END_COMMIT_TABLE -->
+
 
 
 
