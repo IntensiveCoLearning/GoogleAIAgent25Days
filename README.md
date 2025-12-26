@@ -186,7 +186,11 @@ Telegram：https://t.me/+3wGYldnFuFZkZjE1
 | [zoeyz3](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/zoeyz3.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 | [lunateng](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/lunateng.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 | [Xiaonan2020](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/Xiaonan2020.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
+| [eureka1d2](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/eureka1d2.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
+| [gpteth](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/gpteth.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
+| [LiinNs](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/LiinNs.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 <!-- END_COMMIT_TABLE -->
+
 
 
 
