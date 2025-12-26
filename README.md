@@ -182,7 +182,9 @@ Telegram：https://t.me/+3wGYldnFuFZkZjE1
 | [pillowtalk-Qy](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/pillowtalk-Qy.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 | [yixingsyb](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/yixingsyb.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 | [yeeva0102](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/yeeva0102.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
+| [lesonstacy](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/lesonstacy.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 <!-- END_COMMIT_TABLE -->
+
 
 
 
