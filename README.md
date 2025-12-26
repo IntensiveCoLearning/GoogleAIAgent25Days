@@ -180,7 +180,10 @@ Telegram：https://t.me/+3wGYldnFuFZkZjE1
 | [surongga930-cell](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/surongga930-cell.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 | [Jack-OuCJ](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/Jack-OuCJ.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 | [pillowtalk-Qy](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/pillowtalk-Qy.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
+| [yixingsyb](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/yixingsyb.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
+| [yeeva0102](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/yeeva0102.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 <!-- END_COMMIT_TABLE -->
+
 
 
 
