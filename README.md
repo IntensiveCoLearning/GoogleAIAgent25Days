@@ -204,7 +204,9 @@ Telegram：https://t.me/+3wGYldnFuFZkZjE1
 | [hamartia0](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/hamartia0.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 | [Fuika0306](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/Fuika0306.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 | [czhao1986716-glitch](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/czhao1986716-glitch.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
+| [web3niuma](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/web3niuma.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 <!-- END_COMMIT_TABLE -->
+
 
 
 
