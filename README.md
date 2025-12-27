@@ -202,7 +202,9 @@ Telegram：https://t.me/+3wGYldnFuFZkZjE1
 | [puppet25k](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/puppet25k.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 | [liwnldutng](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/liwnldutng.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 | [hamartia0](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/hamartia0.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
+| [Fuika0306](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/Fuika0306.md) | | | | | | | | | | | | | | | | | | | | | | | | | |
 <!-- END_COMMIT_TABLE -->
+
 
 
 
