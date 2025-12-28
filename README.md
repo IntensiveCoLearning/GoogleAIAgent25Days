@@ -205,8 +205,9 @@ Telegram：https://t.me/+3wGYldnFuFZkZjE1
 | [Fuika0306](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/Fuika0306.md) |   | | | | | | | | | | | | | | | | | | | | | | | | |
 | [czhao1986716-glitch](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/czhao1986716-glitch.md) | ✅ | | | | | | | | | | | | | | | | | | | | | | | | |
 | [web3niuma](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/web3niuma.md) |   | | | | | | | | | | | | | | | | | | | | | | | | |
-| [Volca2603](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/Volca2603.md) |   | | | | | | | | | | | | | | | | | | | | | | | | |
+| [Volca2603](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/Volca2603.md) | ✅ | | | | | | | | | | | | | | | | | | | | | | | | |
 <!-- END_COMMIT_TABLE -->
+
 
 
 
