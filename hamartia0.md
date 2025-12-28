@@ -15,6 +15,8 @@ timezone: UTC+8
 ## Notes
 
 <!-- Content_START -->
-
-
+# 2025-12-29
+<!-- DAILY_CHECKIN_2025-12-29_START -->
+观看了Day1的基础视频
+<!-- DAILY_CHECKIN_2025-12-29_END -->
 <!-- Content_END -->
