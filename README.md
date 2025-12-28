@@ -174,7 +174,7 @@ Telegram：https://t.me/+3wGYldnFuFZkZjE1
 | [DrakenZeng](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/DrakenZeng.md) |   | | | | | | | | | | | | | | | | | | | | | | | | |
 | [nocb](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/nocb.md) |   | | | | | | | | | | | | | | | | | | | | | | | | |
 | [debugzhao](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/debugzhao.md) |   | | | | | | | | | | | | | | | | | | | | | | | | |
-| [lingyuzz](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/lingyuzz.md) |   | | | | | | | | | | | | | | | | | | | | | | | | |
+| [lingyuzz](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/lingyuzz.md) | ✅ | | | | | | | | | | | | | | | | | | | | | | | | |
 | [0xInco](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/0xInco.md) |   | | | | | | | | | | | | | | | | | | | | | | | | |
 | [ARZER-TW](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/ARZER-TW.md) |   | | | | | | | | | | | | | | | | | | | | | | | | |
 | [surongga930-cell](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/surongga930-cell.md) |   | | | | | | | | | | | | | | | | | | | | | | | | |
@@ -207,6 +207,7 @@ Telegram：https://t.me/+3wGYldnFuFZkZjE1
 | [web3niuma](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/web3niuma.md) |   | | | | | | | | | | | | | | | | | | | | | | | | |
 | [Volca2603](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/Volca2603.md) |   | | | | | | | | | | | | | | | | | | | | | | | | |
 <!-- END_COMMIT_TABLE -->
+
 
 
 
