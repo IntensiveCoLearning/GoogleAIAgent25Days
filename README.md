@@ -201,12 +201,13 @@ Telegram：https://t.me/+3wGYldnFuFZkZjE1
 | [xinyuuum2](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/xinyuuum2.md) | ✅ | ✅ | | | | | | | | | | | | | | | | | | | | | | | |
 | [puppet25k](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/puppet25k.md) | ⭕️ |   | | | | | | | | | | | | | | | | | | | | | | | |
 | [liwnldutng](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/liwnldutng.md) | ⭕️ | ✅ | | | | | | | | | | | | | | | | | | | | | | | |
-| [hamartia0](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/hamartia0.md) | ⭕️ |   | | | | | | | | | | | | | | | | | | | | | | | |
+| [hamartia0](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/hamartia0.md) | ⭕️ | ✅ | | | | | | | | | | | | | | | | | | | | | | | |
 | [Fuika0306](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/Fuika0306.md) | ⭕️ |   | | | | | | | | | | | | | | | | | | | | | | | |
 | [czhao1986716-glitch](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/czhao1986716-glitch.md) | ✅ |   | | | | | | | | | | | | | | | | | | | | | | | |
 | [web3niuma](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/web3niuma.md) | ⭕️ |   | | | | | | | | | | | | | | | | | | | | | | | |
 | [Volca2603](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/Volca2603.md) | ✅ |   | | | | | | | | | | | | | | | | | | | | | | | |
 <!-- END_COMMIT_TABLE -->
+
 
 
 
