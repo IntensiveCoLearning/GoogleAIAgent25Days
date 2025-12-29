@@ -17,6 +17,43 @@ Full-Stack Developer
 <!-- Content_START -->
 # 2025-12-29
 <!-- DAILY_CHECKIN_2025-12-29_START -->
+# Day01
+
+准备阶段，环境安装
+
+-   **Gemini 3**：上下文工程 (Context Engineering)、电脑操作控制 (Computer Use)、实时 API (Live API) 以及进阶模式。
+    
+-   **Google ADK**：Agent 开发套件 (Python 版)。
+    
+-   **Vertex AI Agent Engine**：数分钟内即可完成 Agent 部署。
+    
+-   **Agent 入门套件**：端到端 (E2E) 的生产级就绪范本。
+    
+
+## Installation[**¶**](https://google.github.io/adk-docs/get-started/python/#installation)
+
+Install ADK by running the following command:
+
+```
+ pip install google-adk
+```
+
+Create a Python virtual environment:
+
+```
+ python -m venv .venv
+```
+
+## Create an agent project[**¶**](https://google.github.io/adk-docs/get-started/python/#create-an-agent-project)
+
+Run the `adk create` command to start a new agent project.
+
+```
+ adk create my_agent
+```
+
+Gemini API: [**https://aistudio.google.com/api-keys**](https://aistudio.google.com/api-keys)
+
 # Day02
 
 使用YAML构造AI Agent
@@ -42,12 +79,11 @@ Full-Stack Developer
 
 ## YAML
 
-YAML: YAML Ain't Markup Language™，是一种**人类友好的数据序列化格式**
+YAML: YAML Ain’t Markup Language™，是一种**人类友好的数据序列化格式**
 
 ### 核心特点
 
-NaN.  **可读性极高**
-      
+NaN. **可读性极高**
 
 YAML 使用缩进和简洁的语法，比 JSON 和 XML 更易读：
 
@@ -131,6 +167,7 @@ Add Google Search tool to the agent file by simple adding the tools section.
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 Day 1
 <!-- DAILY_CHECKIN_2025-12-28_END -->
