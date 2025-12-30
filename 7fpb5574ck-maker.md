@@ -15,8 +15,118 @@ AI × Crypto 实践者，关注 AI Agent、自动化与工具构建，正在用 
 ## Notes
 
 <!-- Content_START -->
+# 2025-12-30
+<!-- DAILY_CHECKIN_2025-12-30_START -->
+# **Day 03 学习笔记: Gemini 3 与 神经符号智能体 (Neuro-Symbolic Agents)**
+
+## **1\. 核心理念: 神经符号 AI (Neuro-Symbolic AI)**
+
+Day 03 标志着我们从“聊天机器人”迈向了“解决问题的智能体”。
+
+-   **Neuro (神经)**: **Gemini 3 Pro**。大模型作为“大脑”，负责理解非结构化的用户意图（“我要开店”）、制定高层战略（“需要做差异化竞争”）。
+    
+-   **Symbolic (符号)**: **代码执行 (Code Execution)**。Python 解释器作为“计算器”，负责处理结构化数据、精确计算（平均分 4.46）、逻辑推导。
+    
+
+**价值**: 这种结合解决了 LLM 的两大死穴：**幻觉 (Hallucination)** 和 **计算能力弱 (Poor Math)**。
+
+## **2\. 架构设计 (Architecture)**
+
+我们的 Retail Agent 采用了经典的 **ReAct (Reason + Act)** 变体模式：
+
+1.  **感知 (Perception)**: 用户输入 "分析 KR Puram 的健身房竞争"。
+    
+2.  **行动 1 (Tool 1)**: 调用
+    
+    **search\_places** 获取外部数据（Competitor Data）。
+    
+3.  **推理 (Reasoning)**: 拿到数据后，发现需要量化分析。
+    
+4.  **行动 2 (Tool 2)**: 编写并调用
+    
+    **execute\_code**，计算市场饱和度、加权评分。
+    
+5.  **决策 (Decision)**: 综合数据与常识，输出最终战略报告。
+    
+
+## **3\. 工程实践 (Engineering Highlights)**
+
+### **A. 模拟数据 (Mocking Strategy)**
+
+由于没有 Google Maps Billing 权限，我们采用了 **Mock（模拟）** 策略。
+
+-   **实现**: 编写
+    
+    **mock\_**[**data.py**](http://data.py) 和假的
+    
+    **search\_places** 工具。
+    
+-   **启发**: 在 Agent 开发初期，不要被外部 API 卡住。先用 Mock 数据跑通逻辑，架构稳定后再接入真实 API。
+    
+
+### **B. 自定义工具 (Custom Tools)**
+
+官方 ADK 的 `BuiltInCodeExecutor` 与部分模型存在兼容性问题（400 Error）。
+
+-   **解决方案**: 我们手动实现了一个
+    
+    **execute\_code(code: str)** 工具，底层使用 Python 的
+    
+    **exec()**。
+    
+-   **启发**: Agent 的本质只是 LLM + Functions。不必迷信官方封装，只要能把函数描述清楚（Docstring）并正确返回结果，任何代码都可以成为 Agent 的手。
+    
+
+### **C. 模型探索 (Model Discovery)**
+
+我们发现即便 UI 显示 "Gemini 3 Pro"，API 标识符可能不同。
+
+-   **Gemini 3 Flash**: `models/gemini-3-flash-preview`
+    
+-   **Gemini 3 Pro**: `models/gemini-3-pro-preview`
+    
+-   **经验**: 永远使用 `client.models.list()` 来确认当前可用的真实 Model ID，而不是盲猜。
+    
+
+## **4\. 关键成果 (Key Outcomes)**
+
+-   **Data-Driven Insight**: Agent 不是瞎编建议，而是基于算出来的 "4.46 平均分" 警告我们 "市场竞争极度激烈"。
+    
+-   **Autonomous Chaining**: Agent 自主完成了 `Search` -> `Code` 的数据流转，全程无需人类干预。
+    
+
+* * *
+
+## **5\. 代码片段 (Golden Snippets)**
+
+**Agent 如何自我思考并写代码：**
+
+```
+# Agent 生成的用来分析市场的代码
+```
+
+import pandas as pd
+
+data = \[...\] # 自动注入了上一步搜索到的数据
+
+\# 自动计算加权平均分
+
+df\['weighted\_score'\] = df\['rating'\] \* df\['reviews'\]
+
+overall\_weighted\_avg = df\['weighted\_score'\].sum() / total\_reviews
+
+\# 自动进行细分市场切片
+
+market\_leaders = df\[(df\['rating'\] >= 4.5) & (df\['reviews'\] >= 100)\]
+
+niche\_players = df\[(df\['rating'\] >= 4.5) & (df\['reviews'\] < 100)\]
+
+这段逻辑完全由 Gemini 3 Pro 自主生成，证明了其强大的逻辑推理能力。
+<!-- DAILY_CHECKIN_2025-12-30_END -->
+
 # 2025-12-29
 <!-- DAILY_CHECKIN_2025-12-29_START -->
+
 ````markdown
 # Day 02: Introduction to Declarative Agents (2025-12-29)
 
@@ -79,6 +189,7 @@ tools:
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 **\[Day 01\] Google AI Agent 开发环境搭建与初探**
 
