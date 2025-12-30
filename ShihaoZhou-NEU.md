@@ -15,8 +15,150 @@ Full-Stack Developer
 ## Notes
 
 <!-- Content_START -->
+# 2025-12-30
+<!-- DAILY_CHECKIN_2025-12-30_START -->
+# Day03
+
+-   **Google 搜索落地 (Grounding)**：原生接入实时网络数据。
+    
+-   **电脑操作控制 (Computer use)**：让 Agent 能够导航并与用户界面 (UI) 进行交互。
+    
+-   **实时 API (Live API)**：为语音和视频 Agent 提供实时流式传输支持。
+    
+-   **原生可观测性**：全面监控 Gemini 调用、工具使用以及 Agent 的推理过程。
+    
+
+uvx agent-starter-pack create -y --api-key YOUR\_GEMINI\_API\_KEY
+
+## Code
+
+-   One liner with Agent Starter Pack
+    
+
+```
+ uvx agent-starter-pack create -y --api-key YOUR_GEMINI_API_KEY
+```
+
+-   Using ADK CLI
+    
+
+```
+ uv init
+ uv add google-adk
+ uv add google-genai
+ export GOOGLE_API_KEY="YOUR_API_KEY"
+ set GOOGLE_API_KEY="YOUR_API_KEY" #CMD
+ source .venv/bin/activate
+ .venv\Scripts\activate #CMD
+ adk create my_agent
+```
+
+-   Download sample and run locally
+    
+
+```
+ curl '<https://raw.githubusercontent.com/GoogleCloudPlatform/devrel-demos/refs/heads/main/ai-ml/agent-labs/gemini-3-pro-agent-demo/my_agent/agent.py>' > my_agent/agent.py
+ adk web
+```
+
+## A Multi-agent app with MCP
+
+```
+ pip install google-adk
+ pip install firecrawl-py
+```
+
+```
+ # yaml-language-server: $schema=https://raw.githubusercontent.com/google/adk-python/refs/heads/main/src/google/adk/agents/config_schemas/AgentConfig.json
+ name: web_research_coordinator
+ model: gemini-2.5-flash
+ description: A coordinator agent that manages web research using Firecrawl for scraping and two specialized sub-agents for research and summarization.
+ instruction: |
+   You are a web research coordinator agent. Your job is to:
+   1. Coordinate web research tasks using two sub-agents:
+       - Research Agent: Uses Firecrawl to scrape web content based on given queries.
+       - Summarization Agent: Summarizes the scraped content into concise reports.
+   2. Synthesize findings from both sub-agents into actionable insights.
+   Important: when delegating to research_agent, provide clear and specific instrucations:
+   For URLs: "Please scrape and analyze the content from [URL]"
+   For research topics: "Please search for and analyze information about [TOPIC]"
+   DO NOT pass complex objects or arrays to the research_agent. Use simple, clear text instrucations.
+   When given a URL or research topic:
+   - Pass a clear, simple instruction to the research_agent.(e.g. "Scrape and analyze https://example.com" or "Research the latest trends in AI.")
+   - The research_agent will use appropriate Firecrawl tools with correct parameters. 
+   - The research_agent will analyze the content and return key findings.
+   - Delegate summarization of the research_agent's analysis to the summary_agent.
+   - Combine outputs from both agents into a final comprehensive report.
+ sub_agents:
+   - config_path: research_agent.yaml
+   - config_path: summary_agent.yaml
+ ​
+```
+
+```
+ name: research_agent
+ model: gemini-2.5-flash
+ description: "Specialized agent for analyzing web content and extracting insights, patterns, and key information."
+ instruction: |
+   You are a research analysis agent with access to Firecrawl web scraping tools. Your job is to:1. Use Firecrawl tools to scrape and search web content
+   2. Analyze scraped content for key insights and patterns
+   3. Identify important facts, trends, and relationships4. Extract relevant quotes and data points
+   5. Provide structured analysis of the content
+   6. Highlight any inconsistencies or gaps in information
+ ​
+   Firecrawl Tool Usage:
+   - For URLs:Use 'firecrawl_scrape' with parameter:{"url":"https://example.com"}
+   - For search queries:Use 'firecrawl_search' with parameter:{"query":"search term"}
+   - Always use simple object parameters, not arrays or complex structures
+ ​
+   Always provide your analysis in a structured format with clear sections for:
+   - Key Findings
+   - Important Data Points
+   - Trends and Patterns
+   - Notable Quotes
+   - Areas for Further Investigation
+ tools:
+   - name: MCPToolset
+     args:
+       stdio_server_params:
+         command: "npx"
+         args:
+           - "-y"
+           - "firecrawl-mcp"
+         env:
+           FIRECRAWL_API_KEY: "${FIRECRAWL_API_KEY}"
+ ​
+```
+
+```
+ name: summary_agent
+ model: gemini-2.5-flash
+ description: "Specialized agent for creating comprehensive summaries and reports from research findings."
+ instruction: |
+   You are a summarization agent. Your job is to:
+   1. Create clear, concise summaries of research findings
+   2. Organize information into logical sections
+   3. Generate executive summaries for quick understanding
+   4. Create detailed reports with proper formatting
+   5. Ensure all important information is captured and presented clearly
+   Always structure your output with:
+   - Executive Summary (2-3 sentences)
+   - Detailed Summary (organized by topic)
+   - Key Takeaways (bullet points)
+   - Recommendations (if applicable)
+   When creating summaries, ensure:
+   - Information is accurate and well-organized
+   - Key points are highlighted and easy to find
+   - Complex information is simplified without losing meaning
+   - Recommendations are actionable and specific
+   - The summary is comprehensive yet concise
+ ​
+```
+<!-- DAILY_CHECKIN_2025-12-30_END -->
+
 # 2025-12-29
 <!-- DAILY_CHECKIN_2025-12-29_START -->
+
 # Day01
 
 准备阶段，环境安装
@@ -167,6 +309,7 @@ Add Google Search tool to the agent file by simple adding the tools section.
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 Day 1
