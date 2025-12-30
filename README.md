@@ -198,7 +198,7 @@ Telegram：https://t.me/+3wGYldnFuFZkZjE1
 | [RSXLX](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/RSXLX.md) | ⭕️ | ⭕️ |   | | | | | | | | | | | | | | | | | | | | | | |
 | [zhaoyang231](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/zhaoyang231.md) | ⭕️ | ⭕️ |   | | | | | | | | | | | | | | | | | | | | | | |
 | [OVO96](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/OVO96.md) | ⭕️ | ⭕️ |   | | | | | | | | | | | | | | | | | | | | | | |
-| [xinyuuum2](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/xinyuuum2.md) | ✅ | ✅ |   | | | | | | | | | | | | | | | | | | | | | | |
+| [xinyuuum2](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/xinyuuum2.md) | ✅ | ✅ | ✅ | | | | | | | | | | | | | | | | | | | | | | |
 | [puppet25k](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/puppet25k.md) | ⭕️ | ⭕️ |   | | | | | | | | | | | | | | | | | | | | | | |
 | [liwnldutng](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/liwnldutng.md) | ⭕️ | ✅ |   | | | | | | | | | | | | | | | | | | | | | | |
 | [hamartia0](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/hamartia0.md) | ⭕️ | ✅ |   | | | | | | | | | | | | | | | | | | | | | | |
@@ -207,6 +207,7 @@ Telegram：https://t.me/+3wGYldnFuFZkZjE1
 | [web3niuma](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/web3niuma.md) | ⭕️ | ⭕️ |   | | | | | | | | | | | | | | | | | | | | | | |
 | [Volca2603](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/Volca2603.md) | ✅ | ✅ |   | | | | | | | | | | | | | | | | | | | | | | |
 <!-- END_COMMIT_TABLE -->
+
 
 
 
