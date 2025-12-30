@@ -15,8 +15,22 @@ timezone: UTC+8
 ## Notes
 
 <!-- Content_START -->
+# 2025-12-30
+<!-- DAILY_CHECKIN_2025-12-30_START -->
+使用免费的账号，调用gemini flash 2.5需要等待几分钟，这样不会出现资源枯竭的情况，目前能正常使用。  
+  
+今日在 ymal文件添加  
+  
+tools:
+
+\- name: google\_search  
+  
+可以调用 google搜索引擎，对话成功
+<!-- DAILY_CHECKIN_2025-12-30_END -->
+
 # 2025-12-29
 <!-- DAILY_CHECKIN_2025-12-29_START -->
+
 1、安装uv  
   
 2、打开Power shell 运行：  
@@ -41,6 +55,7 @@ root\_agent.yaml 这个文件是构建ai agent的核心
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 阅读 Introduction to Agents 白皮书，浅显理解ai agent。  
 对比我们用的ai大模型，ai大模型只能帮你思考，确不能做任何改变；而ai agent不仅有大脑，还有双手和神经中枢，不仅可以帮你思考，还能通过使用工具去完成目标。
