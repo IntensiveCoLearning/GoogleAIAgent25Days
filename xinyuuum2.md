@@ -184,10 +184,16 @@ Bash
 ```
 python test_agent.py
 ```
+
+  
+记录一下成功了！！
+
+![截屏2025-12-31 14.01.07.png](https://raw.githubusercontent.com/IntensiveCoLearning/GoogleAIAgent25Days/main/assets/xinyuuum2/images/2025-12-31-1767160916971-__2025-12-31_14.01.07.png)
 <!-- DAILY_CHECKIN_2025-12-31_END -->
 
 # 2025-12-30
 <!-- DAILY_CHECKIN_2025-12-30_START -->
+
 
 -   One liner with Agent Starter Pack
     
@@ -251,6 +257,7 @@ tools:
 
 
 
+
 ADK 智能体配置功能让你无需编写代码即可构建 ADK 工作流。智能体配置使用 YAML 格式的文本文件，包含智能体的简要描述，允许几乎任何人组装和运行 ADK 智能体。以下是一个基本智能体配置定义的简单示例：
 
 ```
@@ -263,6 +270,7 @@ instruction: You are an agent to help answer users' various questions.
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
