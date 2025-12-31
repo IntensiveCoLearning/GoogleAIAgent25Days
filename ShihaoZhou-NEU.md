@@ -15,8 +15,75 @@ Full-Stack Developer
 ## Notes
 
 <!-- Content_START -->
+# 2025-12-31
+<!-- DAILY_CHECKIN_2025-12-31_START -->
+# Day04
+
+**gent Engine 现已支持基于源码的部署（Source-based deployment）。** 你的源代码可以直接部署到生产环境，彻底消除了常见的部署阻碍。
+
+**告别以下烦恼：**
+
+-   **Pickle 序列化错误**
+    
+-   **复杂的序列化难题**
+    
+-   **让人头疼的模块路径问题**
+    
+
+现在，本地运行的效果与生产环境完全一致。开发与部署之间的鸿沟已不复存在。
+
+```
+ uvx agent-starter-pack create my-agent -a adk_base -d agent_engine
+ ​
+ ​
+```
+
+随后只需运行
+
+```
+ make deploy
+```
+
+即可完成部署。
+
+-   Create new project with Agent Starter Pack
+    
+
+```
+ uvx agent-starter-pack create my-agent -a adk_base -d agent_engine
+ cd my-agent && make deploy
+```
+
+-   Enhance existing ADK agent
+    
+
+```
+ uvx agent-starter-pack enhance --d agent_engine
+```
+
+### uvx遇到安装问题就不要用uvx，直接
+
+```
+ # 1. Create and activate a virtual environment
+ python -m venv .venv
+ source .venv/bin/activate
+ ​
+ # 2. Install the package
+ pip install agent-starter-pack
+ ​
+ # 3. Run the create command
+ agent-starter-pack create
+ ​
+ # You can also pass flags to skip the prompts
+ agent-starter-pack create my-adk-agent -a adk_base -d agent_engine
+ ​
+ cd <your-project> && make install && make playground
+```
+<!-- DAILY_CHECKIN_2025-12-31_END -->
+
 # 2025-12-30
 <!-- DAILY_CHECKIN_2025-12-30_START -->
+
 # Day03
 
 -   **Google 搜索落地 (Grounding)**：原生接入实时网络数据。
@@ -158,6 +225,7 @@ uvx agent-starter-pack create -y --api-key YOUR\_GEMINI\_API\_KEY
 
 # 2025-12-29
 <!-- DAILY_CHECKIN_2025-12-29_START -->
+
 
 # Day01
 
@@ -309,6 +377,7 @@ Add Google Search tool to the agent file by simple adding the tools section.
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
