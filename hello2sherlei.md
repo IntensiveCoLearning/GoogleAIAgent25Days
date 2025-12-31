@@ -17,8 +17,41 @@ timezone: UTC+8
 ## Notes
 
 <!-- Content_START -->
+# 2025-12-31
+<!-- DAILY_CHECKIN_2025-12-31_START -->
+### DAY4 零技术基础 - 学习笔记与思考 ：
+
+这一课自己看没搞懂在干嘛，开着网页用comet帮忙解释。
+
+Day 1–3 教你在本机把 Agent 跑起来，而 Day 4 开始，用 Agent Engine 做“源码级部署”，让你本地那套代码一行命令就变成真正的云上生产服务。
+
+所以这一课的核心：
+
+-   引入 Agent Engine 的源码部署：不再是你自己 docker（打包和运行） / 手写 CI/CD，而是直接把本地源码“托管”给 Agent Engine，由它在云端跑同一份代码。
+    
+-   目标是“本地怎么跑，线上就怎么跑”
+    
+
+相当于之前两天做的agent，今天就是把现在这份工程，用一行命令丢给 Agent Engine，在云上得到同款运行环境和一个正式的线上 Agent 服务。
+
+1、什么是source-based deployment？
+
+source-based 部署不是在生产环境里直接改代码并发布；而是把仓库里的代码拉到上线环境，当场执行“安装依赖→编译/打包→启动”的流程。简单来说，就是在你自己的电脑上把功能写好后，把这份“代码”带到那台对外营业的正式机器上（云上的服务器也算）。到现场再把它“加工好并启动”，让所有人都能用。
+
+2、CI、CD、GCP是什么？
+
+CI = Continuous Integration（持续集成），你提交代码后，自动帮你测试、打包。
+
+CD = Continuous Delivery / Continuous Deployment（持续交付 / 持续部署），通过测试后，自动部署到服务器。
+
+CI/CD都是自动化流程。
+
+GCP = Google Cloud Platform（谷歌云平台），就是云服务器放在哪个机房（国家/城市）。比如 us-central1 是美国中部。
+<!-- DAILY_CHECKIN_2025-12-31_END -->
+
 # 2025-12-30
 <!-- DAILY_CHECKIN_2025-12-30_START -->
+
 ### DAY3 零技术基础 - 学习笔记与思考 ：
 
 自己跟着文档有看不懂的地方，直接打开vs code，发给gpt，让他搞定，并解释清楚原理。
@@ -194,6 +227,7 @@ cd my-agent && make install && make playground
 
 # 2025-12-29
 <!-- DAILY_CHECKIN_2025-12-29_START -->
+
 
 ### DAY2 零技术基础 - 学习笔记与思考 ：
 
@@ -446,6 +480,7 @@ sub_agents:
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 ### 零技术基础 - 学习笔记与思考：
