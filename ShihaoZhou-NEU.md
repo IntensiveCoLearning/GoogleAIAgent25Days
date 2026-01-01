@@ -15,8 +15,45 @@ Full-Stack Developer
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-01
+<!-- DAILY_CHECKIN_2026-01-01_START -->
+# Day05
+
+**自动配置的两个层级：**
+
+1.  **Agent 遥测 (Telemetry)**
+    
+    -   **Cloud Trace** 捕获每一次执行。
+        
+    -   **LLM 调用**及其延迟细分。
+        
+    -   **工具执行**耗时。
+        
+    -   完整的**对话流**可视化。
+        
+2.  **提示词-响应日志 (Prompt-Response Logging)（自动开启）**
+    
+    -   通过 **Terraform** 预配完整的端到端 (E2E) 流程。
+        
+    -   **日志分析 (Log Analytics)** + 具有自定义保留期的**日志桶 (Log Buckets)**。
+        
+    -   **BigQuery Delta Lake** 配合自定义视图，方便进行数据查询。
+        
+    -   **数据安全**：日志中不包含敏感数据——所有内容均写入 **GCS (Google Cloud Storage)**。
+        
+
+**只需一条指令即可部署：**
+
+```
+ uvx agent-starter-pack create my-agent -a adk_base -d agent_engine
+ make deploy
+ ​
+```
+<!-- DAILY_CHECKIN_2026-01-01_END -->
+
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 # Day04
 
 **gent Engine 现已支持基于源码的部署（Source-based deployment）。** 你的源代码可以直接部署到生产环境，彻底消除了常见的部署阻碍。
@@ -83,6 +120,7 @@ Full-Stack Developer
 
 # 2025-12-30
 <!-- DAILY_CHECKIN_2025-12-30_START -->
+
 
 # Day03
 
@@ -225,6 +263,7 @@ uvx agent-starter-pack create -y --api-key YOUR\_GEMINI\_API\_KEY
 
 # 2025-12-29
 <!-- DAILY_CHECKIN_2025-12-29_START -->
+
 
 
 # Day01
@@ -377,6 +416,7 @@ Add Google Search tool to the agent file by simple adding the tools section.
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
