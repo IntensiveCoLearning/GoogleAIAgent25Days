@@ -15,8 +15,16 @@ timezone: UTC+8
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-01
+<!-- DAILY_CHECKIN_2026-01-01_START -->
+学习 了解 Gemini 3 ，申请相关的api key
+
+主要了解 它对电脑的操控
+<!-- DAILY_CHECKIN_2026-01-01_END -->
+
 # 2025-12-30
 <!-- DAILY_CHECKIN_2025-12-30_START -->
+
 学习了 使用 yaml 配置做agent
 
 有如下限制
@@ -30,6 +38,7 @@ timezone: UTC+8
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 安装了 adk 环境 ，
 
