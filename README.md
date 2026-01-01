@@ -183,7 +183,7 @@ Telegram：https://t.me/+3wGYldnFuFZkZjE1
 | [yixingsyb](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/yixingsyb.md) | ⭕️ | ⭕️ | ⭕️ | ❌ | | | | | | | | | | | | | | | | | | | | | |
 | [yeeva0102](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/yeeva0102.md) | ✅ | ⭕️ | ⭕️ | ⭕️ |   | | | | | | | | | | | | | | | | | | | | |
 | [lesonstacy](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/lesonstacy.md) | ⭕️ | ⭕️ | ⭕️ | ❌ | | | | | | | | | | | | | | | | | | | | | |
-| [zoeyz3](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/zoeyz3.md) | ✅ | ⭕️ | ✅ | ⭕️ |   | | | | | | | | | | | | | | | | | | | | |
+| [zoeyz3](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/zoeyz3.md) | ✅ | ⭕️ | ✅ | ⭕️ | ✅ | | | | | | | | | | | | | | | | | | | | |
 | [lunateng](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/lunateng.md) | ⭕️ | ⭕️ | ⭕️ | ❌ | | | | | | | | | | | | | | | | | | | | | |
 | [Xiaonan2020](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/Xiaonan2020.md) | ⭕️ | ⭕️ | ⭕️ | ❌ | | | | | | | | | | | | | | | | | | | | | |
 | [eureka1d2](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/eureka1d2.md) | ⭕️ | ⭕️ | ⭕️ | ❌ | | | | | | | | | | | | | | | | | | | | | |
@@ -207,6 +207,7 @@ Telegram：https://t.me/+3wGYldnFuFZkZjE1
 | [web3niuma](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/web3niuma.md) | ⭕️ | ⭕️ | ⭕️ | ❌ | | | | | | | | | | | | | | | | | | | | | |
 | [Volca2603](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/Volca2603.md) | ✅ | ✅ | ⭕️ | ⭕️ |   | | | | | | | | | | | | | | | | | | | | |
 <!-- END_COMMIT_TABLE -->
+
 
 
 
