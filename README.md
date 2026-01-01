@@ -167,7 +167,7 @@ Telegram：https://t.me/+3wGYldnFuFZkZjE1
 | [Toby1009](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/Toby1009.md) | ✅ | ✅ | ✅ | ✅ |   | | | | | | | | | | | | | | | | | | | | |
 | [SU-AN-coder](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/SU-AN-coder.md) | ⭕️ | ⭕️ | ⭕️ | ❌ | | | | | | | | | | | | | | | | | | | | | |
 | [lebronboy500](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/lebronboy500.md) | ⭕️ | ⭕️ | ⭕️ | ❌ | | | | | | | | | | | | | | | | | | | | | |
-| [ShihaoZhou-NEU](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/ShihaoZhou-NEU.md) | ✅ | ✅ | ✅ | ✅ |   | | | | | | | | | | | | | | | | | | | | |
+| [ShihaoZhou-NEU](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/ShihaoZhou-NEU.md) | ✅ | ✅ | ✅ | ✅ | ✅ | | | | | | | | | | | | | | | | | | | | |
 | [Easycoder-lin](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/Easycoder-lin.md) | ✅ | ⭕️ | ✅ | ⭕️ |   | | | | | | | | | | | | | | | | | | | | |
 | [hello2sherlei](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/hello2sherlei.md) | ✅ | ✅ | ✅ | ✅ |   | | | | | | | | | | | | | | | | | | | | |
 | [StellaWang5209](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/StellaWang5209.md) | ⭕️ | ⭕️ | ⭕️ | ❌ | | | | | | | | | | | | | | | | | | | | | |
@@ -207,6 +207,7 @@ Telegram：https://t.me/+3wGYldnFuFZkZjE1
 | [web3niuma](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/web3niuma.md) | ⭕️ | ⭕️ | ⭕️ | ❌ | | | | | | | | | | | | | | | | | | | | | |
 | [Volca2603](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/Volca2603.md) | ✅ | ✅ | ⭕️ | ⭕️ |   | | | | | | | | | | | | | | | | | | | | |
 <!-- END_COMMIT_TABLE -->
+
 
 
 
