@@ -15,8 +15,59 @@ AI × Crypto 实践者，关注 AI Agent、自动化与工具构建，正在用 
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-01
+<!-- DAILY_CHECKIN_2026-01-01_START -->
+# 📅 2026-01-01 Day 05 学习日记
+
+## 📝 学习主题：Production Observability (Agent Starter Pack)
+
+新年第一天，学习了 Google Cloud 的 **Agent Starter Pack**，重心放在了 Agent 的**生产级可观测性（Observability）**。
+
+### 💡 核心收货
+
+1.  **Agent Starter Pack 的价值**：
+    
+    -   它不仅仅是一个模板，而是一套**工程化标准**。通过 `agent-starter-pack create` 可以快速生成包含后端、部署配置和观测性代码的项目，极大提升了从 Demo 到生产的效率。
+        
+2.  **可观测性的两层深度理解**：
+    
+    -   **Agent Telemetry (Cloud Trace)**：这是"骨架"。记录了请求怎么走、每个工具跑了多久。
+        
+    -   **Prompt-Response Logging (GCS/BigQuery)**：这是"细节"。记录了 AI 到底说了什么，用了多少 Token。
+        
+    -   **隐私权衡**：学到了 `NO_CONTENT` 模式，在记录元数据进行成本/性能监控的同时，保护用户隐私。
+        
+3.  **ReAct 模式的实战感悟**：
+    
+    -   通过本地 Playground 的交互，清晰地看到了模型如何自主决定调用 `get_weather`。这种"思考 -> 行动 -> 观察 -> 总结"的闭环是当前最实用的 Agent 范式。
+        
+
+### 🚀 对 Prediction Copilot 的启发
+
+-   **决策溯源**：在预测市场中，AI 为什么判断为 YES 必须是可追溯的。利用 Cloud Trace 这种工具，可以把"新闻检索 -> 鲸鱼分析 -> 逻辑推理"这个过程可视化，增加产品的透明度和信任度。
+    
+-   **成本控制**：通过观测性面板看到的 Token 统计，可以帮助精准核算每次分析的成本，从而制定合理的定价或使用限制策略。
+    
+
+### 🔧 技术细节记录
+
+-   **环境配置**：遇到 SSL 问题，通过 `venv` 环境和 `uv` 工具成功解决。
+    
+-   **配置切换**：学会了如何在 `agent.py` 中通过环境变量 `GOOGLE_GENAI_USE_VERTEXAI` 在 GCP Vertex AI 和 Google AI Studio 之间快速切换认证模式。
+    
+
+### 🌟 总结
+
+如果说前几天是在学"怎么做 Agent"，今天是学"怎么管 Agent"。在一个真实的生产项目中，能看清 Agent 的运行状态比做对一个功能更重要。
+
+* * *
+
+**下一站**：Day 06 - ADK Ready (Antigravity, Gemini CLI, Cursor, Firebase)
+<!-- DAILY_CHECKIN_2026-01-01_END -->
+
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 # **Day 04 学习笔记: Source-Based Deployment (基于源的部署)**
 
 ## **1\. 核心问题：为什么需要 Source-Based Deployment？**
@@ -201,6 +252,7 @@ python day04/deploy.py --create
 # 2025-12-30
 <!-- DAILY_CHECKIN_2025-12-30_START -->
 
+
 # **Day 03 学习笔记: Gemini 3 与 神经符号智能体 (Neuro-Symbolic Agents)**
 
 ## **1\. 核心理念: 神经符号 AI (Neuro-Symbolic AI)**
@@ -312,6 +364,7 @@ niche\_players = df\[(df\['rating'\] >= 4.5) & (df\['reviews'\] < 100)\]
 <!-- DAILY_CHECKIN_2025-12-29_START -->
 
 
+
 ````markdown
 # Day 02: Introduction to Declarative Agents (2025-12-29)
 
@@ -374,6 +427,7 @@ tools:
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
