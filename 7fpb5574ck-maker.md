@@ -15,8 +15,38 @@ AI × Crypto 实践者，关注 AI Agent、自动化与工具构建，正在用 
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-02
+<!-- DAILY_CHECKIN_2026-01-02_START -->
+**📅 Day 06 打卡：ADK Ready & Context Engineering**
+
+**📝 核心收获** 今天不写代码，而是“磨刀”。从手搓代码转向了 **Agent 工程化** 思维。
+
+**🚀 工具链解锁**
+
+1.  **Antigravity (IDE)**: 不止是编辑器，而是能自主规划任务的 AI 伙伴。
+    
+2.  **Context Files (**
+    
+    [**GEMINI.md**](http://GEMINI.md)**)**: 本日MVP。这是写给 AI 看的项目说明书（System Prompt 扩展包）。只要维护好这个文件，新来的 AI 助手立马就能懂我的代码规范和技术栈。
+    
+3.  **Agent Starter Pack**: Google 官方的 Agent 脚手架，生产级标准，开箱即用。
+    
+
+**💡 认知升级 (Aha Moment)**
+
+-   **Neuro-Symbolic**: 用代码逻辑（Symbolic）去约束发散的大模型（Neuro）。
+    
+-   未来的核心竞争力：**Context Engineering**。谁能给 AI 提供更精准的上下文，谁就能驾驭更强的 Agent。
+    
+
+**🔜 Next Step**: Day 07，赋予 AI 执行代码的能力！(LLMs Can Execute Code)
+
+#GoogleAI #Agent开发 #GEMINI #100DaysOfCode
+<!-- DAILY_CHECKIN_2026-01-02_END -->
+
 # 2026-01-01
 <!-- DAILY_CHECKIN_2026-01-01_START -->
+
 # 📅 2026-01-01 Day 05 学习日记
 
 ## 📝 学习主题：Production Observability (Agent Starter Pack)
@@ -67,6 +97,7 @@ AI × Crypto 实践者，关注 AI Agent、自动化与工具构建，正在用 
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 # **Day 04 学习笔记: Source-Based Deployment (基于源的部署)**
 
@@ -253,6 +284,7 @@ python day04/deploy.py --create
 <!-- DAILY_CHECKIN_2025-12-30_START -->
 
 
+
 # **Day 03 学习笔记: Gemini 3 与 神经符号智能体 (Neuro-Symbolic Agents)**
 
 ## **1\. 核心理念: 神经符号 AI (Neuro-Symbolic AI)**
@@ -365,6 +397,7 @@ niche\_players = df\[(df\['rating'\] >= 4.5) & (df\['reviews'\] < 100)\]
 
 
 
+
 ````markdown
 # Day 02: Introduction to Declarative Agents (2025-12-29)
 
@@ -427,6 +460,7 @@ tools:
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
