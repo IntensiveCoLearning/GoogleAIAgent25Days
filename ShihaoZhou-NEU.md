@@ -15,8 +15,37 @@ Full-Stack Developer
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-02
+<!-- DAILY_CHECKIN_2026-01-02_START -->
+# Day06
+
+在随附的视频中，你可以看到 **Antigravity** 在零配置的情况下就能理解 ADK 的工作原理。这要归功于入门套件中默认开启的 **ADK 备忘单 (Cheatsheet)**，它适用于大多数 IDE。
+
+如果你目前没有使用 Agent Starter Pack，这里有一些关于如何配置常用 IDE 的建议。
+
+**超短启动指令：**
+
+```
+ uvx agent-starter-pack create deep_search --adk
+```
+
+```
+ # Using ADK and Agent Starter Pack within Antigravity
+ uvx agent-starter-pack create deep_search --adk
+ # nothing else
+```
+
+```
+ # Install dependencies
+ pip install pydantic-ai
+ gemini extensions install https://github.com/derailed-dash/adk-docs-ext
+ gemini
+```
+<!-- DAILY_CHECKIN_2026-01-02_END -->
+
 # 2026-01-01
 <!-- DAILY_CHECKIN_2026-01-01_START -->
+
 # Day05
 
 **自动配置的两个层级：**
@@ -53,6 +82,7 @@ Full-Stack Developer
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 # Day04
 
@@ -120,6 +150,7 @@ Full-Stack Developer
 
 # 2025-12-30
 <!-- DAILY_CHECKIN_2025-12-30_START -->
+
 
 
 # Day03
@@ -263,6 +294,7 @@ uvx agent-starter-pack create -y --api-key YOUR\_GEMINI\_API\_KEY
 
 # 2025-12-29
 <!-- DAILY_CHECKIN_2025-12-29_START -->
+
 
 
 
@@ -416,6 +448,7 @@ Add Google Search tool to the agent file by simple adding the tools section.
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
