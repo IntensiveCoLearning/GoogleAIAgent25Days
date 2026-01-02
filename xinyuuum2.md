@@ -15,8 +15,37 @@ timezone: UTC+8
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-02
+<!-- DAILY_CHECKIN_2026-01-02_START -->
+昨天忘记了 先补一下昨天的…
+
+A. 第一层：系统行为追踪 (Agent Telemetry)
+
+-   **工具：** Cloud Trace
+    
+-   **作用：** 解决“慢”和“错”的问题。
+    
+-   **核心概念 - Span（跨度）：** 它把一个完整的用户请求拆解成了详细的链条： `收到请求` → `解析输入(50ms)` → `调用LLM(800ms)` → `搜索工具(600ms)` → `格式化输出` _通过这个链条，你能一眼看出瓶颈在哪里。_
+    
+
+B. 第二层：交互与消耗记录 (Prompt-Response Logging)
+
+-   **工具：** GCS (存储) + BigQuery (查询)
+    
+-   **作用：** 解决“成本”和“质量”的问题。
+    
+-   **核心模式 - 隐私保护模式 (**`NO_CONTENT`**)：**
+    
+    -   默认情况下，系统**只记录元数据**（用了什么模型、消耗了多少 Token、耗时多久、时间戳）。
+        
+    -   **不记录**用户的原始 Prompt 和 LLM 的具体回答（除非你显式开启 `ALL` 模式）。
+        
+-   **数据流向：** 日志会自动存入 Google Cloud Storage，并同步到 BigQuery。可以直接写 SQL 语句来查询：“过去24小时，Gemini-2.0 模型一共消耗了多少 Token？”
+<!-- DAILY_CHECKIN_2026-01-02_END -->
+
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 今天的内容有点点多，用gemini老师辅助了一下，记录一下大概内容吧。
 
 ### 第一阶段：准备工作 (环境搭建)
@@ -195,6 +224,7 @@ python test_agent.py
 <!-- DAILY_CHECKIN_2025-12-30_START -->
 
 
+
 -   One liner with Agent Starter Pack
     
 
@@ -258,6 +288,7 @@ tools:
 
 
 
+
 ADK 智能体配置功能让你无需编写代码即可构建 ADK 工作流。智能体配置使用 YAML 格式的文本文件，包含智能体的简要描述，允许几乎任何人组装和运行 ADK 智能体。以下是一个基本智能体配置定义的简单示例：
 
 ```
@@ -270,6 +301,7 @@ instruction: You are an agent to help answer users' various questions.
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
