@@ -15,8 +15,127 @@ AI × Crypto 实践者，关注 AI Agent、自动化与工具构建，正在用 
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-03
+<!-- DAILY_CHECKIN_2026-01-03_START -->
+# **📅 2026-01-03 Day 07 学习日记**
+
+## **📝 学习主题：LLMs Can Execute Code (Autonomous Problem Solving)**
+
+今天是 Week 1 的最后一天，我们将学习如何让 AI Agent **自主编写并执行代码** 来解决问题。通过
+
+```
+BuiltInCodeExecutor
+```
+
+，LLM 获得了一个强大的计算器和逻辑执行引擎，真正实现了 "Neuro-Symbolic"（神经符号）AI。
+
+### **🧠 核心概念**
+
+**1\. 为什么需要代码执行能力？**
+
+LLM 的"思考"是基于概率的，擅长语言生成，但有以下先天局限：
+
+-   **精确计算**: 复杂的数学运算容易出错（LLM 是"文科生"）。
+    
+-   **数据处理**: 处理大量 CSV/JSON 数据时，Token 上下文有限且容易产生幻想。
+    
+-   **可复现性**: 自然语言推理是不可控的，而代码逻辑是确定性的。
+    
+-   **复杂算法**: 排序、搜索、图遍历等算法用代码实现远比 Prompt 高效。
+    
+
+**关键洞见**:
+
+-   **Prompt**: 负责 "Intent" (意图) 和 "Design" (设计)。
+    
+-   **Code**: 负责 "Action" (行动) 和 "Precision" (精确)。
+    
+
+**2\. ADK 中的 Code Executor 机制**
+
+ADK 通过
+
+```
+CodeExecutor
+```
+
+接口将 LLM 生成的代码发送到沙盒环境运行。
+
+| 执行器 | 底层机制 | 适用场景 | 安全性 |
+| --- | --- | --- | --- |
+| BuiltInCodeExecutor | Docker 容器或本地受限进程 (gVisor) | 开发测试、简单脚本、本地工具 | ⭐⭐⭐ (依赖环境配置) |
+| AgentEngineSandboxCodeExecutor | Google Cloud 全托管沙盒 (MicroVMs) | 生产环境、企业级应用、高并发 | ⭐⭐⭐⭐⭐ (硬件级隔离) |
+
+> **_⚠️ 安全警示_**_: 即使是本地沙盒，也绝对_**_禁止_**_将 Code Executor 开放在未受信任的输入源（如允许用户直接让 Agent 执行任意代码）。这是 "Prompt Injection" 的高危区。_
+
+**3\. 进阶知识点 (Deep Dive)**
+
+🔄 The "Self-Correction" Loop (自我纠错循环)
+
+这是 Agent 最强大的能力之一。当代码执行报错时，Agent 能够：
+
+1.  **捕获 Stderr**: 读取 Traceback 错误信息。
+    
+2.  **Analysis**: 即时分析错误原因（是语法错误、库缺失，还是逻辑漏洞？）。
+    
+3.  **Rewrite**: 重新编写代码。
+    
+4.  **Retry**: 再次执行。
+    
+
+这种"试错"能力让 Agent 能够解决它从未见过的复杂问题。
+
+💾 State Persistence (状态持久化)
+
+代码执行通常是**无状态**的（Stateless），特别是在
+
+```
+BuiltInCodeExecutor
+```
+
+中。
+
+-   **Block A**:
+    
+    ```
+    x = 5
+    ```
+    
+-   **Block B**:
+    
+    ```
+    print(x)
+    ```
+    
+    \-> **NameError!**
+    
+
+**解决方案**:
+
+-   **单次执行**: 尽量将逻辑封装在一个完整的代码块中。
+    
+-   **Session Context**: 高级执行器（如 Agent Engine Sandbox）支持 Session 级别的内存持久化，允许跨代码块共享变量。
+    
+
+### **💡 Week 1 总结 & Week 2 展望**
+
+回顾这一周，我们完成了从"零"到"准生产"的旅程：
+
+-   Day 01-02: 基础与配置
+    
+-   Day 03-04: Gemini 模型与云端部署
+    
+-   Day 05-06: 可观测性与工具集成
+    
+-   **Day 07**: 自主代码执行 (Agent 的"大脑"长出了"手")
+    
+
+**Next (Week 2): Context & Orchestration** 我们将解决 Agent 的"记忆"问题。如何让 Agent 记住长对话？如何管理庞大的文档上下文？Day 08 将深入 **Effective Context Management**。
+<!-- DAILY_CHECKIN_2026-01-03_END -->
+
 # 2026-01-02
 <!-- DAILY_CHECKIN_2026-01-02_START -->
+
 **📅 Day 06 打卡：ADK Ready & Context Engineering**
 
 **📝 核心收获** 今天不写代码，而是“磨刀”。从手搓代码转向了 **Agent 工程化** 思维。
@@ -46,6 +165,7 @@ AI × Crypto 实践者，关注 AI Agent、自动化与工具构建，正在用 
 
 # 2026-01-01
 <!-- DAILY_CHECKIN_2026-01-01_START -->
+
 
 # 📅 2026-01-01 Day 05 学习日记
 
@@ -97,6 +217,7 @@ AI × Crypto 实践者，关注 AI Agent、自动化与工具构建，正在用 
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 
 # **Day 04 学习笔记: Source-Based Deployment (基于源的部署)**
@@ -285,6 +406,7 @@ python day04/deploy.py --create
 
 
 
+
 # **Day 03 学习笔记: Gemini 3 与 神经符号智能体 (Neuro-Symbolic Agents)**
 
 ## **1\. 核心理念: 神经符号 AI (Neuro-Symbolic AI)**
@@ -398,6 +520,7 @@ niche\_players = df\[(df\['rating'\] >= 4.5) & (df\['reviews'\] < 100)\]
 
 
 
+
 ````markdown
 # Day 02: Introduction to Declarative Agents (2025-12-29)
 
@@ -460,6 +583,7 @@ tools:
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
