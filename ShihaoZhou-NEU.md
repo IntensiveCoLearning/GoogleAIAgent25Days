@@ -15,8 +15,28 @@ Full-Stack Developer
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-03
+<!-- DAILY_CHECKIN_2026-01-03_START -->
+# Day07
+
+### **通过 ADK 的代码执行器 (Code Executor) 你将获得：**
+
+-   **BuiltInCodeExecutor**：开箱即用。
+    
+-   **灵活运行**：可在你的本地机器或托管云沙箱中运行。
+    
+-   **云沙箱兼容**：适配 Agent Engine、Google Kubernetes Engine (GKE) 和 Daytona。
+    
+-   **全生命周期开发**：Agent 可以编写、测试、调试并迭代代码。
+    
+-   **最终产出**：既可以是代码执行的结果，也可以是代码本身。
+    
+-   **零复杂度**：无需复杂设置，只需启用该工具即可。
+<!-- DAILY_CHECKIN_2026-01-03_END -->
+
 # 2026-01-02
 <!-- DAILY_CHECKIN_2026-01-02_START -->
+
 # Day06
 
 在随附的视频中，你可以看到 **Antigravity** 在零配置的情况下就能理解 ADK 的工作原理。这要归功于入门套件中默认开启的 **ADK 备忘单 (Cheatsheet)**，它适用于大多数 IDE。
@@ -45,6 +65,7 @@ Full-Stack Developer
 
 # 2026-01-01
 <!-- DAILY_CHECKIN_2026-01-01_START -->
+
 
 # Day05
 
@@ -82,6 +103,7 @@ Full-Stack Developer
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 
 # Day04
@@ -150,6 +172,7 @@ Full-Stack Developer
 
 # 2025-12-30
 <!-- DAILY_CHECKIN_2025-12-30_START -->
+
 
 
 
@@ -294,6 +317,7 @@ uvx agent-starter-pack create -y --api-key YOUR\_GEMINI\_API\_KEY
 
 # 2025-12-29
 <!-- DAILY_CHECKIN_2025-12-29_START -->
+
 
 
 
@@ -448,6 +472,7 @@ Add Google Search tool to the agent file by simple adding the tools section.
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
