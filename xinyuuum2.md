@@ -15,8 +15,16 @@ timezone: UTC+8
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-04
+<!-- DAILY_CHECKIN_2026-01-04_START -->
+今天有点忙…学习了一下课程里的Retail site agent
+
+明天再补笔记
+<!-- DAILY_CHECKIN_2026-01-04_END -->
+
 # 2026-01-03
 <!-- DAILY_CHECKIN_2026-01-03_START -->
+
 | 概念 | 学到了什么 |
 | --- | --- |
 | Code Execution | 让 LLM 在沙箱中执行代码，获得精确结果 |
@@ -57,6 +65,7 @@ agent = Agent(
 # 2026-01-02
 <!-- DAILY_CHECKIN_2026-01-02_START -->
 
+
 昨天忘记了 先补一下昨天的…
 
 A. 第一层：系统行为追踪 (Agent Telemetry)
@@ -85,6 +94,7 @@ B. 第二层：交互与消耗记录 (Prompt-Response Logging)
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 
 今天的内容有点点多，用gemini老师辅助了一下，记录一下大概内容吧。
@@ -267,6 +277,7 @@ python test_agent.py
 
 
 
+
 -   One liner with Agent Starter Pack
     
 
@@ -332,6 +343,7 @@ tools:
 
 
 
+
 ADK 智能体配置功能让你无需编写代码即可构建 ADK 工作流。智能体配置使用 YAML 格式的文本文件，包含智能体的简要描述，允许几乎任何人组装和运行 ADK 智能体。以下是一个基本智能体配置定义的简单示例：
 
 ```
@@ -344,6 +356,7 @@ instruction: You are an agent to help answer users' various questions.
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
