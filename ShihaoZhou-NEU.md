@@ -15,8 +15,161 @@ Full-Stack Developer
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-04
+<!-- DAILY_CHECKIN_2026-01-04_START -->
+# Day08
+
+**别再往你 Agent 的 LLM 里塞乱七八糟的上下文了。**
+
+“追加一切”的策略是导致延迟激增和“迷失在中间 (Lost in the middle)”幻觉的单程票。Google ADK 改变了这一模式，将上下文视为**编译视图 (Compiled view)**，而非一串巨大的字符串。ADK 不再将原始历史记录生搬硬套地塞进窗口，而是通过一系列处理器从结构化、持久化的会话状态中动态过滤、压缩并格式化出简洁的“工作上下文”。作为开发者，你可以控制这个处理流水线，按需定制行为。
+
+**真正的工程化需要粒度化的控制，而不仅仅是更大的上下文窗口。**
+
+ADK 的分层架构将“存储”与“展示”分离，允许你通过“句柄模式 (Handle pattern)”将大文件外部化为 **Artifacts（工件）**，并仅在绝对必要时通过可搜索的 **Memory（记忆）** 检索长期数据。无论你是在管理严谨的多 Agent 移交，还是在调试工具交互，**ToolContext** 等专用对象都能确保你的 Agent 仅访问其所需的作用域——不多不少，恰到好处。
+
+**利用优化模型能力的模式，为生产规模而构建。**
+
+ADK 通过强制分离“静态指令”（不变的策略和 Schema）与“轮次指令”（动态的、由控制器拥有的引导），让 **Context Caching（上下文缓存）** 得以工程化运行。这种设计保持了沉重的系统头部信息稳定，从而大幅削减成本和延迟，同时确保每一轮的指令在逻辑上与用户输入分离，从而获得更好的安全性和验证效果。
+
+As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kaggle.com/whitepaper-context-engineering-sessions-and-memory), Agents are largely "context management".
+
+## Code
+
+-   app\_[setup.py](http://setup.py)
+    
+
+```
+ # An Example of Static Context Policy 
+ from google.adk.apps import App
+ from google.adk.agents import Agent
+ from google.adk.agents.context_cache_config import ContextCacheConfig
+ ​
+ STATIC_POLICY_HEADER = """You are a strict policy assistant for internal compliance Q&A.
+ ​
+ Follow this exact JSON schema in every response:
+ {"answer": str, "citations": [str], "confidence": float}
+ ​
+ Safety:
+ - Never provide medical or legal advice; refuse with a brief explanation.
+ - Never invent policy numbers or sections; ask for the missing reference.
+ ​
+ Style:
+ - Use short sentences.
+ - Prefer active voice.
+ - If uncertain, say so and request the missing input.
+ ​
+ Tools:
+ - search: use for public web facts.
+ - bq: use for internal policy tables (read-only).
+ """
+ ​
+ agent = Agent(
+     name="policy_agent",
+     static_instruction=STATIC_POLICY_HEADER,
+     instruction="Default: be concise and include at most two citations."
+ )
+ ​
+ app = App(
+     name="policy_qa_app",
+     context_cache_config=ContextCacheConfig(
+         ttl_seconds=3600,     # cache the header for 1 hour
+         cache_intervals=5,    # force a refresh every 5 requests (guardrail)
+         min_tokens=1000       # only cache if header is “worth it”
+     ),
+     root_agent=agent
+ )
+```
+
+-   [**steering.py**](http://steering.py)
+    
+
+```
+ # An Example of a runtime controller generating each turn instructions
+ from dataclasses import dataclass
+ from typing import Optional, Tuple
+ ​
+ @dataclass
+ class SteeringInputs:
+     goal: str                                  # this turn’s objective
+     style: str = "concise"                     # terse, detailed, crisp, etc.
+     max_cites: int = 2                         # runtime knob
+     tenant_hint: Optional[str] = None          # "Answer for EU employees only"
+     corrective: Optional[str] = None           # "Last reply missed field X; include it"
+     confidence_range: Tuple[float, float] = (0.6, 0.9)
+ ​
+ def build_turn_instruction(s: SteeringInputs) -> str:
+     parts = [
+         f"Goal: {s.goal}",
+         f"Style: {s.style}",
+         (
+             "Constraints: "
+             f"include at most {s.max_cites} citations; "
+             "refuse medical/legal advice; "
+             "if info is missing, ask one targeted question; "
+             f"return 'confidence' between {s.confidence_range[0]} and {s.confidence_range[1]}."
+         )
+     ]
+     if s.tenant_hint:
+         parts.append(f"Tenant: {s.tenant_hint}")
+     if s.corrective:
+         parts.append(f"Correction: {s.corrective}")
+     return "
+ ".join(parts)
+```
+
+-   chat\_[handler.py](http://handler.py)
+    
+
+```
+ # An Example of a chat handler which composes the turn instruction
+ from steering import SteeringInputs, build_turn_instruction
+ from google.adk.agents import Agent
+ ​
+ # agent imported from app_startup.py
+ ​
+ def route_intent(user_message: str) -> str:
+     text = user_message.lower()
+     if "compare" in text: return "compare"
+     if "list" in text and "control" in text: return "list_controls"
+     if "summarize" in text: return "summarize"
+     return "answer"
+ ​
+ INTENT_TO_GOAL = {
+     "summarize": "Summarize ACME-42 in plain English.",
+     "list_controls": "List mandatory controls from ACME-42 with one-line rationales.",
+     "compare": "Compare ACME-42 to ISO 27001 at a high level, return a short markdown table inside the JSON 'answer'.",
+     "answer": "Answer the user directly."
+ }
+ ​
+ def chat(session_id: str, user_message: str, ui_style: str | None = None):
+     intent = route_intent(user_message)
+     goal = INTENT_TO_GOAL.get(intent, f"Answer the user: {user_message[:120]}")
+ ​
+     style = ui_style or get_flag(session_id, "style", default="concise")
+     max_cites = get_flag(session_id, "max_citations", default=2)
+     tenant_hint = get_tenant_hint(session_id)     # e.g., "EU employees only" or None
+     corrective = get_last_validation_error(session_id)  # None or short string
+ ​
+     turn_instruction = build_turn_instruction(
+         SteeringInputs(
+             goal=goal,
+             style=style,
+             max_cites=max_cites,
+             tenant_hint=tenant_hint,
+             corrective=(f"Your last reply failed validation: {corrective}. Fix it this turn." if corrective else None)
+         )
+     )
+ ​
+     agent.instruction = turn_instruction
+     response = agent.run(user_message=user_message)
+     validate_and_record(session_id, response)     # optional schema check + feedback
+     return response
+```
+<!-- DAILY_CHECKIN_2026-01-04_END -->
+
 # 2026-01-03
 <!-- DAILY_CHECKIN_2026-01-03_START -->
+
 # Day07
 
 ### **通过 ADK 的代码执行器 (Code Executor) 你将获得：**
@@ -36,6 +189,7 @@ Full-Stack Developer
 
 # 2026-01-02
 <!-- DAILY_CHECKIN_2026-01-02_START -->
+
 
 # Day06
 
@@ -65,6 +219,7 @@ Full-Stack Developer
 
 # 2026-01-01
 <!-- DAILY_CHECKIN_2026-01-01_START -->
+
 
 
 # Day05
@@ -103,6 +258,7 @@ Full-Stack Developer
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 
 
@@ -172,6 +328,7 @@ Full-Stack Developer
 
 # 2025-12-30
 <!-- DAILY_CHECKIN_2025-12-30_START -->
+
 
 
 
@@ -317,6 +474,7 @@ uvx agent-starter-pack create -y --api-key YOUR\_GEMINI\_API\_KEY
 
 # 2025-12-29
 <!-- DAILY_CHECKIN_2025-12-29_START -->
+
 
 
 
@@ -472,6 +630,7 @@ Add Google Search tool to the agent file by simple adding the tools section.
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
