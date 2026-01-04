@@ -15,8 +15,127 @@ AI × Crypto 实践者，关注 AI Agent、自动化与工具构建，正在用 
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-04
+<!-- DAILY_CHECKIN_2026-01-04_START -->
+````markdown
+# Day 08: Effective Context Management (ADK Layers)
+
+> **日期**: 2026-01-04  
+> **主题**: ADK 的上下文分层管理  
+> **状态**: ✅ 完成
+
+---
+
+## 🎯 一句话总结
+
+> **教 Agent 用便签纸传话 + 用笔记本记长期偏好 + 用文件柜存文档**
+
+---
+
+## 🧠 核心概念：三个比喻
+
+| 比喻 | ADK 概念 | 代码示例 | 生命周期 |
+|------|----------|----------|----------|
+| 📝 便签 | `output_key` + `{state_key}` | Agent A 写，Agent B 读 | 当前会话 |
+| 📓 笔记本 | `user:` 前缀 | `state["user:preference"]` | **跨会话永久** |
+| 🗄️ 文件柜 | Artifacts | `save_artifact()` / `load_artifact()` | 按需配置 |
+
+---
+
+## 📝 便签：Agent 之间传话
+
+**场景**：Summarizer 生成摘要 → Translator 读取并翻译
+
+```python
+# Agent A: 写便签
+summarizer = Agent(
+    name="summarizer",
+    instruction="Summarize the text.",
+    output_key="summary"  # ← 输出自动保存到 state["summary"]
+)
+
+# Agent B: 读便签
+translator = Agent(
+    name="translator",
+    instruction="Translate this: {summary}"  # ← 自动从 state 注入
+)
+
+# 组合为流水线
+pipeline = SequentialAgent(sub_agents=[summarizer, translator])
+```
+
+---
+
+## 📓 笔记本：跨会话记忆
+
+**场景**：记住用户偏好，下次对话还知道
+
+```python
+def remember_preference(preference: str, tool_context: ToolContext):
+    # user: 前缀 = 跨会话持久化
+    tool_context.state["user:preference"] = preference
+    return {"status": "saved"}
+```
+
+**State 前缀速查**：
+| 前缀 | 作用域 | 用途 |
+|------|--------|------|
+| (无) | 当前会话 | 工作流临时数据 |
+| `user:` | 跨会话 | 用户偏好 |
+| `app:` | 全局 | 应用设置 |
+| `temp:` | 仅当前执行 | 一次性中间结果 |
+
+---
+
+## 🗄️ 文件柜：存储二进制文件
+
+**场景**：生成报告并保存为 Artifact
+
+```python
+async def generate_report(topic: str, tool_context: ToolContext):
+    content = f"# Report: {topic}\n..."
+    artifact = types.Part.from_bytes(data=content.encode(), mime_type="text/markdown")
+    
+    # ⚠️ 异步方法，必须 await
+    version = await tool_context.save_artifact(filename="report.md", artifact=artifact)
+    return {"version": version}
+```
+
+---
+
+## ⚠️ 今日踩坑
+
+1. **`adk web` 启动位置**：必须从项目根目录运行，否则找不到 agent
+2. **异步方法忘记 `await`**：`save_artifact()` 和 `load_artifact()` 是异步的，不加 `await` 会返回 `coroutine` 对象导致序列化错误
+
+---
+
+## ✏️ 自测题（明天复习用）
+
+1. Agent A 的输出怎么让 Agent B 看到？
+2. 怎么让数据在用户换个对话后还记得？
+3. 存文件用什么方法？要注意什么？
+
+---
+
+## 📂 今日产出
+
+- `day08/agent.py` - SequentialAgent Pipeline 示例
+- `day08/tools.py` - User State + Artifacts 工具
+- `day08/.env` - API 配置
+
+---
+
+## 🔗 参考资源
+
+- [ADK Session & State 官方文档](https://google.github.io/adk-python/sessions/)
+- [ADK Artifacts 官方文档](https://google.github.io/adk-python/artifacts/)
+````
+<!-- DAILY_CHECKIN_2026-01-04_END -->
+
 # 2026-01-03
 <!-- DAILY_CHECKIN_2026-01-03_START -->
+
 # **📅 2026-01-03 Day 07 学习日记**
 
 ## **📝 学习主题：LLMs Can Execute Code (Autonomous Problem Solving)**
@@ -136,6 +255,7 @@ BuiltInCodeExecutor
 # 2026-01-02
 <!-- DAILY_CHECKIN_2026-01-02_START -->
 
+
 **📅 Day 06 打卡：ADK Ready & Context Engineering**
 
 **📝 核心收获** 今天不写代码，而是“磨刀”。从手搓代码转向了 **Agent 工程化** 思维。
@@ -165,6 +285,7 @@ BuiltInCodeExecutor
 
 # 2026-01-01
 <!-- DAILY_CHECKIN_2026-01-01_START -->
+
 
 
 # 📅 2026-01-01 Day 05 学习日记
@@ -217,6 +338,7 @@ BuiltInCodeExecutor
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 
 
@@ -407,6 +529,7 @@ python day04/deploy.py --create
 
 
 
+
 # **Day 03 学习笔记: Gemini 3 与 神经符号智能体 (Neuro-Symbolic Agents)**
 
 ## **1\. 核心理念: 神经符号 AI (Neuro-Symbolic AI)**
@@ -521,6 +644,7 @@ niche\_players = df\[(df\['rating'\] >= 4.5) & (df\['reviews'\] < 100)\]
 
 
 
+
 ````markdown
 # Day 02: Introduction to Declarative Agents (2025-12-29)
 
@@ -583,6 +707,7 @@ tools:
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
