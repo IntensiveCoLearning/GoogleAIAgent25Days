@@ -15,8 +15,145 @@ AI × Crypto 实践者，关注 AI Agent、自动化与工具构建，正在用 
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-05
+<!-- DAILY_CHECKIN_2026-01-05_START -->
+````markdown
+# Day 09: Undo Buttons for Agents (Time Travel)
+
+> **日期**: 2026-01-05  
+> **主题**: Session Rewind + Resumability  
+> **状态**: ✅ 完成
+
+---
+
+## 🎯 一句话总结
+
+> **给 Agent 装上「撤销」和「断点续传」按钮**
+
+---
+
+## 🧠 核心概念：两个比喻
+
+| 比喻 | ADK 概念 | 作用 | 代码入口 |
+|------|----------|------|----------|
+| ⏪ 撤销 | `rewind_async()` | 回滚到历史某一轮对话 | `runner.rewind_async()` |
+| 💾 断点续传 | `ResumabilityConfig` | 中断后从失败点恢复 | `App(resumability_config=...)` |
+
+---
+
+## ⏪ 撤销：Session Rewind
+
+**场景**：用户说"刚才那个答案不对，帮我重新回答"
+
+### 工作原理
+
+1. **指定回滚点**：通过 `invocation_id` 标识要撤销的那一轮对话
+2. **计算逆向 Delta**：ADK 遍历事件历史，计算 State 和 Artifact 的回滚差值
+3. **追加 Rewind Event**：不删除历史，而是追加一个 `rewind_event`，后续 LLM 不再「看」被撤销的内容
+
+```python
+from google.adk import Runner
+
+# 回滚到某个 invocation 之前
+await runner.rewind_async(
+    user_id="user_123",
+    session_id="session_abc",
+    rewind_before_invocation_id="inv_to_undo"  # ← 要撤销的 invocation_id
+)
+```
+
+### 限制 (重要!)
+
+| 限制 | 说明 |
+|------|------|
+| ❌ 不回滚全局状态 | `app:` 和 `user:` 前缀的 State 不会被撤销 |
+| ❌ 不回滚外部系统 | 如果 tool 调用了外部 API（如下单），需自己处理回滚 |
+| ⚠️ 非原子操作 | 回滚中途若有其他写入，可能不一致 |
+
+---
+
+## 💾 断点续传：Resumability
+
+**场景**：Agent 执行到一半，网络断了或服务重启了
+
+### 启用方式
+
+```python
+from google.adk.apps import App, ResumabilityConfig
+
+app = App(
+    name="my_resumable_app",
+    root_agent=my_agent,
+    resumability_config=ResumabilityConfig(is_resumable=True)  # ← 核心配置
+)
+```
+
+### 恢复执行
+
+```python
+# 通过 invocation_id 恢复之前中断的执行
+async for event in runner.run_async(
+    user_id="user_123",
+    session_id="session_abc",
+    invocation_id="interrupted_inv_id"  # ← 指定要恢复的 invocation
+):
+    print(event)
+```
+
+### 限制
+
+| 限制 | 说明 |
+|------|------|
+| ⚠️ 至少一次执行 | 恢复时 tool 可能被重复调用，需保证幂等性 |
+| ❌ 内存状态丢失 | 临时变量、`temp:` 前缀 State 会丢失 |
+
+---
+
+## 📊 对比总结
+
+| 特性 | Rewind | Resumability |
+|------|--------|--------------|
+| 目的 | 回滚历史 | 从中断恢复 |
+| 触发方式 | 用户主动 | 系统自动检测 |
+| 数据影响 | 追加逆向事件 | 继续追加事件 |
+| tool 行为 | 无重复调用 | 可能重复调用 |
+
+---
+
+## 💡 最佳实践
+
+1. **Tool 设计幂等性**：恢复时 tool 可能被重复调用
+2. **避免回滚活跃 Session**：确保没有并发写入
+3. **全局状态用 `app:` / `user:`**：这些不会被 rewind 影响
+
+---
+
+## ✏️ 自测题（明天复习用）
+
+1. 如何让用户"撤销"上一轮对话？
+2. `ResumabilityConfig` 在哪里配置？
+3. Rewind 不会回滚哪些 State？
+
+---
+
+## 📂 今日产出
+
+- `day09/agent.py` - Resumable App 示例
+- `day09/test_rewind.py` - Rewind 测试脚本 (概念性)
+- `logs/day09/learning_notes.md` - 本文件
+
+---
+
+## 🔗 参考资源
+
+- [ADK Rewind Sessions](https://google.github.io/adk-python/sessions/rewind-sessions/)
+- [ADK Resuming Agents](https://google.github.io/adk-python/resuming-agents/)
+````
+<!-- DAILY_CHECKIN_2026-01-05_END -->
+
 # 2026-01-04
 <!-- DAILY_CHECKIN_2026-01-04_START -->
+
 ````markdown
 # Day 08: Effective Context Management (ADK Layers)
 
@@ -135,6 +272,7 @@ async def generate_report(topic: str, tool_context: ToolContext):
 
 # 2026-01-03
 <!-- DAILY_CHECKIN_2026-01-03_START -->
+
 
 # **📅 2026-01-03 Day 07 学习日记**
 
@@ -256,6 +394,7 @@ BuiltInCodeExecutor
 <!-- DAILY_CHECKIN_2026-01-02_START -->
 
 
+
 **📅 Day 06 打卡：ADK Ready & Context Engineering**
 
 **📝 核心收获** 今天不写代码，而是“磨刀”。从手搓代码转向了 **Agent 工程化** 思维。
@@ -285,6 +424,7 @@ BuiltInCodeExecutor
 
 # 2026-01-01
 <!-- DAILY_CHECKIN_2026-01-01_START -->
+
 
 
 
@@ -338,6 +478,7 @@ BuiltInCodeExecutor
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 
 
@@ -530,6 +671,7 @@ python day04/deploy.py --create
 
 
 
+
 # **Day 03 学习笔记: Gemini 3 与 神经符号智能体 (Neuro-Symbolic Agents)**
 
 ## **1\. 核心理念: 神经符号 AI (Neuro-Symbolic AI)**
@@ -645,6 +787,7 @@ niche\_players = df\[(df\['rating'\] >= 4.5) & (df\['reviews'\] < 100)\]
 
 
 
+
 ````markdown
 # Day 02: Introduction to Declarative Agents (2025-12-29)
 
@@ -707,6 +850,7 @@ tools:
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
