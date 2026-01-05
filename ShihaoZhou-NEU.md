@@ -15,8 +15,50 @@ Full-Stack Developer
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-05
+<!-- DAILY_CHECKIN_2026-01-05_START -->
+# Day09
+
+ADK 支持**时光倒流 (Time Travel) 与检查点 (Checkpointing)** 功能了！
+
+不同于直接删除历史记录的破坏性做法，运行器（Runner）会计算“现在”与“当时”之间的差异（即状态与工件的增量数据 State & Artifact Deltas），并在日志中追加一个“倒回事件”。这让你可以将应用状态恢复到特定的时间戳或调用 ID (Invocation ID)，同时保留完整的审计轨迹以供查证。
+
+### **化繁为简的修复方案**
+
+你不仅是“回到过去”——而是将整个世界还原到当时完全一致的状态，并保留被倒回的那条路径以备不时之需。
+
+## Code
+
+-   rewind\_[example.py](http://example.py)
+    
+
+```
+ import asyncio
+ from adk.api.agents.in_memory_runner import InMemoryRunner
+ ​
+ # 1. Initialize the runner
+ runner = InMemoryRunner(...)
+ ​
+ # 2. Something goes wrong? (e.g., hallucination or error at 'invocation_456')
+ # Instead of clearing the session, we request a rewind.
+ ​
+ # 3. Rewind (Time Travel)
+ # This asynchronously restores session state and artifacts to the target moment.
+ asyncio.run(
+     runner.rewind_async(
+         session_id='session_123',
+         before_invocation_id='invocation_456'
+     )
+ )
+ ​
+ # 4. Resume the conversation from that exact point
+ asyncio.run(runner.run(query="Let's try that request again with these constraints..."))
+```
+<!-- DAILY_CHECKIN_2026-01-05_END -->
+
 # 2026-01-04
 <!-- DAILY_CHECKIN_2026-01-04_START -->
+
 # Day08
 
 **别再往你 Agent 的 LLM 里塞乱七八糟的上下文了。**
@@ -170,6 +212,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 # 2026-01-03
 <!-- DAILY_CHECKIN_2026-01-03_START -->
 
+
 # Day07
 
 ### **通过 ADK 的代码执行器 (Code Executor) 你将获得：**
@@ -189,6 +232,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 # 2026-01-02
 <!-- DAILY_CHECKIN_2026-01-02_START -->
+
 
 
 # Day06
@@ -219,6 +263,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 # 2026-01-01
 <!-- DAILY_CHECKIN_2026-01-01_START -->
+
 
 
 
@@ -258,6 +303,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 
 
@@ -328,6 +374,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 # 2025-12-30
 <!-- DAILY_CHECKIN_2025-12-30_START -->
+
 
 
 
@@ -474,6 +521,7 @@ uvx agent-starter-pack create -y --api-key YOUR\_GEMINI\_API\_KEY
 
 # 2025-12-29
 <!-- DAILY_CHECKIN_2025-12-29_START -->
+
 
 
 
@@ -630,6 +678,7 @@ Add Google Search tool to the agent file by simple adding the tools section.
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
