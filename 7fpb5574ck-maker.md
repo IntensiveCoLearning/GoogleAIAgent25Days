@@ -15,8 +15,99 @@ AI × Crypto 实践者，关注 AI Agent、自动化与工具构建，正在用 
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-06
+<!-- DAILY_CHECKIN_2026-01-06_START -->
+````markdown
+# Day 10: Big Context ≠ Better Memory (Caching & Compaction)
+
+> **日期**: 2026-01-06
+> **主题**: Context Caching + Event Compaction
+> **状态**: ✅ 完成
+
+---
+
+## 🎯 一句话总结
+
+> **用"缓存"换取速度，用"压缩"换取记忆。**
+
+---
+
+## 🧠 核心概念：通俗理解
+
+### 1. Context Caching (上下文缓存) —— "书摊开在桌上"
+
+*   **问题**: 就像每次回答问题前都要重新从头阅读一本 500 页的书（Token 计费贵，处理慢）。
+*   **解决**: 把处理过的长文档（Context）**缓存**在服务端（书摊开放在桌上）。
+*   **效果**: 下次提问时，直接基于缓存回答，**延迟极低，成本大幅下降**。
+*   **适用**: 法律文档问答、长篇小说续写、拥有复杂 System Prompt 的角色扮演。
+
+| 配置项 | 作用 | 推荐值 |
+|:---|:---|:---|
+| `min_tokens` | 只有超过这个长度才触发缓存 | 32,768 (32k) |
+| `ttl_seconds` | 缓存多久不因使用而失效 | 3600 (1小时) |
+
+### 2. Event Compaction (历史压缩) —— "定期写会议纪要"
+
+*   **问题**: Agent 的脑容量（Context Window）有限。如果对话无限变长，最早的记忆（如用户的核心指令）会被挤出并遗忘。
+*   **解决**: 定期暂停，回顾最近的 N 轮对话，将其**总结**成一段摘要（Summary），替换掉原始的废话。
+*   **效果**: 腾出了脑容量，同时**保留了关键信息**。
+*   **核心机制**: 原始对话 A, B, C, D -> 压缩为 [Summary(A,B)] + C, D。
+
+| 配置项 | 作用 | 推荐值 |
+|:---|:---|:---|
+| `compaction_interval` | 每隔几轮对话触发一次压缩 | 5~10 |
+| `overlap_size` | 压缩时保留最近几条原始消息 | 2 (保证上下文连贯) |
+
+---
+
+## 💻 代码实现 (day10/agent.py)
+
+```python
+from google.adk.apps import App
+from google.adk.apps.app import EventsCompactionConfig
+from google.adk.agents.context_cache_config import ContextCacheConfig
+
+day10_app = App(
+    name="day10_app",
+    root_agent=reader_agent,
+    
+    # 🌟 启用缓存
+    context_cache_config=ContextCacheConfig(
+        min_tokens=32768, 
+        ttl_seconds=3600
+    ),
+    
+    # 🌟 启用压缩
+    events_compaction_config=EventsCompactionConfig(
+        compaction_interval=5,
+        overlap_size=2
+    )
+)
+```
+
+---
+
+## 📊 验证结果
+
+通过 `day10/test_compaction.py` 我们验证了：
+
+1.  **Caching 生效**: 日志显示 Agent 检查了 context 长度（当前测试文本较短，提示 `Previous request too small`，证明检查逻辑在线）。
+2.  **Compaction 生效**: 
+    - 模拟了 5 轮对话。
+    - 在第 3 轮附近，观察到了额外的 LLM 请求（摘要生成）。
+    - 最终历史记录 (`session.events`) 包含了 Summary 事件，而非全是原始 Message。
+
+---
+
+## 🔗 参考资源
+- [ADK Context Caching](https://google.github.io/adk-python/context-caching/)
+- [ADK Event Compaction](https://google.github.io/adk-python/memory/compaction/)
+````
+<!-- DAILY_CHECKIN_2026-01-06_END -->
+
 # 2026-01-05
 <!-- DAILY_CHECKIN_2026-01-05_START -->
+
 ````markdown
 # Day 09: Undo Buttons for Agents (Time Travel)
 
@@ -154,6 +245,7 @@ async for event in runner.run_async(
 # 2026-01-04
 <!-- DAILY_CHECKIN_2026-01-04_START -->
 
+
 ````markdown
 # Day 08: Effective Context Management (ADK Layers)
 
@@ -272,6 +364,7 @@ async def generate_report(topic: str, tool_context: ToolContext):
 
 # 2026-01-03
 <!-- DAILY_CHECKIN_2026-01-03_START -->
+
 
 
 # **📅 2026-01-03 Day 07 学习日记**
@@ -395,6 +488,7 @@ BuiltInCodeExecutor
 
 
 
+
 **📅 Day 06 打卡：ADK Ready & Context Engineering**
 
 **📝 核心收获** 今天不写代码，而是“磨刀”。从手搓代码转向了 **Agent 工程化** 思维。
@@ -424,6 +518,7 @@ BuiltInCodeExecutor
 
 # 2026-01-01
 <!-- DAILY_CHECKIN_2026-01-01_START -->
+
 
 
 
@@ -478,6 +573,7 @@ BuiltInCodeExecutor
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 
 
@@ -672,6 +768,7 @@ python day04/deploy.py --create
 
 
 
+
 # **Day 03 学习笔记: Gemini 3 与 神经符号智能体 (Neuro-Symbolic Agents)**
 
 ## **1\. 核心理念: 神经符号 AI (Neuro-Symbolic AI)**
@@ -788,6 +885,7 @@ niche\_players = df\[(df\['rating'\] >= 4.5) & (df\['reviews'\] < 100)\]
 
 
 
+
 ````markdown
 # Day 02: Introduction to Declarative Agents (2025-12-29)
 
@@ -850,6 +948,7 @@ tools:
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
