@@ -15,8 +15,54 @@ Full-Stack Developer
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-06
+<!-- DAILY_CHECKIN_2026-01-06_START -->
+# Day10
+
+**长周期的 Agent 会话面临两大敌人：延迟和“迷失在中间 (Lost in the middle)”综合征。** 随着对话历史的增长，重复发送庞大的系统指令变得昂贵，且模型难以在近期的噪音中优先处理早期的规则。
+
+ADK 通过双管齐下的方式解决了这个问题：
+
+1.  **上下文缓存 (Context Caching)**：允许你缓存 Prompt 中不可变的部分（如系统指令、Few-shot 示例），这样你就无需为每一轮对话重复支付计算成本。
+    
+2.  **上下文压缩 (Context Compaction)**：防止历史记录膨胀。
+    
+
+**ADK 不会无休止地追加原始消息。** 它采用滑动窗口机制，将较早的事件总结为简练的“记忆”块，同时保留最近的交互原件以确保精准度。
+
+## Code
+
+-   context\_[config.py](http://config.py)
+    
+
+```python
+from google.adk.apps import App, EventsCompactionConfig
+from google.adk.agents.context_cache_config import ContextCacheConfig
+
+# Configure your App with both Caching and Compaction
+app = App(
+    name='long-memory-agent',
+    root_agent=my_agent,
+    
+    # 1. Cache heavy instructions
+    context_cache_config=ContextCacheConfig(
+        min_tokens=2048,    # Only cache if prompt is heavy
+        ttl_seconds=1800,   # Keep cache alive for 30 mins
+        cache_intervals=10  # Refresh after 10 uses
+    ),
+
+    # 2. Compress history to prevent "Context Rot"
+    events_compaction_config=EventsCompactionConfig(
+        compaction_interval=3, # Summarize every 3 turns
+        overlap_size=1         # Keep 1 turn of context overlap
+    )
+)
+```
+<!-- DAILY_CHECKIN_2026-01-06_END -->
+
 # 2026-01-05
 <!-- DAILY_CHECKIN_2026-01-05_START -->
+
 # Day09
 
 ADK 支持**时光倒流 (Time Travel) 与检查点 (Checkpointing)** 功能了！
@@ -58,6 +104,7 @@ ADK 支持**时光倒流 (Time Travel) 与检查点 (Checkpointing)** 功能了�
 
 # 2026-01-04
 <!-- DAILY_CHECKIN_2026-01-04_START -->
+
 
 # Day08
 
@@ -213,6 +260,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 <!-- DAILY_CHECKIN_2026-01-03_START -->
 
 
+
 # Day07
 
 ### **通过 ADK 的代码执行器 (Code Executor) 你将获得：**
@@ -232,6 +280,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 # 2026-01-02
 <!-- DAILY_CHECKIN_2026-01-02_START -->
+
 
 
 
@@ -263,6 +312,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 # 2026-01-01
 <!-- DAILY_CHECKIN_2026-01-01_START -->
+
 
 
 
@@ -303,6 +353,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 
 
@@ -374,6 +425,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 # 2025-12-30
 <!-- DAILY_CHECKIN_2025-12-30_START -->
+
 
 
 
@@ -521,6 +573,7 @@ uvx agent-starter-pack create -y --api-key YOUR\_GEMINI\_API\_KEY
 
 # 2025-12-29
 <!-- DAILY_CHECKIN_2025-12-29_START -->
+
 
 
 
@@ -678,6 +731,7 @@ Add Google Search tool to the agent file by simple adding the tools section.
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
