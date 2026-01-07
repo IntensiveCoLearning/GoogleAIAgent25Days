@@ -15,8 +15,31 @@ Full-Stack Developer
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-07
+<!-- DAILY_CHECKIN_2026-01-07_START -->
+# Day11
+
+## MCP
+
+### **统一且可控的接口**
+
+无需再解析脆弱的命令行输出，你的 Agent 现在拥有了针对复杂系统的结构化、可发现接口：
+
+-   **Google Maps**：提供“轻量级落地 (Grounding Lite)”，为 Agent 提供新鲜的地理空间数据和路线详情，防止对物理位置产生幻觉。
+    
+-   **BigQuery**：允许 Agent 直接解析 Schema 并执行查询，无需将海量数据集移入上下文窗口，从而降低延迟和安全风险。
+    
+-   **GKE & Compute Engine**：将基础架构管理（预配、调整大小、诊断）转变为可发现的工具，实现真正的“Day-2”自主运维。
+    
+
+### **原生安全，而非事后补丁**
+
+由于这些是托管端点，你不会失去控制权。管理员可以通过 **Google Cloud IAM** 管理访问权限，并使用 **Google Cloud Model Armor** 防御间接提示词注入。
+<!-- DAILY_CHECKIN_2026-01-07_END -->
+
 # 2026-01-06
 <!-- DAILY_CHECKIN_2026-01-06_START -->
+
 # Day10
 
 **长周期的 Agent 会话面临两大敌人：延迟和“迷失在中间 (Lost in the middle)”综合征。** 随着对话历史的增长，重复发送庞大的系统指令变得昂贵，且模型难以在近期的噪音中优先处理早期的规则。
@@ -63,6 +86,7 @@ app = App(
 # 2026-01-05
 <!-- DAILY_CHECKIN_2026-01-05_START -->
 
+
 # Day09
 
 ADK 支持**时光倒流 (Time Travel) 与检查点 (Checkpointing)** 功能了！
@@ -104,6 +128,7 @@ ADK 支持**时光倒流 (Time Travel) 与检查点 (Checkpointing)** 功能了�
 
 # 2026-01-04
 <!-- DAILY_CHECKIN_2026-01-04_START -->
+
 
 
 # Day08
@@ -261,6 +286,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 
 
+
 # Day07
 
 ### **通过 ADK 的代码执行器 (Code Executor) 你将获得：**
@@ -280,6 +306,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 # 2026-01-02
 <!-- DAILY_CHECKIN_2026-01-02_START -->
+
 
 
 
@@ -312,6 +339,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 # 2026-01-01
 <!-- DAILY_CHECKIN_2026-01-01_START -->
+
 
 
 
@@ -353,6 +381,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 
 
@@ -425,6 +454,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 # 2025-12-30
 <!-- DAILY_CHECKIN_2025-12-30_START -->
+
 
 
 
@@ -573,6 +603,7 @@ uvx agent-starter-pack create -y --api-key YOUR\_GEMINI\_API\_KEY
 
 # 2025-12-29
 <!-- DAILY_CHECKIN_2025-12-29_START -->
+
 
 
 
@@ -731,6 +762,7 @@ Add Google Search tool to the agent file by simple adding the tools section.
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
