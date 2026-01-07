@@ -15,8 +15,86 @@ AI × Crypto 实践者，关注 AI Agent、自动化与工具构建，正在用 
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-07
+<!-- DAILY_CHECKIN_2026-01-07_START -->
+````markdown
+# Day 11: Google Managed MCP (Connecting to Services)
+
+> **日期**: 2026-01-07
+> **主题**: Model Context Protocol (MCP) & Google Cloud Action API
+> **状态**: ✅ 完成
+
+---
+
+## 🎯 核心目标
+
+1.  **理解 MCP (Model Context Protocol)**: 为什么它是 AI Agent 连接世界的标准？
+2.  **Google Managed MCP**: 如何不写复杂的 Server 代码，直接让 Agent 拥有安全连接数据的能力。
+
+---
+
+## 🧠 概念预热
+
+### 1. 什么是 MCP？(The "USB" for AI)
+
+在 MCP 出现之前，每个 Agent 都要自己写特定的 integration 代码来连接 Notion, Github, Slack...
+MCP 定义了一种**标准协议**：
+*   **MCP Server**: 提供资源 (Resources)、提示 (Prompts) 和工具 (Tools)。
+*   **MCP Client (Your Agent)**: 通过标准方式消费这些能力。
+
+这就好比 **USB 接口**：你不需要为每个鼠标单独焊死在电脑主板上，只要它是 USB 的，插上就能用。
+
+### 2. 这个 Protocol 解决了什么问题？
+
+*   **Fragmentation**: 不再需要 `langchain-notion`, `llama-index-notion`... 只需要一个 `mcp-server-notion`。
+*   **User Context**: 让 AI 安全地访问你的本地文件、数据库或私有 SaaS 数据。
+
+### 3. "Google Managed" 是什么意思？
+
+通常运行 MCP Server 需要你自己在本地或服务器跑一个进程 (`npx @modelcontextprotocol/server-notion`)。
+Google 的 Managed MCP (通常指 Vertex AI Extensions 或其生态集成) 试图让这个过程更“云原生”，或者就在 ADK 层面无缝支持。
+
+*(注：由于 MCP 是 Anthropic 发起的开源标准，Google ADK 的支持方式可能是通过通用 Tool 接口兼容，或者特定的 Adapter。我们将探索 ADK 如何作为 MCP Client 使用)*
+
+---
+
+## 💻 代码实现 (day11/agent.py)
+
+利用 `McpToolset` 和 `uvx` 运行 Python 版 MCP SQLite Server：
+
+```python
+from google.adk.tools import McpToolset
+from google.adk.tools.mcp_tool.mcp_session_manager import StdioConnectionParams, StdioServerParameters
+
+sqlite_mcp_toolset = McpToolset(
+    connection_params=StdioConnectionParams(
+        server_params=StdioServerParameters(
+            command="uvx",
+            args=["mcp-server-sqlite", "--db-path", db_path],
+        )
+    ),
+    tool_name_prefix="db_" 
+)
+```
+
+## 📊 验证结果
+
+运行 `day11/test_mcp.py` 结果表明 Agent 完美继承了 MCP 工具：
+
+1.  **动态发现**: Agent 自动识别并调用了 `db_list_tables`。
+2.  **数据交互**: Agent 成功从 SQLite `users` 表中读取了初始化的测试数据。
+
+---
+
+## 🔗 参考资源
+- [Model Context Protocol (MCP) Official Site](https://modelcontextprotocol.io/)
+- [ADK McpToolset Documentation](https://google.github.io/adk-python/tools/mcp/)
+````
+<!-- DAILY_CHECKIN_2026-01-07_END -->
+
 # 2026-01-06
 <!-- DAILY_CHECKIN_2026-01-06_START -->
+
 ````markdown
 # Day 10: Big Context ≠ Better Memory (Caching & Compaction)
 
@@ -107,6 +185,7 @@ day10_app = App(
 
 # 2026-01-05
 <!-- DAILY_CHECKIN_2026-01-05_START -->
+
 
 ````markdown
 # Day 09: Undo Buttons for Agents (Time Travel)
@@ -246,6 +325,7 @@ async for event in runner.run_async(
 <!-- DAILY_CHECKIN_2026-01-04_START -->
 
 
+
 ````markdown
 # Day 08: Effective Context Management (ADK Layers)
 
@@ -364,6 +444,7 @@ async def generate_report(topic: str, tool_context: ToolContext):
 
 # 2026-01-03
 <!-- DAILY_CHECKIN_2026-01-03_START -->
+
 
 
 
@@ -489,6 +570,7 @@ BuiltInCodeExecutor
 
 
 
+
 **📅 Day 06 打卡：ADK Ready & Context Engineering**
 
 **📝 核心收获** 今天不写代码，而是“磨刀”。从手搓代码转向了 **Agent 工程化** 思维。
@@ -518,6 +600,7 @@ BuiltInCodeExecutor
 
 # 2026-01-01
 <!-- DAILY_CHECKIN_2026-01-01_START -->
+
 
 
 
@@ -573,6 +656,7 @@ BuiltInCodeExecutor
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 
 
@@ -769,6 +853,7 @@ python day04/deploy.py --create
 
 
 
+
 # **Day 03 学习笔记: Gemini 3 与 神经符号智能体 (Neuro-Symbolic Agents)**
 
 ## **1\. 核心理念: 神经符号 AI (Neuro-Symbolic AI)**
@@ -886,6 +971,7 @@ niche\_players = df\[(df\['rating'\] >= 4.5) & (df\['reviews'\] < 100)\]
 
 
 
+
 ````markdown
 # Day 02: Introduction to Declarative Agents (2025-12-29)
 
@@ -948,6 +1034,7 @@ tools:
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
