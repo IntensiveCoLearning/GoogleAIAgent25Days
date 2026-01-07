@@ -15,8 +15,73 @@ timezone: UTC+8
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-07
+<!-- DAILY_CHECKIN_2026-01-07_START -->
+ADK 内置 **Session Rewind** 能力，使 Agent 的会话具备“时间回溯”特性，无需数据库迁移或复杂状态管理，即可恢复到任意历史执行点。
+
+Session 的回溯不仅作用于对话内容，还会 **完整恢复**：
+
+-   Working State（状态）
+    
+-   Artifacts（文件 / 产物）
+    
+
+### 关键机制
+
+-   **Invocation ID**  
+    每一次 Agent 运行（包括工具调用）都会生成唯一的 invocation\_id，可作为回溯锚点。
+    
+-   **rewind\_before\_invocation\_id**  
+    回溯到指定 invocation 之前的完整会话状态。
+    
+-   **runner.rewind\_async(...)**  
+    触发会话回溯的核心 API。
+    
+
+### 演示流程要点
+
+1.  初始化 Session（InMemoryRunner）
+    
+2.  写入状态与文件（state + artifact）
+    
+3.  记录关键修改操作对应的 invocation\_id
+    
+4.  继续产生新状态与新文件版本
+    
+5.  调用 rewind\_async 回溯
+    
+6.  验证状态与文件已恢复到历史版本
+    
+
+### 能力总结
+
+Session Rewind 可以同时撤销：
+
+-   状态更新（tool\_context.state）
+    
+-   文件写入（Artifacts 版本）
+    
+
+回溯后，Agent 像“从未执行过这些操作”一样继续运行。
+
+### 典型应用场景
+
+-   **编辑消息（Edit Message）**  
+    回溯到该用户消息之前，再提交修改后的消息
+    
+-   **重新生成（Regenerate）**  
+    回溯到上一次用户输入之前，重新运行 Agent
+    
+-   **撤销操作（Undo）**  
+    回溯到关键状态变更前
+    
+-   **对话分支（Branching）**  
+    从同一历史点出发，探索不同决策路径
+<!-- DAILY_CHECKIN_2026-01-07_END -->
+
 # 2026-01-05
 <!-- DAILY_CHECKIN_2026-01-05_START -->
+
 ## 一、为什么传统的 “Append-Everything” 会失败
 
 ### 1️⃣ 传统做法的本质
@@ -305,6 +370,7 @@ Payment Tool: 才能看到 payment_token
 # 2026-01-04
 <!-- DAILY_CHECKIN_2026-01-04_START -->
 
+
 今天有点忙…学习了一下课程里的Retail site agent
 
 明天再补笔记
@@ -312,6 +378,7 @@ Payment Tool: 才能看到 payment_token
 
 # 2026-01-03
 <!-- DAILY_CHECKIN_2026-01-03_START -->
+
 
 
 | 概念 | 学到了什么 |
@@ -356,6 +423,7 @@ agent = Agent(
 
 
 
+
 昨天忘记了 先补一下昨天的…
 
 A. 第一层：系统行为追踪 (Agent Telemetry)
@@ -384,6 +452,7 @@ B. 第二层：交互与消耗记录 (Prompt-Response Logging)
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 
 
@@ -570,6 +639,7 @@ python test_agent.py
 
 
 
+
 -   One liner with Agent Starter Pack
     
 
@@ -637,6 +707,7 @@ tools:
 
 
 
+
 ADK 智能体配置功能让你无需编写代码即可构建 ADK 工作流。智能体配置使用 YAML 格式的文本文件，包含智能体的简要描述，允许几乎任何人组装和运行 ADK 智能体。以下是一个基本智能体配置定义的简单示例：
 
 ```
@@ -649,6 +720,7 @@ instruction: You are an agent to help answer users' various questions.
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
