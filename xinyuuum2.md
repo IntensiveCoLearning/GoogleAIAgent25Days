@@ -15,8 +15,147 @@ timezone: UTC+8
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-08
+<!-- DAILY_CHECKIN_2026-01-08_START -->
+长生命周期 Agent 会同时面临两个系统性挑战：
+
+1.  **Latency（延迟）**：上下文越长，请求成本和响应时间越高
+    
+2.  **Lost in the Middle**：LLM 对长上下文中间内容的记忆显著弱于开头和结尾，导致理解偏差和幻觉
+    
+
+结论：**简单堆叠上下文不仅不能提升“记忆”，反而会降低性能与准确性。**
+
+* * *
+
+### ADK 的两大解决方案
+
+1\. Context Compaction（上下文压缩）
+
+**目标**：控制上下文规模，防止“context rot”。
+
+**机制**
+
+-   当上下文超过阈值时，将较早的多轮对话自动摘要
+    
+-   保留最近 N 轮原始对话，确保当前语义精度
+    
+-   摘要本身作为结构化历史记忆参与后续推理
+    
+
+**解决的问题**
+
+-   防止上下文无限增长
+    
+-   缓解 Lost in the Middle
+    
+-   降低延迟与 token 成本
+    
+
+**适用场景**
+
+-   长对话
+    
+-   多轮交互式 Agent
+    
+-   状态随时间逐步演化的任务
+    
+
+* * *
+
+2\. Context Caching（上下文缓存）
+
+**目标**：减少重复计算，提升性能与性价比。
+
+**机制**
+
+-   将稳定不变的上下文前缀（System Prompt、Agent Identity、工具定义、Few-shot 示例）在 API 层缓存
+    
+-   后续请求只需处理动态部分（当前用户输入、检索内容、压缩后的历史）
+    
+
+**解决的问题**
+
+-   重复处理大型 system prompt 带来的高成本
+    
+-   不必要的延迟
+    
+
+**收益**
+
+-   成本可降低 60% 以上
+    
+-   显著降低请求延迟
+    
+
+**适用场景**
+
+-   大型、长期稳定的 system prompt
+    
+-   工具复杂、schema 较多的 Agent
+    
+
+* * *
+
+### 两者的协同关系
+
+Context Compaction 与 Context Caching 是互补的：
+
+-   **Caching** 负责优化“稳定前缀”
+    
+-   **Compaction** 负责控制“可变历史”
+    
+
+共同构成 ADK 推荐的上下文结构：
+
+-   Stable Prefix（可缓存）
+    
+-   Variable Suffix（可压缩）
+    
+
+* * *
+
+### 关键设计原则（Best Practices）
+
+1.  **严格区分 Static 与 Dynamic 内容**
+    
+    -   Static：system prompt、工具、规则（适合缓存）
+        
+    -   Dynamic：turn instructions、用户输入、检索结果（不缓存）
+        
+2.  **设置合理的 Compaction 策略**
+    
+    -   明确触发阈值
+        
+    -   保留足够的最近轮次
+        
+    -   使用可靠的摘要模型
+        
+3.  **持续监控指标**
+    
+    -   Cache hit rate
+        
+    -   平均上下文长度
+        
+    -   Compaction 频率
+        
+    -   长期响应质量变化
+        
+
+* * *
+
+-   高质量 Agent 的关键不在于“记住一切”，而在于：
+    
+    -   记住该记住的
+        
+    -   丢弃或压缩不再重要的
+        
+    -   复用稳定、不变的认知结构
+<!-- DAILY_CHECKIN_2026-01-08_END -->
+
 # 2026-01-07
 <!-- DAILY_CHECKIN_2026-01-07_START -->
+
 ADK 内置 **Session Rewind** 能力，使 Agent 的会话具备“时间回溯”特性，无需数据库迁移或复杂状态管理，即可恢复到任意历史执行点。
 
 Session 的回溯不仅作用于对话内容，还会 **完整恢复**：
@@ -81,6 +220,7 @@ Session Rewind 可以同时撤销：
 
 # 2026-01-05
 <!-- DAILY_CHECKIN_2026-01-05_START -->
+
 
 ## 一、为什么传统的 “Append-Everything” 会失败
 
@@ -371,6 +511,7 @@ Payment Tool: 才能看到 payment_token
 <!-- DAILY_CHECKIN_2026-01-04_START -->
 
 
+
 今天有点忙…学习了一下课程里的Retail site agent
 
 明天再补笔记
@@ -378,6 +519,7 @@ Payment Tool: 才能看到 payment_token
 
 # 2026-01-03
 <!-- DAILY_CHECKIN_2026-01-03_START -->
+
 
 
 
@@ -424,6 +566,7 @@ agent = Agent(
 
 
 
+
 昨天忘记了 先补一下昨天的…
 
 A. 第一层：系统行为追踪 (Agent Telemetry)
@@ -452,6 +595,7 @@ B. 第二层：交互与消耗记录 (Prompt-Response Logging)
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 
 
@@ -640,6 +784,7 @@ python test_agent.py
 
 
 
+
 -   One liner with Agent Starter Pack
     
 
@@ -708,6 +853,7 @@ tools:
 
 
 
+
 ADK 智能体配置功能让你无需编写代码即可构建 ADK 工作流。智能体配置使用 YAML 格式的文本文件，包含智能体的简要描述，允许几乎任何人组装和运行 ADK 智能体。以下是一个基本智能体配置定义的简单示例：
 
 ```
@@ -720,6 +866,7 @@ instruction: You are an agent to help answer users' various questions.
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
