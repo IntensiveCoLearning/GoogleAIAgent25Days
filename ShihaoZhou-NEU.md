@@ -15,8 +15,45 @@ Full-Stack Developer
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-08
+<!-- DAILY_CHECKIN_2026-01-08_START -->
+# Day11
+
+**魔法不在于提示词（Prompt），而在于事件循环（Event Loop）。**
+
+大多数 AI Agent 依赖 HTTP 协议（请求 → 等待 → 响应），这会产生延迟，且让“打断” AI 变得不可能。我们通过 **双向流（Bi-Directional Streaming）** 打破了这一循环，也就是大家熟知的 **ADK Bidi-streaming**。通过与 Gemini 建立持久的 WebSocket 连接，我们创建了一个客户端输入（音频/视频/文本）与服务端输出（音频/文本/工具调用）同步流动的会话。我们可以利用 ADK 来控制 Gemini Live 并为其配备强大的工具。
+
+### **工作原理：**
+
+-   **应用初始化**：启动时创建 Agent、SessionService 和 Runner。
+    
+-   **会话初始化**：为每个连接建立 Session、RunConfig 和 LiveRequestQueue。
+    
+-   **双向流传输**：并发执行上行（客户端 → 队列）和下行（事件 → 客户端）任务。
+    
+-   **优雅终止**：确保 LiveRequestQueue 和 WebSocket 连接的妥善关闭。
+    
+
+### **核心功能：**
+
+-   **WebSocket 通信**：通过 `/ws/{user_id}/{session_id}` 实现实时双向流。
+    
+-   **多模态请求**：支持文本、音频及图像/视频输入，并具备自动语音转录功能。
+    
+-   **灵活响应**：根据模型架构自动确定输出文本或音频。
+    
+-   **会话恢复**：通过 RunConfig 配置支持断线重连。
+    
+-   **并发任务**：独立的异步上/下行任务，实现最优性能。
+    
+-   **交互式 UI**：带有事件控制台的 Web 界面，用于监控 Live API 事件。
+    
+-   **Google 搜索集成**：为 Agent 配备 `Google Search` 工具。
+<!-- DAILY_CHECKIN_2026-01-08_END -->
+
 # 2026-01-07
 <!-- DAILY_CHECKIN_2026-01-07_START -->
+
 # Day11
 
 ## MCP
@@ -39,6 +76,7 @@ Full-Stack Developer
 
 # 2026-01-06
 <!-- DAILY_CHECKIN_2026-01-06_START -->
+
 
 # Day10
 
@@ -87,6 +125,7 @@ app = App(
 <!-- DAILY_CHECKIN_2026-01-05_START -->
 
 
+
 # Day09
 
 ADK 支持**时光倒流 (Time Travel) 与检查点 (Checkpointing)** 功能了！
@@ -128,6 +167,7 @@ ADK 支持**时光倒流 (Time Travel) 与检查点 (Checkpointing)** 功能了�
 
 # 2026-01-04
 <!-- DAILY_CHECKIN_2026-01-04_START -->
+
 
 
 
@@ -287,6 +327,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 
 
+
 # Day07
 
 ### **通过 ADK 的代码执行器 (Code Executor) 你将获得：**
@@ -306,6 +347,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 # 2026-01-02
 <!-- DAILY_CHECKIN_2026-01-02_START -->
+
 
 
 
@@ -339,6 +381,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 # 2026-01-01
 <!-- DAILY_CHECKIN_2026-01-01_START -->
+
 
 
 
@@ -381,6 +424,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 
 
@@ -454,6 +498,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 # 2025-12-30
 <!-- DAILY_CHECKIN_2025-12-30_START -->
+
 
 
 
@@ -603,6 +648,7 @@ uvx agent-starter-pack create -y --api-key YOUR\_GEMINI\_API\_KEY
 
 # 2025-12-29
 <!-- DAILY_CHECKIN_2025-12-29_START -->
+
 
 
 
@@ -762,6 +808,7 @@ Add Google Search tool to the agent file by simple adding the tools section.
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
