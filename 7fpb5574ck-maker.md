@@ -15,8 +15,92 @@ AI × Crypto 实践者，关注 AI Agent、自动化与工具构建，正在用 
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-08
+<!-- DAILY_CHECKIN_2026-01-08_START -->
+# Day 12: Multimodal Agents (Gemini Live API & Streaming)
+
+> **日期**: 2026-01-08 **主题**: Streaming Responses & Multimodal Inputs **状态**: ✅ 完成
+
+* * *
+
+## 🎯 核心目标
+
+1.  **理解 Streaming**: 如何在 ADK 中开启流式输出，提升用户体验。
+    
+2.  **多模态处理 (Multimodal)**: 让 Agent 不仅能读文字，还能“看”图片和“听”音频。
+    
+3.  **Gemini Live API (BIDI)**: 初探双向实时交互机制。
+    
+
+* * *
+
+## 🧠 概念预热
+
+### 1\. Streaming (流式输出)
+
+通过 `RunConfig(streaming_mode=StreamingMode.SSE)`，Agent 的响应将分块返回。这在长文本生成或复杂工具调用时能显著降低感知延迟。
+
+### 2\. Multimodal (多模态)
+
+Gemini 原生支持文本、图像、音频和视频。在 ADK 中，我们可以通过 `runner.run_async` 发送包含 `genai_types.Part` 数据的 `Content`。
+
+### 3\. Gemini Live API
+
+支持毫秒级延迟的双向音视频交互。ADK 通过 `StreamingMode.BIDI` 和 `LiveRequestQueue` 来管理实时流。
+
+* * *
+
+## ⚒️ 实践记录
+
+### 1\. 实现 Agent (`day12/agent.py`)
+
+创建了名为 `multimodal_explorer` 的 Agent，使用 `gemini-2.0-flash` 模型。
+
+### 2\. 流式输出验证 (`day12/test_stream.py`)
+
+-   **关键点**: 必须使用 `StreamingMode.SSE` (Server-Sent Events)。
+    
+-   **验证**: 实现了异步迭代捕获分块输出。
+    
+
+### 3\. 多模态验证 (`day12/test_multimodal.py`)
+
+-   **发现**: 脚本调用 100% 成功。
+    
+-   **发送图片**: 使用 `genai_types.Part.from_bytes(data=image_bytes, mime_type="image/png")`。
+    
+
+* * *
+
+## 🔍 故障排查 (Troubleshooting)
+
+### 🚨 案例: 网页端上传图片报 400 错误
+
+**症状**: 在 ADK Web UI (Playground) 拖入图片发送时，返回 `400 INVALID_ARGUMENT: Provided image is not valid.`。
+
+**排查与结论**:
+
+-   **现象**: 脚本调用正常，但 UI 发起的请求长度只有 ~86KB（实际图片 ~560KB）。
+    
+-   **原因**: ADK Web UI 存在截断大文件或前端编码 Bug。
+    
+-   **解决方案**: 在开发阶段优先使用 Python 脚本验证，UI 测试建议使用极小图片（<60KB）。
+    
+
+* * *
+
+## 🔗 参考资源
+
+-   ADK Bidi Demo
+    
+-   [Gemini Live API Docs](https://ai.google.dev/gemini-api/docs/live)
+    
+-   ADK Python Cheatsheet Section 15
+<!-- DAILY_CHECKIN_2026-01-08_END -->
+
 # 2026-01-07
 <!-- DAILY_CHECKIN_2026-01-07_START -->
+
 ````markdown
 # Day 11: Google Managed MCP (Connecting to Services)
 
@@ -94,6 +178,7 @@ sqlite_mcp_toolset = McpToolset(
 
 # 2026-01-06
 <!-- DAILY_CHECKIN_2026-01-06_START -->
+
 
 ````markdown
 # Day 10: Big Context ≠ Better Memory (Caching & Compaction)
@@ -185,6 +270,7 @@ day10_app = App(
 
 # 2026-01-05
 <!-- DAILY_CHECKIN_2026-01-05_START -->
+
 
 
 ````markdown
@@ -326,6 +412,7 @@ async for event in runner.run_async(
 
 
 
+
 ````markdown
 # Day 08: Effective Context Management (ADK Layers)
 
@@ -444,6 +531,7 @@ async def generate_report(topic: str, tool_context: ToolContext):
 
 # 2026-01-03
 <!-- DAILY_CHECKIN_2026-01-03_START -->
+
 
 
 
@@ -571,6 +659,7 @@ BuiltInCodeExecutor
 
 
 
+
 **📅 Day 06 打卡：ADK Ready & Context Engineering**
 
 **📝 核心收获** 今天不写代码，而是“磨刀”。从手搓代码转向了 **Agent 工程化** 思维。
@@ -600,6 +689,7 @@ BuiltInCodeExecutor
 
 # 2026-01-01
 <!-- DAILY_CHECKIN_2026-01-01_START -->
+
 
 
 
@@ -656,6 +746,7 @@ BuiltInCodeExecutor
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 
 
@@ -854,6 +945,7 @@ python day04/deploy.py --create
 
 
 
+
 # **Day 03 学习笔记: Gemini 3 与 神经符号智能体 (Neuro-Symbolic Agents)**
 
 ## **1\. 核心理念: 神经符号 AI (Neuro-Symbolic AI)**
@@ -972,6 +1064,7 @@ niche\_players = df\[(df\['rating'\] >= 4.5) & (df\['reviews'\] < 100)\]
 
 
 
+
 ````markdown
 # Day 02: Introduction to Declarative Agents (2025-12-29)
 
@@ -1034,6 +1127,7 @@ tools:
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
