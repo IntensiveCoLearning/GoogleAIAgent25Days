@@ -15,8 +15,16 @@ web2转3新人，AI探索者，仰卧起坐的半躺平选手
 ## Notes
 
 <!-- Content_START -->
+# 2025-12-29
+<!-- DAILY_CHECKIN_2025-12-29_START -->
+![image.png](https://raw.githubusercontent.com/IntensiveCoLearning/GoogleAIAgent25Days/main/assets/Volca2603/images/2025-12-29-1767023003177-image.png)
+
+跟随教程操作中，照着教程创建了agent项目并且打开了，不过似乎需要配置一下gcloud
+<!-- DAILY_CHECKIN_2025-12-29_END -->
+
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 今天是这个AI agent 课程第一天，从视频中主要分享了学习路线图，在links中给出了基于google clouds做agent会用到的工具包，以及分享了一篇agent说明书。
 
 这个agent说明书先说了agent和以前的被动答题工具不一样，它可以自主解决问题能自己想步骤、用工具，不用人盯着每一步。然后介绍了agent的构造，就像人有大脑、双手、神经系统，对应到agent就是模型，是和现实世界物品跟数据交互的工具比如api或者其他东西，以及协调层，让大脑和双手配合。

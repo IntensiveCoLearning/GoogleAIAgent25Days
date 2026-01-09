@@ -15,6 +15,18 @@ timezone: UTC+8
 ## Notes
 
 <!-- Content_START -->
+# 2025-12-30
+<!-- DAILY_CHECKIN_2025-12-30_START -->
+[残酷共学AI Agent-DAY3 | Kaggle](https://www.kaggle.com/code/howardotw/ai-agent-day3/edit)
+<!-- DAILY_CHECKIN_2025-12-30_END -->
+
+# 2025-12-29
+<!-- DAILY_CHECKIN_2025-12-29_START -->
+
+
+[https://www.kaggle.com/code/howardotw/ai-agent-day2](https://www.kaggle.com/code/howardotw/ai-agent-day2)
+<!-- DAILY_CHECKIN_2025-12-29_END -->
+
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
 DAY-1 
