@@ -15,8 +15,191 @@ AI × Crypto 实践者，关注 AI Agent、自动化与工具构建，正在用 
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-09
+<!-- DAILY_CHECKIN_2026-01-09_START -->
+````markdown
+# Day 13: Interactions API (Stateful Workflows)
+
+> **日期**: 2026-01-09
+> **主题**: Callbacks, Tool Confirmation, Human-in-the-Loop
+> **状态**: ✅ 完成
+
+---
+
+## 🎯 核心目标
+
+1.  **理解 Callbacks 机制**: 掌握 Agent 生命周期中的 6 大 Hook 点。
+2.  **Human-in-the-Loop**: 使用 `require_confirmation` 实现敏感操作的人工确认。
+3.  **Interactions API 概念**: 了解 Google 最新推出的有状态工作流 API。
+
+---
+
+## 🧠 概念地图
+
+### 1. Callbacks: Agent 的拦截器
+
+Callbacks 是 ADK 提供的**拦截与控制机制**，允许开发者在 Agent 执行的关键节点注入自定义逻辑。
+
+```
+┌──────────────────────────────────────────────────────┐
+│                  Agent 执行生命周期                    │
+├──────────────────────────────────────────────────────┤
+│  User Message                                        │
+│       ↓                                              │
+│  [before_agent_callback] ── 返回 Content 可跳过整个 Agent │
+│       ↓                                              │
+│  Agent Logic (e.g., LlmAgent)                        │
+│       ↓                                              │
+│      ┌─ [before_model_callback] ── 返回 LlmResponse 可跳过 LLM │
+│      │       ↓                                       │
+│      │   LLM Call (e.g., Gemini)                     │
+│      │       ↓                                       │
+│      └─ [after_model_callback] ── 可替换 LLM 响应     │
+│       ↓                                              │
+│      ┌─ [before_tool_callback] ── 返回 dict 可跳过工具执行 │
+│      │       ↓                                       │
+│      │   Tool Execution                              │
+│      │       ↓                                       │
+│      └─ [after_tool_callback] ── 可替换工具结果       │
+│       ↓                                              │
+│  [after_agent_callback] ── 可替换最终 Agent 输出      │
+│       ↓                                              │
+│  Final Response                                      │
+└──────────────────────────────────────────────────────┘
+```
+
+**核心原则**:
+- `return None`: 允许默认行为继续执行。
+- `return <特定对象>`: **覆盖**默认行为，跳过后续步骤。
+
+### 2. Tool Confirmation (Human-in-the-Loop)
+
+当 Agent 需要执行敏感操作（如删除数据、转账等）时，可以暂停执行，等待人工确认。
+
+**三种确认模式**:
+
+| 模式 | 使用方式 | 适用场景 |
+|------|----------|----------|
+| **Boolean** | `FunctionTool(my_func, require_confirmation=True)` | 所有调用都需确认 |
+| **Dynamic** | `FunctionTool(my_func, require_confirmation=lambda amount: amount > 10000)` | 根据参数动态判定 |
+| **Payload** | `tool_context.request_confirmation(hint, payload)` | 需用户提供额外选项 |
+
+### 3. Interactions API (Google 2025 新推出)
+
+Interactions API 是 Google 从**无状态 request-response** 转向**有状态 multi-turn 工作流**的关键基础设施。
+
+**核心特性**:
+- **原生状态管理**: 自动处理对话历史 (Conversation History)。
+- **后台执行**: 支持长时间运行的任务 (Long-running tasks)。
+- **统一接口**: 可同时与原始模型 (Raw Model) 和托管 Agent (e.g., Deep Research) 交互。
+- **支持模型**: Gemini 3.0, Gemini 2.5, Deep Research Preview。
+
+> **与 ADK 的关系**: Interactions API 可作为 ADK Agent 的 Inference Engine，是 `generateContent` API 的有状态进化版本。
+
+---
+
+## ⚒️ 实践示例
+
+### 示例 1: `before_model_callback` - 输入拦截
+
+**场景**: 检测到敏感关键词时，阻止 LLM 调用。
+
+```python
+from google.adk.agents import Agent
+from google.adk.agents.callback_context import CallbackContext
+from google.adk.models import LlmResponse, LlmRequest
+from google.genai import types
+from typing import Optional
+
+def block_sensitive_input(
+    callback_context: CallbackContext, 
+    llm_request: LlmRequest
+) -> Optional[LlmResponse]:
+    """如果用户输入包含 'BLOCK'，则跳过 LLM 调用。"""
+    last_user_msg = ""
+    if llm_request.contents and llm_request.contents[-1].role == 'user':
+        if llm_request.contents[-1].parts:
+            last_user_msg = llm_request.contents[-1].parts[0].text
+    
+    if "BLOCK" in last_user_msg.upper():
+        print("[Callback] 'BLOCK' 关键词检测到，跳过 LLM 调用。")
+        return LlmResponse(
+            content=types.Content(
+                role="model",
+                parts=[types.Part(text="此请求因安全策略被拦截。")],
+            )
+        )
+    return None  # 允许 LLM 调用继续
+
+my_agent = Agent(
+    name="safe_agent",
+    model="gemini-2.5-flash",
+    instruction="你是一个安全的助手。",
+    before_model_callback=block_sensitive_input,
+)
+```
+
+### 示例 2: Tool Confirmation - 动态确认
+
+**场景**: 转账金额超过 10000 时需要人工确认。
+
+```python
+from google.adk.tools import FunctionTool, ToolContext
+
+def wire_money(amount: float, recipient: str, tool_context: ToolContext) -> dict:
+    """转账到指定账户。"""
+    # 执行转账逻辑...
+    return {"status": "success", "amount": amount, "to": recipient}
+
+# 金额 > 10000 时触发确认流程
+def needs_approval(amount: float, **kwargs) -> bool:
+    return amount > 10000
+
+transfer_tool = FunctionTool(wire_money, require_confirmation=needs_approval)
+```
+
+### 示例 3: Payload Confirmation - 高级交互
+
+**场景**: 预订机票时，让用户选择座位等级。
+
+```python
+from google.adk.tools import ToolContext
+
+def book_flight(destination: str, price: float, tool_context: ToolContext) -> dict:
+    """预订机票，需用户确认并选择座位等级。"""
+    tool_context.request_confirmation(
+        hint="请确认预订并选择座位等级。",
+        payload={"seat_class": ["economy", "business", "first"]}
+    )
+    return {"status": "pending_confirmation"}
+```
+
+---
+
+## 🔑 关键收获
+
+| 知识点 | 一句话总结 |
+|--------|-----------|
+| **Callbacks** | Agent 的 AOP (面向切面编程)，拦截并控制执行流 |
+| **返回值语义** | `None` = 继续执行；`对象` = 覆盖跳过 |
+| **Tool Confirmation** | 敏感操作的"保险丝"，支持 Boolean/Dynamic/Payload 三种模式 |
+| **Interactions API** | Google 新一代有状态 API，ADK 的底层引擎可选项 |
+| **Plugins** | 全局 Callbacks，应用于 Runner 级别的所有 Agent |
+
+---
+
+## 🔗 参考资源
+
+- [ADK Callbacks 官方文档](https://google.github.io/adk-docs/callbacks/)
+- [Google Interactions API 发布博客](https://developers.googleblog.com/)
+- ADK Python Cheatsheet Section 10 (Control Flow with Callbacks)
+- GEMINI.md Section 7.4 (Tool Confirmation)
+````
+<!-- DAILY_CHECKIN_2026-01-09_END -->
+
 # 2026-01-08
 <!-- DAILY_CHECKIN_2026-01-08_START -->
+
 # Day 12: Multimodal Agents (Gemini Live API & Streaming)
 
 > **日期**: 2026-01-08 **主题**: Streaming Responses & Multimodal Inputs **状态**: ✅ 完成
@@ -101,6 +284,7 @@ Gemini 原生支持文本、图像、音频和视频。在 ADK 中，我们可�
 # 2026-01-07
 <!-- DAILY_CHECKIN_2026-01-07_START -->
 
+
 ````markdown
 # Day 11: Google Managed MCP (Connecting to Services)
 
@@ -178,6 +362,7 @@ sqlite_mcp_toolset = McpToolset(
 
 # 2026-01-06
 <!-- DAILY_CHECKIN_2026-01-06_START -->
+
 
 
 ````markdown
@@ -270,6 +455,7 @@ day10_app = App(
 
 # 2026-01-05
 <!-- DAILY_CHECKIN_2026-01-05_START -->
+
 
 
 
@@ -413,6 +599,7 @@ async for event in runner.run_async(
 
 
 
+
 ````markdown
 # Day 08: Effective Context Management (ADK Layers)
 
@@ -531,6 +718,7 @@ async def generate_report(topic: str, tool_context: ToolContext):
 
 # 2026-01-03
 <!-- DAILY_CHECKIN_2026-01-03_START -->
+
 
 
 
@@ -660,6 +848,7 @@ BuiltInCodeExecutor
 
 
 
+
 **📅 Day 06 打卡：ADK Ready & Context Engineering**
 
 **📝 核心收获** 今天不写代码，而是“磨刀”。从手搓代码转向了 **Agent 工程化** 思维。
@@ -689,6 +878,7 @@ BuiltInCodeExecutor
 
 # 2026-01-01
 <!-- DAILY_CHECKIN_2026-01-01_START -->
+
 
 
 
@@ -746,6 +936,7 @@ BuiltInCodeExecutor
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 
 
@@ -946,6 +1137,7 @@ python day04/deploy.py --create
 
 
 
+
 # **Day 03 学习笔记: Gemini 3 与 神经符号智能体 (Neuro-Symbolic Agents)**
 
 ## **1\. 核心理念: 神经符号 AI (Neuro-Symbolic AI)**
@@ -1065,6 +1257,7 @@ niche\_players = df\[(df\['rating'\] >= 4.5) & (df\['reviews'\] < 100)\]
 
 
 
+
 ````markdown
 # Day 02: Introduction to Declarative Agents (2025-12-29)
 
@@ -1127,6 +1320,7 @@ tools:
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
