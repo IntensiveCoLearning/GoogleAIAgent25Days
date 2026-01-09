@@ -15,8 +15,174 @@ timezone: UTC+8
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-09
+<!-- DAILY_CHECKIN_2026-01-09_START -->
+### 一、Intro
+
+**Model Context Protocol（MCP）** 是一个开放标准协议，用于将 AI Agent 与外部工具和数据源解耦连接，被称为 **“USB-C for AI”**。
+
+核心价值在于：
+
+-   统一工具接入方式
+    
+-   消除 Agent 与工具之间的 N×M 集成复杂度
+    
+-   实现“即插即用”的工具互操作
+    
+
+**核心组成**
+
+-   MCP Server：暴露工具、资源、prompt
+    
+-   MCP Client：使用这些能力的 Agent
+    
+-   Tools / Resources / Prompts：标准化能力接口
+    
+
+* * *
+
+### 二、Google Managed MCP 的优势
+
+Google 提供 **官方托管的 MCP Server**，让 Google Cloud 原生服务“Agent-ready”。
+
+相较传统 MCP，自身优势包括：
+
+-   无需自行部署和运维 MCP Server
+    
+-   使用 Cloud IAM 做身份与权限控制
+    
+-   内置 Model Armor，防止 prompt 注入和数据泄露
+    
+-   自动扩展，企业级稳定性
+    
+
+**首批支持服务**
+
+-   Google Maps
+    
+-   BigQuery
+    
+-   Cloud Storage
+    
+-   GKE / Cloud Run / Compute Engine
+    
+-   数据库（AlloyDB、Cloud SQL、Spanner）
+    
+-   Looker、Pub/Sub、Dataplex 等
+    
+
+核心理念：**让 Agent 直接、安全地操作企业级云能力**。
+
+* * *
+
+### 三、ADK 中的 McpToolset
+
+ADK 通过 `McpToolset` 将 MCP Server 的工具无缝集成到 Agent 中。
+
+**工作流程**
+
+1.  连接 MCP Server
+    
+2.  调用 `list_tools`
+    
+3.  转换为 ADK Tool 格式
+    
+4.  代理工具调用
+    
+5.  返回结果给 Agent
+    
+
+**基础接口**
+
+```
+McpToolset(
+    connection_params=...,   # Stdio / SSE / StreamableHTTP
+    tool_filter=[...]        # 可选：限制可用工具
+)
+```
+
+* * *
+
+### 四、三种 MCP 连接方式
+
+-   **Stdio**：本地 MCP Server（开发 / 调试）
+    
+-   **SSE**：远程事件流（单向）
+    
+-   **StreamableHTTP**：远程托管 MCP（生产推荐）
+    
+
+Google Managed MCP 主要使用 **StreamableHTTP**。
+
+* * *
+
+### 五、实战能力示例
+
+-   Google Maps MCP：路线规划、地点搜索
+    
+-   BigQuery MCP：数据集浏览、Schema 查询、SQL 分析
+    
+
+Agent 不再“生成 SQL 或 API 调用代码”，而是：
+
+-   理解用户意图
+    
+-   调用 MCP 工具
+    
+-   解释结果
+    
+
+这是从“代码生成”向“能力调用”的关键转变。
+
+* * *
+
+### 六、tool\_filter 的重要性
+
+`tool_filter` 是 MCP 实战中的关键设计点。
+
+作用：
+
+-   降低上下文 token 消耗
+    
+-   遵循最小权限原则
+    
+-   提升模型选工具的准确性
+    
+
+**原则**
+
+-   只暴露 Agent 当前任务所需的工具
+    
+-   避免“大而全”的工具集合
+    
+
+* * *
+
+### 七、最佳实践总结
+
+-   生产环境优先使用 **Google Managed MCP**
+    
+-   明确区分 Agent 职责，限制工具范围
+    
+-   使用 IAM 精细化控制权限
+    
+-   监控 MCP 调用频率与成本
+    
+
+* * *
+
+-   MCP 是 Agent 工具互操作的事实标准
+    
+-   Google Managed MCP 让企业级云服务天然可被 Agent 使用
+    
+-   ADK 的 `McpToolset` 是连接 Agent 与现实系统的关键桥梁
+    
+-   Agent 架构正从“Prompt + LLM”演进为 **“LLM + 标准化能力网络”**
+<!-- DAILY_CHECKIN_2026-01-09_END -->
+
 # 2026-01-08
 <!-- DAILY_CHECKIN_2026-01-08_START -->
+
 长生命周期 Agent 会同时面临两个系统性挑战：
 
 1.  **Latency（延迟）**：上下文越长，请求成本和响应时间越高
@@ -156,6 +322,7 @@ Context Compaction 与 Context Caching 是互补的：
 # 2026-01-07
 <!-- DAILY_CHECKIN_2026-01-07_START -->
 
+
 ADK 内置 **Session Rewind** 能力，使 Agent 的会话具备“时间回溯”特性，无需数据库迁移或复杂状态管理，即可恢复到任意历史执行点。
 
 Session 的回溯不仅作用于对话内容，还会 **完整恢复**：
@@ -220,6 +387,7 @@ Session Rewind 可以同时撤销：
 
 # 2026-01-05
 <!-- DAILY_CHECKIN_2026-01-05_START -->
+
 
 
 ## 一、为什么传统的 “Append-Everything” 会失败
@@ -512,6 +680,7 @@ Payment Tool: 才能看到 payment_token
 
 
 
+
 今天有点忙…学习了一下课程里的Retail site agent
 
 明天再补笔记
@@ -519,6 +688,7 @@ Payment Tool: 才能看到 payment_token
 
 # 2026-01-03
 <!-- DAILY_CHECKIN_2026-01-03_START -->
+
 
 
 
@@ -567,6 +737,7 @@ agent = Agent(
 
 
 
+
 昨天忘记了 先补一下昨天的…
 
 A. 第一层：系统行为追踪 (Agent Telemetry)
@@ -595,6 +766,7 @@ B. 第二层：交互与消耗记录 (Prompt-Response Logging)
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 
 
@@ -785,6 +957,7 @@ python test_agent.py
 
 
 
+
 -   One liner with Agent Starter Pack
     
 
@@ -854,6 +1027,7 @@ tools:
 
 
 
+
 ADK 智能体配置功能让你无需编写代码即可构建 ADK 工作流。智能体配置使用 YAML 格式的文本文件，包含智能体的简要描述，允许几乎任何人组装和运行 ADK 智能体。以下是一个基本智能体配置定义的简单示例：
 
 ```
@@ -866,6 +1040,7 @@ instruction: You are an agent to help answer users' various questions.
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
