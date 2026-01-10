@@ -15,8 +15,389 @@ AI × Crypto 实践者，关注 AI Agent、自动化与工具构建，正在用 
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-10
+<!-- DAILY_CHECKIN_2026-01-10_START -->
+````markdown
+# Day 14: Connecting Agents with A2A (Agent2Agent Protocol)
+
+> **日期**: 2026-01-10
+> **主题**: A2A Protocol, 分布式 Agent 通信, 跨服务协作
+> **状态**: ✅ 完成
+
+---
+
+## 🎯 核心目标
+
+1.  **理解 A2A 协议**: 掌握 Agent-to-Agent 通信的核心概念和架构。
+2.  **暴露 Agent 服务**: 使用 `to_a2a()` 将本地 Agent 发布为网络服务。
+3.  **消费远程 Agent**: 使用 `RemoteA2aAgent` 调用远程 A2A 服务。
+4.  **实践多服务架构**: 构建一个基于 A2A 的分布式 Agent 系统。
+
+---
+
+## 🧠 概念地图
+
+### 1. 为什么需要 A2A？
+
+在复杂的企业级应用中，Agent 可能需要：
+- 跨**不同服务器**部署（微服务架构）
+- 跨**不同编程语言**协作（Python Agent ↔ Go Agent）
+- 与**第三方 Agent** 集成（不同供应商）
+- 建立**正式的 API 契约**（而非内部代码依赖）
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    A2A vs Local Sub-Agents                   │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│   Local Sub-Agents (Day 1-13)      A2A Protocol (Day 14)    │
+│   ─────────────────────────────    ─────────────────────    │
+│   同一进程内通信                    跨网络 HTTP 通信          │
+│   共享内存 (session.state)         JSON-RPC / SSE           │
+│   无需序列化                        需要序列化/反序列化        │
+│   高性能、低延迟                    支持分布式、可扩展         │
+│   适合: 内部模块组织                适合: 微服务、第三方集成    │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### 2. A2A 协议核心概念
+
+| 概念 | 说明 |
+|------|------|
+| **Agent Card** | `.well-known/agent.json` — Agent 的"名片"，描述能力和端点 |
+| **Client Agent** | 发起请求的 Agent（消费者） |
+| **Remote Agent** | 提供服务的 Agent（生产者） |
+| **Task** | A2A 通信的基本单位，包含请求和响应 |
+| **Artifact** | 任务执行的产物（文本、文件等） |
+
+### 3. A2A 通信流程
+
+```
+┌──────────────┐           ┌──────────────┐           ┌──────────────┐
+│   Client     │  1. GET   │    A2A       │           │   Remote     │
+│   Agent      │ ─────────>│   Server     │           │   Agent      │
+│              │agent.json │              │           │              │
+│              │<─────────-│              │           │              │
+│              │           │              │           │              │
+│              │ 2. POST   │              │ 3. Run    │              │
+│              │ ─────────>│   /tasks     │ ─────────>│              │
+│              │  (Task)   │              │           │              │
+│              │           │              │ 4. Yield  │              │
+│              │ 5. SSE    │              │ <─────────│              │
+│              │ <─────────│  (Events)    │           │              │
+│              │           │              │           │              │
+└──────────────┘           └──────────────┘           └──────────────┘
+```
+
+> **核心技术栈**: HTTP + JSON-RPC + Server-Sent Events (SSE)
+
+---
+
+## ⚒️ 实践示例
+
+### 示例 1: 暴露 Agent 为 A2A 服务 (`to_a2a()`)
+
+**目标**: 将一个简单的 Agent 发布为可被远程调用的服务。
+
+```python
+# day14/prime_server/agent.py
+from google.adk.agents import Agent
+
+def check_prime(number: int) -> dict:
+    """检查一个数是否为质数。
+    
+    Args:
+        number: 要检查的整数
+        
+    Returns:
+        包含检查结果的字典
+    """
+    if number < 2:
+        return {"number": number, "is_prime": False, "reason": "小于2"}
+    for i in range(2, int(number**0.5) + 1):
+        if number % i == 0:
+            return {"number": number, "is_prime": False, "divisor": i}
+    return {"number": number, "is_prime": True}
+
+root_agent = Agent(
+    name="prime_checker",
+    model="gemini-2.5-flash",
+    description="一个专门检查质数的 Agent。提供数字，告诉你是否为质数。",
+    instruction="你是一个数学助手，专门检查用户提供的数字是否为质数。使用 check_prime 工具。",
+    tools=[check_prime],
+)
+```
+
+```python
+# day14/prime_server/main.py
+from google.adk.a2a.utils.agent_to_a2a import to_a2a
+from agent import root_agent
+
+# 一行代码将 Agent 转换为 A2A 服务！
+a2a_app = to_a2a(root_agent, port=8001)
+
+# 启动命令: uvicorn main:a2a_app --host localhost --port 8001
+```
+
+**启动后可访问**:
+- Agent Card: `http://localhost:8001/.well-known/agent.json`
+- A2A 端点: `http://localhost:8001/a2a/prime_checker/`
+
+### 示例 2: 消费远程 A2A Agent (`RemoteA2aAgent`)
+
+**目标**: 从另一个 Agent 中调用远程的质数检查服务。
+
+```python
+# day14/math_client/agent.py
+from google.adk.agents import Agent
+from google.adk.a2a.remote_a2a_agent import RemoteA2aAgent
+
+# 创建远程 Agent 的本地代理
+prime_checker = RemoteA2aAgent(
+    name="remote_prime_checker",
+    description="远程质数检查服务。可以检查任意整数是否为质数。",
+    agent_card="http://localhost:8001/.well-known/agent.json"
+)
+
+# 将远程 Agent 作为 sub_agent 使用
+root_agent = Agent(
+    name="math_tutor",
+    model="gemini-2.5-flash",
+    description="数学辅导助手，可以帮助解答各种数学问题。",
+    instruction="""你是一个数学辅导老师。
+    
+当用户询问关于质数的问题时，你应该将任务委托给 remote_prime_checker。
+对于其他数学问题，你可以直接回答。
+""",
+    sub_agents=[prime_checker],  # 像本地 sub_agent 一样使用！
+)
+```
+
+### 示例 3: 完整的分布式系统
+
+**架构图**:
+
+```
+                    ┌─────────────────┐
+                    │   Coordinator   │  Port: 8000
+                    │   (主协调器)     │
+                    └────────┬────────┘
+                             │ A2A
+            ┌────────────────┼────────────────┐
+            │                │                │
+            ▼                ▼                ▼
+   ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
+   │ Math Agent  │  │ Weather     │  │ Translator  │
+   │ Port: 8001  │  │ Agent: 8002 │  │ Agent: 8003 │
+   └─────────────┘  └─────────────┘  └─────────────┘
+```
+
+**Coordinator Agent**:
+
+```python
+# day14/coordinator/agent.py
+from google.adk.agents import Agent
+from google.adk.a2a.remote_a2a_agent import RemoteA2aAgent
+
+# 连接多个远程服务
+math_agent = RemoteA2aAgent(
+    name="math_service",
+    description="数学计算服务",
+    agent_card="http://localhost:8001/.well-known/agent.json"
+)
+
+weather_agent = RemoteA2aAgent(
+    name="weather_service", 
+    description="天气查询服务",
+    agent_card="http://localhost:8002/.well-known/agent.json"
+)
+
+translator_agent = RemoteA2aAgent(
+    name="translation_service",
+    description="多语言翻译服务",
+    agent_card="http://localhost:8003/.well-known/agent.json"
+)
+
+root_agent = Agent(
+    name="smart_coordinator",
+    model="gemini-2.5-flash",
+    description="智能协调器，可以调用多种专业服务。",
+    instruction="""你是一个智能助手，可以协调多个专业服务来回答用户问题。
+
+可用服务:
+- math_service: 处理数学计算和质数检查
+- weather_service: 查询天气信息
+- translation_service: 翻译文本
+
+根据用户需求，将任务委托给合适的服务。
+""",
+    sub_agents=[math_agent, weather_agent, translator_agent],
+)
+```
+
+---
+
+## 🔧 CLI 工具
+
+### 使用 `adk api_server --a2a`
+
+除了 `to_a2a()` 方法，ADK 还提供 CLI 方式启动 A2A 服务：
+
+```bash
+# 需要先创建 agent.json 文件
+adk api_server --a2a ./my_agent_folder
+```
+
+**手动创建 Agent Card** (`agent.json`):
+
+```json
+{
+  "name": "prime_checker",
+  "description": "检查数字是否为质数的 Agent",
+  "url": "http://localhost:8001/a2a/prime_checker/",
+  "version": "1.0.0",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false
+  },
+  "skills": [
+    {
+      "id": "check_prime",
+      "name": "质数检查",
+      "description": "检查给定的整数是否为质数"
+    }
+  ]
+}
+```
+
+---
+
+## 🔑 关键收获
+
+| 知识点 | 一句话总结 |
+|--------|-----------|
+| **A2A Protocol** | 网络层的 Agent 通信标准，基于 HTTP + JSON-RPC + SSE |
+| **Agent Card** | Agent 的"名片"，描述能力和端点，位于 `.well-known/agent.json` |
+| **`to_a2a()`** | 一行代码将 ADK Agent 转换为 A2A 可访问的 FastAPI 服务 |
+| **`RemoteA2aAgent`** | 远程 Agent 的本地代理，可像本地 sub_agent 一样使用 |
+| **适用场景** | 微服务架构、跨语言协作、第三方集成、正式 API 契约 |
+| **vs Local Sub-Agents** | A2A 适合分布式；本地 sub_agents 适合单进程内模块化 |
+
+---
+
+## 🧪 动手练习
+
+### 练习 1: 启动质数检查服务
+1. 创建 `day14/prime_server/` 目录
+2. 实现 `agent.py` 和 `main.py`
+3. 运行 `uvicorn main:a2a_app --port 8001`
+4. 访问 `http://localhost:8001/.well-known/agent.json` 验证
+
+### 练习 2: 创建客户端 Agent
+1. 创建 `day14/math_client/` 目录
+2. 使用 `RemoteA2aAgent` 连接质数服务
+3. 通过 `adk web` 测试委托功能
+
+### 练习 3 (挑战): 构建微服务生态
+1. 启动 3 个不同功能的 A2A 服务
+2. 创建一个 Coordinator 统一调度
+3. 测试跨服务的复杂查询
+
+---
+
+## 🔗 参考资源
+
+- [ADK A2A 官方文档](https://google.github.io/adk-docs/a2a/)
+- [A2A Protocol 规范](https://a2aprotocol.org/)
+- [Google Developers Blog: A2A 发布公告](https://developers.googleblog.com/)
+- GEMINI.md Section 4.A (Distributed Communication)
+- ADK Python Cheatsheet Section 4 (Multi-Agent Systems)
+
+---
+
+## ✅ 实践验证记录
+
+### 环境准备
+
+```bash
+# 安装 A2A SDK
+uv pip install a2a-sdk
+# 安装版本: a2a-sdk==0.3.22
+```
+
+### 服务端验证
+
+**启动命令**:
+```bash
+cd day14/prime_server
+python main.py
+```
+
+**输出**:
+```
+🚀 正在启动 A2A 质数检查服务...
+📋 Agent Card: http://localhost:8001/.well-known/agent.json
+🔗 A2A 端点: http://localhost:8001/a2a/prime_checker/
+INFO:     Uvicorn running on http://localhost:8001 (Press CTRL+C to quit)
+```
+
+### Agent Card 验证
+
+**请求**: `curl http://localhost:8001/.well-known/agent.json`
+
+**响应** (格式化后):
+```json
+{
+  "name": "prime_checker",
+  "description": "一个专门检查质数的 Agent...",
+  "protocolVersion": "0.3.0",
+  "preferredTransport": "JSONRPC",
+  "url": "http://localhost:8001",
+  "defaultInputModes": ["text/plain"],
+  "defaultOutputModes": ["text/plain"],
+  "skills": [
+    {
+      "id": "prime_checker",
+      "name": "model",
+      "tags": ["llm"]
+    },
+    {
+      "id": "prime_checker-check_prime",
+      "name": "check_prime",
+      "description": "检查一个数是否为质数...",
+      "tags": ["llm", "tools"]
+    }
+  ]
+}
+```
+
+### 注意事项
+
+1. **实验性功能**: ADK 的 A2A 实现目前标记为 `[EXPERIMENTAL]`，API 可能会有变化
+2. **Agent Card 端点更新**: 新版推荐使用 `/.well-known/agent-card.json`（旧的 `agent.json` 已弃用）
+3. **依赖关系**: 需要单独安装 `a2a-sdk` 包
+
+### Week 2 完成总结
+
+| Day | 主题 | 核心知识点 |
+|-----|------|-----------|
+| Day 08 | Context Management | ADK 上下文层级、State Prefix |
+| Day 09 | Time Travel | Session 快照、状态回滚 |
+| Day 10 | Caching & Compaction | Context Cache、Events Compaction |
+| Day 11 | MCP | MCPToolset、外部服务集成 |
+| Day 12 | Multimodal | Live API、Audio/Video 流式处理 |
+| Day 13 | Interactions API | Callbacks、Tool Confirmation |
+| Day 14 | A2A Protocol | 分布式 Agent 通信、微服务架构 |
+
+**🎉 恭喜完成 Week 2！你已掌握 ADK 的上下文管理与编排能力。**
+
+````
+<!-- DAILY_CHECKIN_2026-01-10_END -->
+
 # 2026-01-09
 <!-- DAILY_CHECKIN_2026-01-09_START -->
+
 ````markdown
 # Day 13: Interactions API (Stateful Workflows)
 
@@ -200,6 +581,7 @@ def book_flight(destination: str, price: float, tool_context: ToolContext) -> di
 # 2026-01-08
 <!-- DAILY_CHECKIN_2026-01-08_START -->
 
+
 # Day 12: Multimodal Agents (Gemini Live API & Streaming)
 
 > **日期**: 2026-01-08 **主题**: Streaming Responses & Multimodal Inputs **状态**: ✅ 完成
@@ -285,6 +667,7 @@ Gemini 原生支持文本、图像、音频和视频。在 ADK 中，我们可�
 <!-- DAILY_CHECKIN_2026-01-07_START -->
 
 
+
 ````markdown
 # Day 11: Google Managed MCP (Connecting to Services)
 
@@ -362,6 +745,7 @@ sqlite_mcp_toolset = McpToolset(
 
 # 2026-01-06
 <!-- DAILY_CHECKIN_2026-01-06_START -->
+
 
 
 
@@ -455,6 +839,7 @@ day10_app = App(
 
 # 2026-01-05
 <!-- DAILY_CHECKIN_2026-01-05_START -->
+
 
 
 
@@ -600,6 +985,7 @@ async for event in runner.run_async(
 
 
 
+
 ````markdown
 # Day 08: Effective Context Management (ADK Layers)
 
@@ -718,6 +1104,7 @@ async def generate_report(topic: str, tool_context: ToolContext):
 
 # 2026-01-03
 <!-- DAILY_CHECKIN_2026-01-03_START -->
+
 
 
 
@@ -849,6 +1236,7 @@ BuiltInCodeExecutor
 
 
 
+
 **📅 Day 06 打卡：ADK Ready & Context Engineering**
 
 **📝 核心收获** 今天不写代码，而是“磨刀”。从手搓代码转向了 **Agent 工程化** 思维。
@@ -878,6 +1266,7 @@ BuiltInCodeExecutor
 
 # 2026-01-01
 <!-- DAILY_CHECKIN_2026-01-01_START -->
+
 
 
 
@@ -936,6 +1325,7 @@ BuiltInCodeExecutor
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 
 
@@ -1138,6 +1528,7 @@ python day04/deploy.py --create
 
 
 
+
 # **Day 03 学习笔记: Gemini 3 与 神经符号智能体 (Neuro-Symbolic Agents)**
 
 ## **1\. 核心理念: 神经符号 AI (Neuro-Symbolic AI)**
@@ -1258,6 +1649,7 @@ niche\_players = df\[(df\['rating'\] >= 4.5) & (df\['reviews'\] < 100)\]
 
 
 
+
 ````markdown
 # Day 02: Introduction to Declarative Agents (2025-12-29)
 
@@ -1320,6 +1712,7 @@ tools:
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
