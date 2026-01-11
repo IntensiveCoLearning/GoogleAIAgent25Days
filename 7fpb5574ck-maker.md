@@ -15,8 +15,147 @@ AI × Crypto 实践者，关注 AI Agent、自动化与工具构建，正在用 
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-11
+<!-- DAILY_CHECKIN_2026-01-11_START -->
+````markdown
+# Day 15: A2UI (Generative UIs) 学习笔记
+
+> **日期**: 2026-01-11
+> **主题**: Agent-to-User Interface - 让 Agent "说 UI"
+
+---
+
+## 核心概念
+
+### A2UI 是什么？
+
+Google 2025年12月发布的开源协议，让 Agent 生成声明式 JSON 来描述 UI，而非返回纯文本。
+
+**一句话**：Agent 不再只是"回答问题"，而是"提供工具界面"。
+
+### 三大设计原则
+
+| 原则 | 含义 |
+|------|------|
+| **Security First** | 声明式 JSON，非可执行代码；Component Catalog 白名单 |
+| **LLM-Friendly** | 扁平化组件结构，易于增量生成 |
+| **Cross-Platform** | 支持 React/Flutter/Angular 等原生渲染 |
+
+### 为什么不直接让 LLM 生成 HTML？
+
+**安全性**。LLM 可能被注入攻击，生成恶意代码。A2UI 只能请求预定义组件，无法执行任意代码。
+
+类比：餐厅菜单 vs 开放式厨房
+- 传统方式 = 客人进厨房随便做（危险）
+- A2UI = 客人只能从菜单点菜（安全）
+
+---
+
+## 协议要点
+
+### 四种消息类型
+
+1. `createSurface` - 创建界面
+2. `updateComponents` - 更新组件
+3. `updateDataModel` - 更新数据
+4. `deleteSurface` - 删除界面
+
+### 组件格式（扁平结构）
+
+```json
+{
+  "updateComponents": {
+    "surfaceId": "main",
+    "components": [
+      {"id": "root", "component": "Column", "children": ["title"]},
+      {"id": "title", "component": "Text", "text": "Hello"}
+    ]
+  }
+}
+```
+
+**为什么扁平？** LLM 可以逐个组件生成，支持流式渲染和增量更新。
+
+---
+
+## 协议栈关系
+
+```
+A2UI (Agent → User)     ← 今天学的
+   ↑ 建立在
+A2A  (Agent → Agent)    ← Day 14
+   ↑ 建立在
+ADK  (开发框架)          ← Week 1-2
+```
+
+---
+
+## 对我项目的价值评估
+
+### Prediction Copilot
+
+- **潜在应用**: 分析结果动态生成卡片/图表
+- **当前优先级**: 中等（V2 引擎 + 固定 UI 已能满足需求）
+- **适用场景**: 如果未来要做更灵活的分析结果展示
+
+### Prediction Trader
+
+- **不适用**: 量化执行需要确定性，不需要动态 UI
+
+---
+
+## 关键认知
+
+### "应用课程所学"的三个层次
+
+| 层次 | 含义 |
+|------|------|
+| Level 1 | 有类似代码 ❌（碰巧相似，不是应用）|
+| Level 2 | 理解设计意图 ✅（能解释为什么这样设计）|
+| Level 3 | 有意识的选择 ✅✅（知道何时用/不用）|
+
+### Agent vs AI 调用
+
+| | AI 调用 | Agent |
+|---|---|---|
+| 模式 | 输入→LLM→输出（一次性）| 自主规划→多步执行→迭代 |
+| 控制 | 你控制流程 | Agent 自己决定下一步 |
+
+Copilot V2 引擎目前是 **AI 调用**模式，不是 Agent 模式。
+
+---
+
+## 代码实践
+
+```bash
+cd day15
+python3 concepts.py      # A2UI 消息格式演示
+python3 a2ui_schema.py   # Pydantic Schema 定义
+python3 simple_agent.py  # Agent 示例
+```
+
+---
+
+## 参考资料
+
+- [Google Developers Blog - Introducing A2UI](https://developers.googleblog.com/introducing-a2ui-an-open-project-for-agent-driven-interfaces/)
+- [A2UI GitHub](https://github.com/google/A2UI)
+- [A2UI Specification v0.9](https://a2ui.org/specification/v0.9-a2ui/)
+
+---
+
+## 一句话总结
+
+A2UI 让 Agent 能安全地生成动态 UI，但对我当前项目来说是"好知道"而非"必须用"。核心价值在于理解**声明式 UI 生成**的设计模式。
+
+---
+*Week 3 Day 1 完成。进入 Advanced Architectures 阶段。*
+````
+<!-- DAILY_CHECKIN_2026-01-11_END -->
+
 # 2026-01-10
 <!-- DAILY_CHECKIN_2026-01-10_START -->
+
 ````markdown
 # Day 14: Connecting Agents with A2A (Agent2Agent Protocol)
 
@@ -398,6 +537,7 @@ INFO:     Uvicorn running on http://localhost:8001 (Press CTRL+C to quit)
 # 2026-01-09
 <!-- DAILY_CHECKIN_2026-01-09_START -->
 
+
 ````markdown
 # Day 13: Interactions API (Stateful Workflows)
 
@@ -582,6 +722,7 @@ def book_flight(destination: str, price: float, tool_context: ToolContext) -> di
 <!-- DAILY_CHECKIN_2026-01-08_START -->
 
 
+
 # Day 12: Multimodal Agents (Gemini Live API & Streaming)
 
 > **日期**: 2026-01-08 **主题**: Streaming Responses & Multimodal Inputs **状态**: ✅ 完成
@@ -668,6 +809,7 @@ Gemini 原生支持文本、图像、音频和视频。在 ADK 中，我们可�
 
 
 
+
 ````markdown
 # Day 11: Google Managed MCP (Connecting to Services)
 
@@ -745,6 +887,7 @@ sqlite_mcp_toolset = McpToolset(
 
 # 2026-01-06
 <!-- DAILY_CHECKIN_2026-01-06_START -->
+
 
 
 
@@ -839,6 +982,7 @@ day10_app = App(
 
 # 2026-01-05
 <!-- DAILY_CHECKIN_2026-01-05_START -->
+
 
 
 
@@ -986,6 +1130,7 @@ async for event in runner.run_async(
 
 
 
+
 ````markdown
 # Day 08: Effective Context Management (ADK Layers)
 
@@ -1104,6 +1249,7 @@ async def generate_report(topic: str, tool_context: ToolContext):
 
 # 2026-01-03
 <!-- DAILY_CHECKIN_2026-01-03_START -->
+
 
 
 
@@ -1237,6 +1383,7 @@ BuiltInCodeExecutor
 
 
 
+
 **📅 Day 06 打卡：ADK Ready & Context Engineering**
 
 **📝 核心收获** 今天不写代码，而是“磨刀”。从手搓代码转向了 **Agent 工程化** 思维。
@@ -1266,6 +1413,7 @@ BuiltInCodeExecutor
 
 # 2026-01-01
 <!-- DAILY_CHECKIN_2026-01-01_START -->
+
 
 
 
@@ -1325,6 +1473,7 @@ BuiltInCodeExecutor
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 
 
@@ -1529,6 +1678,7 @@ python day04/deploy.py --create
 
 
 
+
 # **Day 03 学习笔记: Gemini 3 与 神经符号智能体 (Neuro-Symbolic Agents)**
 
 ## **1\. 核心理念: 神经符号 AI (Neuro-Symbolic AI)**
@@ -1650,6 +1800,7 @@ niche\_players = df\[(df\['rating'\] >= 4.5) & (df\['reviews'\] < 100)\]
 
 
 
+
 ````markdown
 # Day 02: Introduction to Declarative Agents (2025-12-29)
 
@@ -1712,6 +1863,7 @@ tools:
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
