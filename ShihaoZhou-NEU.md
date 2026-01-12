@@ -15,8 +15,30 @@ Full-Stack Developer
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-12
+<!-- DAILY_CHECKIN_2026-01-12_START -->
+# Day16
+
+**构建支持 A2A 的 LangGraph Agent！**
+
+**LangGraph** 是一个非常流行的框架，用于构建由 LLM 驱动的有状态、多角色应用。现在，你可以通过 Agent Starter Pack（Agent 入门套件）构建具备完整 A2A 能力的 LangGraph Agent。
+
+Agent Starter Pack 中的 `langgraph_base` 模板为你提供了一个生产级的、支持 A2A 协议的 LangGraph Agent。这意味着：
+
+-   **开箱即用的 A2A 服务**：你的 LangGraph Agent 可以立即被其他 Agent 发现——无论它们使用的是什么框架。
+    
+-   **连接任意 UI**：通过 A2A 暴露你的 Agent，并将其接入聊天机器人、仪表板或自定义界面。
+    
+-   **生产级测试**：内置集成测试与压力测试。
+    
+-   **部署就绪**：自动为 Cloud Run 或 Agent Engine 生成 Terraform 和 CI/CD 配置。
+    
+-   **适配 Gemini 企业版**：只需一条指令，即可将你的 Agent 注册到 Gemini Enterprise。
+<!-- DAILY_CHECKIN_2026-01-12_END -->
+
 # 2026-01-11
 <!-- DAILY_CHECKIN_2026-01-11_START -->
+
 # Day15
 
 ## **Google Advent of Agents：第 15 天**
@@ -40,6 +62,7 @@ Full-Stack Developer
 
 # 2026-01-10
 <!-- DAILY_CHECKIN_2026-01-10_START -->
+
 
 # Day 14
 
@@ -70,6 +93,7 @@ ADK 让 A2A 的实现变得非常简单：
 <!-- DAILY_CHECKIN_2026-01-09_START -->
 
 
+
 # Day 13
 
 **AI 开发的格局正从无状态的“请求-响应”循环，转向有状态的多轮 Agent 工作流。** 随着 **Interactions API** 开启测试，Google 提供了一个专为此新时代设计的统一接口——它是连接原始模型与全托管 **Gemini Deep Research Agent** 的单一网关。
@@ -98,6 +122,7 @@ Interactions API 标志着从无状态文本生成到有状态、自主工作流
 
 # 2026-01-08
 <!-- DAILY_CHECKIN_2026-01-08_START -->
+
 
 
 
@@ -141,6 +166,7 @@ Interactions API 标志着从无状态文本生成到有状态、自主工作流
 
 
 
+
 # Day11
 
 ## MCP
@@ -163,6 +189,7 @@ Interactions API 标志着从无状态文本生成到有状态、自主工作流
 
 # 2026-01-06
 <!-- DAILY_CHECKIN_2026-01-06_START -->
+
 
 
 
@@ -219,6 +246,7 @@ app = App(
 
 
 
+
 # Day09
 
 ADK 支持**时光倒流 (Time Travel) 与检查点 (Checkpointing)** 功能了！
@@ -260,6 +288,7 @@ ADK 支持**时光倒流 (Time Travel) 与检查点 (Checkpointing)** 功能了�
 
 # 2026-01-04
 <!-- DAILY_CHECKIN_2026-01-04_START -->
+
 
 
 
@@ -427,6 +456,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 
 
+
 # Day07
 
 ### **通过 ADK 的代码执行器 (Code Executor) 你将获得：**
@@ -446,6 +476,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 # 2026-01-02
 <!-- DAILY_CHECKIN_2026-01-02_START -->
+
 
 
 
@@ -493,6 +524,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 
 
+
 # Day05
 
 **自动配置的两个层级：**
@@ -529,6 +561,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 
 
@@ -606,6 +639,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 # 2025-12-30
 <!-- DAILY_CHECKIN_2025-12-30_START -->
+
 
 
 
@@ -772,6 +806,7 @@ uvx agent-starter-pack create -y --api-key YOUR\_GEMINI\_API\_KEY
 
 
 
+
 # Day01
 
 准备阶段，环境安装
@@ -922,6 +957,7 @@ Add Google Search tool to the agent file by simple adding the tools section.
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
