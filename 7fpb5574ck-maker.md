@@ -15,8 +15,196 @@ AI × Crypto 实践者，关注 AI Agent、自动化与工具构建，正在用 
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-12
+<!-- DAILY_CHECKIN_2026-01-12_START -->
+````markdown
+# Day 16 学习笔记：LangGraph + A2A (Cross-Framework Orchestration)
+
+> **日期**: 2026-01-12
+> **主题**: 跨框架编排与 Agent 架构选型
+
+---
+
+## 核心收获
+
+### 1. 主流 Agent 框架对比
+
+| 框架 | 出品方 | 核心理念 | 适用场景 |
+|------|--------|----------|----------|
+| **Google ADK** | Google | 原生 Vertex AI 集成 | 企业级、Google 生态 |
+| **LangGraph** | LangChain | 状态图工作流 | 复杂工作流、需要回滚 |
+| **CrewAI** | CrewAI Inc | 角色扮演多代理 | 快速原型、业务建模 |
+| **AutoGen** | Microsoft | 多代理对话 | 研究、对话实验 |
+| **Claude SDK** | Anthropic | 强模型 + 开放协议 | 推理密集型任务 |
+
+**策略差异**：
+- Google: 重框架（ADK）+ A2A 协议
+- Anthropic: 轻框架（SDK）+ MCP 协议
+
+### 2. A2A vs MCP
+
+| 协议 | 主导方 | 定位 | 特点 |
+|------|--------|------|------|
+| **A2A** | Google | Agent 间通信 | 框架互通、分布式 |
+| **MCP** | Anthropic | AI 连接工具/数据 | 更通用、已成事实标准 |
+
+### 3. 多 Agent vs 单 Agent + 多工具
+
+```
+❌ 常见误区：每个功能一个 Agent
+   数据Agent → 分析Agent → 风控Agent → 执行Agent
+   问题：协调复杂、延迟高、调试难
+
+✅ 务实方案：1 个 Agent + 多工具
+   主 Agent (Claude/Gemini)
+     ├── 数据工具
+     ├── 分析工具
+     ├── 风控工具
+     └── 执行工具
+   优势：简单、快速、可控
+```
+
+**什么时候才需要多 Agent**：
+- 需要不同"观点"辩论（Bull vs Bear）
+- 任务可并行且相互独立
+- 需要分布式部署
+
+### 4. MCP 的正确定位
+
+```
+MCP 适用场景：
+✅ 本地开发（Claude Code、Cursor）
+✅ 内部工具、个人助手
+✅ 原型验证
+
+MCP 不适合：
+❌ 高并发生产环境
+❌ Web 产品后端
+
+生产环境应该用：
+→ 直接 Tool Use / Function Calling
+→ 函数直接定义在代码里
+```
+
+### 5. 预测市场 Agent 选型建议
+
+**推荐方案**：Claude SDK + Tool Use
+
+理由：
+1. 预测市场核心是"判断准"，Claude 推理最强
+2. 不需要复杂框架，工具调用足够
+3. 灵活、可控、好调试
+
+**架构建议**：
+```
+当前：Copilot (Gemini) → 用户看 UI
+建议：保持现状，geminiServiceV2.ts 做法正确
+
+未来演进（如果需要）：
+1. 拆分 geminiServiceV2.ts（63KB 太大）
+2. 统一 AI 分析接口
+3. 考虑 Claude 做深度分析（推理更强）
+```
+
+---
+
+## 关键概念
+
+### LangGraph 核心
+
+```python
+# State：在节点之间传递的数据
+class AgentState(TypedDict):
+    messages: list
+    task: str
+    result: str
+
+# Node：执行具体操作的函数
+def analyzer_node(state): ...
+def executor_node(state): ...
+
+# Edge：定义流转逻辑
+graph.add_edge("analyzer", "executor")
+graph.add_conditional_edges("executor", should_continue, {...})
+```
+
+### A2A 协议核心
+
+```python
+# Agent Card：自描述能力（类似 OpenAPI）
+AgentCard(
+    name="researcher",
+    capabilities=["market_research", "analysis"],
+    input_schema={...},
+    output_schema={...}
+)
+
+# Task：工作单元
+A2ATask(
+    input_data={"query": "..."},
+    state=TaskState.RUNNING
+)
+```
+
+---
+
+## 与我项目的关联
+
+### 现有架构（已经很清晰）
+
+```
+Polymarket Data → Supabase → prediction-copilot (Gemini 分析)
+                           → prediction-trader (套利策略，规则驱动)
+```
+
+### 不需要改的
+
+- 不需要多 Agent
+- 不需要 A2A 协议
+- 不需要复杂状态图
+- 现有 Tool Use 做法正确
+
+### 可以优化的（P1）
+
+1. 拆分 `geminiServiceV2.ts`（63KB 太大）
+2. 统一 AI 分析工具函数
+
+---
+
+## 代码练习
+
+今日创建的示例：
+- [01_langgraph_basics.py](../day16/01_langgraph_basics.py) - LangGraph 基础
+- [02_langgraph_as_tool.py](../day16/02_langgraph_as_tool.py) - LangGraph 作为 ADK Tool
+- [03_a2a_cross_framework.py](../day16/03_a2a_cross_framework.py) - A2A 跨框架通信
+
+---
+
+## 金句记录
+
+> "预测市场的胜负在于'判断准'，不在于'框架炫'。"
+
+> "先用最简单的架构跑通闭环，有了真实数据反馈后，再决定是否拆分 Agent。"
+
+> "过早的复杂架构是预测市场项目的头号杀手。"
+
+---
+
+## 明日预告
+
+**Day 17**: Cloud API Registry + ADK
+- 学习如何将云端 API 注册并集成到 ADK Agent
+
+---
+
+*记录者: Leo + Claude*
+*最后更新: 2026-01-12*
+````
+<!-- DAILY_CHECKIN_2026-01-12_END -->
+
 # 2026-01-11
 <!-- DAILY_CHECKIN_2026-01-11_START -->
+
 ````markdown
 # Day 15: A2UI (Generative UIs) 学习笔记
 
@@ -155,6 +343,7 @@ A2UI 让 Agent 能安全地生成动态 UI，但对我当前项目来说是"好�
 
 # 2026-01-10
 <!-- DAILY_CHECKIN_2026-01-10_START -->
+
 
 ````markdown
 # Day 14: Connecting Agents with A2A (Agent2Agent Protocol)
@@ -538,6 +727,7 @@ INFO:     Uvicorn running on http://localhost:8001 (Press CTRL+C to quit)
 <!-- DAILY_CHECKIN_2026-01-09_START -->
 
 
+
 ````markdown
 # Day 13: Interactions API (Stateful Workflows)
 
@@ -723,6 +913,7 @@ def book_flight(destination: str, price: float, tool_context: ToolContext) -> di
 
 
 
+
 # Day 12: Multimodal Agents (Gemini Live API & Streaming)
 
 > **日期**: 2026-01-08 **主题**: Streaming Responses & Multimodal Inputs **状态**: ✅ 完成
@@ -810,6 +1001,7 @@ Gemini 原生支持文本、图像、音频和视频。在 ADK 中，我们可�
 
 
 
+
 ````markdown
 # Day 11: Google Managed MCP (Connecting to Services)
 
@@ -887,6 +1079,7 @@ sqlite_mcp_toolset = McpToolset(
 
 # 2026-01-06
 <!-- DAILY_CHECKIN_2026-01-06_START -->
+
 
 
 
@@ -982,6 +1175,7 @@ day10_app = App(
 
 # 2026-01-05
 <!-- DAILY_CHECKIN_2026-01-05_START -->
+
 
 
 
@@ -1131,6 +1325,7 @@ async for event in runner.run_async(
 
 
 
+
 ````markdown
 # Day 08: Effective Context Management (ADK Layers)
 
@@ -1249,6 +1444,7 @@ async def generate_report(topic: str, tool_context: ToolContext):
 
 # 2026-01-03
 <!-- DAILY_CHECKIN_2026-01-03_START -->
+
 
 
 
@@ -1384,6 +1580,7 @@ BuiltInCodeExecutor
 
 
 
+
 **📅 Day 06 打卡：ADK Ready & Context Engineering**
 
 **📝 核心收获** 今天不写代码，而是“磨刀”。从手搓代码转向了 **Agent 工程化** 思维。
@@ -1413,6 +1610,7 @@ BuiltInCodeExecutor
 
 # 2026-01-01
 <!-- DAILY_CHECKIN_2026-01-01_START -->
+
 
 
 
@@ -1473,6 +1671,7 @@ BuiltInCodeExecutor
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 
 
@@ -1679,6 +1878,7 @@ python day04/deploy.py --create
 
 
 
+
 # **Day 03 学习笔记: Gemini 3 与 神经符号智能体 (Neuro-Symbolic Agents)**
 
 ## **1\. 核心理念: 神经符号 AI (Neuro-Symbolic AI)**
@@ -1801,6 +2001,7 @@ niche\_players = df\[(df\['rating'\] >= 4.5) & (df\['reviews'\] < 100)\]
 
 
 
+
 ````markdown
 # Day 02: Introduction to Declarative Agents (2025-12-29)
 
@@ -1863,6 +2064,7 @@ tools:
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
