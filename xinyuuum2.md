@@ -15,8 +15,28 @@ timezone: UTC+8
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-13
+<!-- DAILY_CHECKIN_2026-01-13_START -->
+先补一下  
+
+-   Summary  
+    简单聊天 → MINIMAL（最省钱最快）  
+    日常任务 → LOW（推荐默认）  
+    分析任务 → MEDIUM  
+    复杂推理 → HIGH（最准但最慢）  
+    
+
+### **与 Gemini 2.5 的区别**
+
+| 版本 | 参数 | 方式 |
+| --- | --- | --- |
+| Gemini 3 | thinking_level | 级别选择 |
+| Gemini 2.5 | thinking_budget | token 预算 |
+<!-- DAILY_CHECKIN_2026-01-13_END -->
+
 # 2026-01-09
 <!-- DAILY_CHECKIN_2026-01-09_START -->
+
 ### 一、Intro
 
 **Model Context Protocol（MCP）** 是一个开放标准协议，用于将 AI Agent 与外部工具和数据源解耦连接，被称为 **“USB-C for AI”**。
@@ -183,6 +203,7 @@ Agent 不再“生成 SQL 或 API 调用代码”，而是：
 # 2026-01-08
 <!-- DAILY_CHECKIN_2026-01-08_START -->
 
+
 长生命周期 Agent 会同时面临两个系统性挑战：
 
 1.  **Latency（延迟）**：上下文越长，请求成本和响应时间越高
@@ -323,6 +344,7 @@ Context Compaction 与 Context Caching 是互补的：
 <!-- DAILY_CHECKIN_2026-01-07_START -->
 
 
+
 ADK 内置 **Session Rewind** 能力，使 Agent 的会话具备“时间回溯”特性，无需数据库迁移或复杂状态管理，即可恢复到任意历史执行点。
 
 Session 的回溯不仅作用于对话内容，还会 **完整恢复**：
@@ -387,6 +409,7 @@ Session Rewind 可以同时撤销：
 
 # 2026-01-05
 <!-- DAILY_CHECKIN_2026-01-05_START -->
+
 
 
 
@@ -681,6 +704,7 @@ Payment Tool: 才能看到 payment_token
 
 
 
+
 今天有点忙…学习了一下课程里的Retail site agent
 
 明天再补笔记
@@ -688,6 +712,7 @@ Payment Tool: 才能看到 payment_token
 
 # 2026-01-03
 <!-- DAILY_CHECKIN_2026-01-03_START -->
+
 
 
 
@@ -738,6 +763,7 @@ agent = Agent(
 
 
 
+
 昨天忘记了 先补一下昨天的…
 
 A. 第一层：系统行为追踪 (Agent Telemetry)
@@ -766,6 +792,7 @@ B. 第二层：交互与消耗记录 (Prompt-Response Logging)
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 
 
@@ -958,6 +985,7 @@ python test_agent.py
 
 
 
+
 -   One liner with Agent Starter Pack
     
 
@@ -1028,6 +1056,7 @@ tools:
 
 
 
+
 ADK 智能体配置功能让你无需编写代码即可构建 ADK 工作流。智能体配置使用 YAML 格式的文本文件，包含智能体的简要描述，允许几乎任何人组装和运行 ADK 智能体。以下是一个基本智能体配置定义的简单示例：
 
 ```
@@ -1040,6 +1069,7 @@ instruction: You are an agent to help answer users' various questions.
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
