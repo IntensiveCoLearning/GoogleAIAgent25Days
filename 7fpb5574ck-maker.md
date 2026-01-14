@@ -15,8 +15,184 @@ AI × Crypto 实践者，关注 AI Agent、自动化与工具构建，正在用 
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-14
+<!-- DAILY_CHECKIN_2026-01-14_START -->
+# **Day 18: Self-Improving Agents 学习笔记**
+
+## **1\. 核心概念 (Core Concept)**
+
+-   **自进化闭环 (Self-Correction Loop)**: 让 Agent 具备自我反思和修复错误的能力，减少人工干预。
+    
+-   **Level 3 Agent**: 并不是指更聪明的模型，而是指更自主的工作流。从只会被动执行的 Copilot，进化为能对自己结果负责、直到做对为止的 Autonomous Agent。
+    
+
+## **2\. 架构设计 (Architecture)**
+
+我们构建了一个标准的 "Generator-Evaluator" 循环：
+
+1.  **Generator (生成者)**:
+    
+    -   角色：负责 "干活"。
+        
+    -   任务：根据 Prompt 生成初始代码或方案。如果收到反馈，则根据反馈修改代码。
+        
+2.  **Executor (执行者/沙箱)**:
+    
+    -   角色：负责 "试错"。
+        
+    -   任务：在一个安全的环境（Sandbox）中运行代码，捕获标准输出 (stdout) 和错误栈 (stderr)。
+        
+    -   _关键技术_: 使用Python的
+        
+        ```
+        subprocess
+        ```
+        
+        +
+        
+        ```
+        tempfile
+        ```
+        
+        实现进程级隔离和超时熔断（Timeout），防止 Agent 写出的死循环搞挂主程序。
+        
+3.  **Evaluator (评估者)**:
+    
+    -   角色：负责 "找茬"。
+        
+    -   任务：分析 Executor 的报错信息。它不直接改代码，而是生成具体的
+        
+        ```
+        Feedback
+        ```
+        
+        （例如："第3行语法错误，也就是没有闭合括号"）。
+        
+
+## **3\. 关键代码逻辑 (Implementation)**
+
+-   **Loop Structure**:
+    
+    ```
+    python
+    ```
+    
+    while attempts < max\_retries:
+    
+    code = generator(prompt + feedback)
+    
+    result = executor(code)
+    
+    if result.success:
+    
+    return code
+    
+    feedback = evaluator(code, result.error)
+    
+-   **Prompt Engineering**:
+    
+    -   Generator 的 Prompt 必须是动态的，能够接收
+        
+        ```
+        Previous Failed Attempt
+        ```
+        
+        和
+        
+        ```
+        Feedback
+        ```
+        
+        作为上下文。
+        
+    -   Evaluator 需要看到完整的 "三位一体"：
+        
+        ```
+        Original Task
+        ```
+        
+        +
+        
+        ```
+        Source Code
+        ```
+        
+        +
+        
+        ```
+        Execution Error
+        ```
+        
+        ，才能给出准确建议。
+        
+
+## **4\. 实际落地场景 (Applications)**
+
+结合目前的 Prediction Trader / Copilot 项目：
+
+1.  **合规审查 (One-Shot Correction)**: _最适合 Copilot_
+    
+    -   在 LLM 生成分析报告后，增加一个
+        
+        ```
+        Evaluator
+        ```
+        
+        (可以是规则代码，也可以是另一个 LLM)。
+        
+    -   强制检查硬性风控规则（如
+        
+        ```
+        Coverage < 0.4
+        ```
+        
+        必须
+        
+        ```
+        AVOID
+        ```
+        
+        ）。
+        
+    -   如果违规，自动打回重写，确保展示给用户的永远是合规的。
+        
+2.  **自愈式爬虫 (Self-Healing Scrapers)**: _最适合 Data 组_
+    
+    -   这里的 Evaluator 是 Python 异常捕获逻辑。
+        
+    -   当抓取脚本报
+        
+        ```
+        AttributeError
+        ```
+        
+        时，触发 Generator 读取新的 HTML 源码，自动修复 CSS Selector。
+        
+3.  **策略参数调优**: _最适合 Trader_
+    
+    -   Executor 运行回测。
+        
+    -   Evaluator 分析 PnL 曲线。
+        
+    -   Generator 调整策略参数（止损位、开仓阈值）。
+        
+
+## **5\. 局限与思考 (Trade-offs)**
+
+-   **Token 成本**: 自进化意味着 Token 消耗可能翻倍（3次重试 = 3倍成本）。需要设置合理的
+    
+    ```
+    Max Retries
+    ```
+    
+    (通常 3 次足够)。
+    
+-   **延迟 (Latency)**: 串行的“生成-检查-再生成”会显著增加用户等待时间。对于实时性要求高的 C 端产品（如 Copilot），需要谨慎使用，或者仅用于后台离线任务。
+<!-- DAILY_CHECKIN_2026-01-14_END -->
+
 # 2026-01-13
 <!-- DAILY_CHECKIN_2026-01-13_START -->
+
 ````markdown
 # Day 17 学习笔记：Cloud API Registry + ADK
 
@@ -244,6 +420,7 @@ api_registry = ApiRegistry(
 # 2026-01-12
 <!-- DAILY_CHECKIN_2026-01-12_START -->
 
+
 ````markdown
 # Day 16 学习笔记：LangGraph + A2A (Cross-Framework Orchestration)
 
@@ -433,6 +610,7 @@ Polymarket Data → Supabase → prediction-copilot (Gemini 分析)
 <!-- DAILY_CHECKIN_2026-01-11_START -->
 
 
+
 ````markdown
 # Day 15: A2UI (Generative UIs) 学习笔记
 
@@ -571,6 +749,7 @@ A2UI 让 Agent 能安全地生成动态 UI，但对我当前项目来说是"好�
 
 # 2026-01-10
 <!-- DAILY_CHECKIN_2026-01-10_START -->
+
 
 
 
@@ -958,6 +1137,7 @@ INFO:     Uvicorn running on http://localhost:8001 (Press CTRL+C to quit)
 
 
 
+
 ````markdown
 # Day 13: Interactions API (Stateful Workflows)
 
@@ -1145,6 +1325,7 @@ def book_flight(destination: str, price: float, tool_context: ToolContext) -> di
 
 
 
+
 # Day 12: Multimodal Agents (Gemini Live API & Streaming)
 
 > **日期**: 2026-01-08 **主题**: Streaming Responses & Multimodal Inputs **状态**: ✅ 完成
@@ -1234,6 +1415,7 @@ Gemini 原生支持文本、图像、音频和视频。在 ADK 中，我们可�
 
 
 
+
 ````markdown
 # Day 11: Google Managed MCP (Connecting to Services)
 
@@ -1311,6 +1493,7 @@ sqlite_mcp_toolset = McpToolset(
 
 # 2026-01-06
 <!-- DAILY_CHECKIN_2026-01-06_START -->
+
 
 
 
@@ -1408,6 +1591,7 @@ day10_app = App(
 
 # 2026-01-05
 <!-- DAILY_CHECKIN_2026-01-05_START -->
+
 
 
 
@@ -1561,6 +1745,7 @@ async for event in runner.run_async(
 
 
 
+
 ````markdown
 # Day 08: Effective Context Management (ADK Layers)
 
@@ -1679,6 +1864,7 @@ async def generate_report(topic: str, tool_context: ToolContext):
 
 # 2026-01-03
 <!-- DAILY_CHECKIN_2026-01-03_START -->
+
 
 
 
@@ -1818,6 +2004,7 @@ BuiltInCodeExecutor
 
 
 
+
 **📅 Day 06 打卡：ADK Ready & Context Engineering**
 
 **📝 核心收获** 今天不写代码，而是“磨刀”。从手搓代码转向了 **Agent 工程化** 思维。
@@ -1847,6 +2034,7 @@ BuiltInCodeExecutor
 
 # 2026-01-01
 <!-- DAILY_CHECKIN_2026-01-01_START -->
+
 
 
 
@@ -1909,6 +2097,7 @@ BuiltInCodeExecutor
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 
 
@@ -2119,6 +2308,7 @@ python day04/deploy.py --create
 
 
 
+
 # **Day 03 学习笔记: Gemini 3 与 神经符号智能体 (Neuro-Symbolic Agents)**
 
 ## **1\. 核心理念: 神经符号 AI (Neuro-Symbolic AI)**
@@ -2243,6 +2433,7 @@ niche\_players = df\[(df\['rating'\] >= 4.5) & (df\['reviews'\] < 100)\]
 
 
 
+
 ````markdown
 # Day 02: Introduction to Declarative Agents (2025-12-29)
 
@@ -2305,6 +2496,7 @@ tools:
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
