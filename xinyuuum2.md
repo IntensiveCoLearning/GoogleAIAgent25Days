@@ -15,8 +15,29 @@ timezone: UTC+8
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-15
+<!-- DAILY_CHECKIN_2026-01-15_START -->
+-   标准化开发： 使用 `agent-starter-pack`快速搭建符合企业规范的 Agent 项目结构。
+    
+-   本地验证（Playground）： 在正式发布前，通过 Streamlit 界面进行实时调试，确保 Agent 的逻辑和输出符合预期。
+    
+-   云端部署与注册： 将代码推送到云端环境。
+    
+    -   `make register-gemini-enterprise`：这是最关键的一步，它相当于在公司的 AI 应用商店挂牌上架，让其他部门的同事可以通过统一的入口直接调用你的 Agent。
+        
+
+* * *
+
+1.  统一入口： 同事不需要安装你的代码环境，直接在企业级 Gemini 界面就能找到你的 Agent。
+    
+2.  权限管理： 企业版提供了更安全的身份验证，确保只有授权人员能使用特定的企业数据插件。
+    
+3.  算力支持： 运行在云端而非本地，能够处理更高并发的请求。
+<!-- DAILY_CHECKIN_2026-01-15_END -->
+
 # 2026-01-13
 <!-- DAILY_CHECKIN_2026-01-13_START -->
+
 先补一下  
 
 -   Summary  
@@ -36,6 +57,7 @@ timezone: UTC+8
 
 # 2026-01-09
 <!-- DAILY_CHECKIN_2026-01-09_START -->
+
 
 ### 一、Intro
 
@@ -204,6 +226,7 @@ Agent 不再“生成 SQL 或 API 调用代码”，而是：
 <!-- DAILY_CHECKIN_2026-01-08_START -->
 
 
+
 长生命周期 Agent 会同时面临两个系统性挑战：
 
 1.  **Latency（延迟）**：上下文越长，请求成本和响应时间越高
@@ -345,6 +368,7 @@ Context Compaction 与 Context Caching 是互补的：
 
 
 
+
 ADK 内置 **Session Rewind** 能力，使 Agent 的会话具备“时间回溯”特性，无需数据库迁移或复杂状态管理，即可恢复到任意历史执行点。
 
 Session 的回溯不仅作用于对话内容，还会 **完整恢复**：
@@ -409,6 +433,7 @@ Session Rewind 可以同时撤销：
 
 # 2026-01-05
 <!-- DAILY_CHECKIN_2026-01-05_START -->
+
 
 
 
@@ -705,6 +730,7 @@ Payment Tool: 才能看到 payment_token
 
 
 
+
 今天有点忙…学习了一下课程里的Retail site agent
 
 明天再补笔记
@@ -712,6 +738,7 @@ Payment Tool: 才能看到 payment_token
 
 # 2026-01-03
 <!-- DAILY_CHECKIN_2026-01-03_START -->
+
 
 
 
@@ -764,6 +791,7 @@ agent = Agent(
 
 
 
+
 昨天忘记了 先补一下昨天的…
 
 A. 第一层：系统行为追踪 (Agent Telemetry)
@@ -792,6 +820,7 @@ B. 第二层：交互与消耗记录 (Prompt-Response Logging)
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 
 
@@ -986,6 +1015,7 @@ python test_agent.py
 
 
 
+
 -   One liner with Agent Starter Pack
     
 
@@ -1057,6 +1087,7 @@ tools:
 
 
 
+
 ADK 智能体配置功能让你无需编写代码即可构建 ADK 工作流。智能体配置使用 YAML 格式的文本文件，包含智能体的简要描述，允许几乎任何人组装和运行 ADK 智能体。以下是一个基本智能体配置定义的简单示例：
 
 ```
@@ -1069,6 +1100,7 @@ instruction: You are an agent to help answer users' various questions.
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
