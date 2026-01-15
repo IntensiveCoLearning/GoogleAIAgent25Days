@@ -15,8 +15,59 @@ AI × Crypto 实践者，关注 AI Agent、自动化与工具构建，正在用 
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-15
+<!-- DAILY_CHECKIN_2026-01-15_START -->
+# Day 19: Advanced RAG with Graph Grounding
+
+## 📅 日期
+
+2026-01-15
+
+## 核心概念 (Key Concepts)
+
+1.  **Graph RAG vs. Vector RAG**:
+    
+    -   **Vector RAG**: 类似于模糊搜索，擅长回答“有什么”。但在需要多跳推理（“A 导致 B，B 影响 C”）时往往表现不佳，因为它丢失了结构信息。
+        
+    -   **Graph RAG**: 类似于思维导图，擅长回答“怎么关联”。通过提取实体关系（Triplets: Source -> Relation -> Target），它能捕获隐形的逻辑链路。
+        
+2.  **知识图谱架构 (KG Architecture)**:
+    
+    -   **Builder (构建器)**: 虽然 Neo4j 是标准，但对于轻量级应用，Gemini + NetworkX (或简单的 Adjacency List) 足够有效。核心在于 Prompt Engineering，让 LLM 稳定输出 JSON 三元组。
+        
+    -   **Retriever (检索器)**: 关键不在于仅仅找到实体，而在于找到实体的**子图 (Subgraph)**。查询扩展 (Query Expansion) 是必要的，从自然语言查询中提取出图谱中的节点。
+        
+
+## 💡 个人项目启示 (Insights for Personal Project)
+
+对于 Polymarket 数据分析项目：
+
+-   **隐形关联**: 可以建立 \[事件\] -> \[影响\] -> \[资产\] 的图谱，发现某些预测市场与特定新闻事件的深层联系。
+    
+-   **交易对手网络**: 建立 \[地址\] -> \[跟随/对冲\] -> \[地址\] 的关系网，用于识别巨鲸马甲和资金团伙。
+    
+-   **实施路径**: 不需要立马上复杂的图数据库。在 Supabase 中加一张 `relations` 表，配合 Python 脚本和 LLM 进行每日更新，就能获得 80% 的效果。
+    
+
+## 📝 实践记录
+
+-   实现了一个无依赖的纯 Python `SimpleGraph` 类，避开了 `networkx` 安装问题。
+    
+-   构建了端到端的 Graph RAG 流程：`Text -> Gemini Extraction -> Graph Storage -> Query -> Subgraph Retrieval -> Gemini Answer`。
+    
+-   验证了 Graph RAG 能回答出纯文本中隐含的结构化信息（如 “AI Agents use Graph RAG”）。
+    
+
+## 🔗 参考资料
+
+-   `day19/graph_rag.py`: 核心图谱实现。
+    
+-   `day19/run_graph_rag.py`: 演示脚本。
+<!-- DAILY_CHECKIN_2026-01-15_END -->
+
 # 2026-01-14
 <!-- DAILY_CHECKIN_2026-01-14_START -->
+
 # **Day 18: Self-Improving Agents 学习笔记**
 
 ## **1\. 核心概念 (Core Concept)**
@@ -192,6 +243,7 @@ AI × Crypto 实践者，关注 AI Agent、自动化与工具构建，正在用 
 
 # 2026-01-13
 <!-- DAILY_CHECKIN_2026-01-13_START -->
+
 
 ````markdown
 # Day 17 学习笔记：Cloud API Registry + ADK
@@ -421,6 +473,7 @@ api_registry = ApiRegistry(
 <!-- DAILY_CHECKIN_2026-01-12_START -->
 
 
+
 ````markdown
 # Day 16 学习笔记：LangGraph + A2A (Cross-Framework Orchestration)
 
@@ -611,6 +664,7 @@ Polymarket Data → Supabase → prediction-copilot (Gemini 分析)
 
 
 
+
 ````markdown
 # Day 15: A2UI (Generative UIs) 学习笔记
 
@@ -749,6 +803,7 @@ A2UI 让 Agent 能安全地生成动态 UI，但对我当前项目来说是"好�
 
 # 2026-01-10
 <!-- DAILY_CHECKIN_2026-01-10_START -->
+
 
 
 
@@ -1138,6 +1193,7 @@ INFO:     Uvicorn running on http://localhost:8001 (Press CTRL+C to quit)
 
 
 
+
 ````markdown
 # Day 13: Interactions API (Stateful Workflows)
 
@@ -1326,6 +1382,7 @@ def book_flight(destination: str, price: float, tool_context: ToolContext) -> di
 
 
 
+
 # Day 12: Multimodal Agents (Gemini Live API & Streaming)
 
 > **日期**: 2026-01-08 **主题**: Streaming Responses & Multimodal Inputs **状态**: ✅ 完成
@@ -1416,6 +1473,7 @@ Gemini 原生支持文本、图像、音频和视频。在 ADK 中，我们可�
 
 
 
+
 ````markdown
 # Day 11: Google Managed MCP (Connecting to Services)
 
@@ -1493,6 +1551,7 @@ sqlite_mcp_toolset = McpToolset(
 
 # 2026-01-06
 <!-- DAILY_CHECKIN_2026-01-06_START -->
+
 
 
 
@@ -1591,6 +1650,7 @@ day10_app = App(
 
 # 2026-01-05
 <!-- DAILY_CHECKIN_2026-01-05_START -->
+
 
 
 
@@ -1746,6 +1806,7 @@ async for event in runner.run_async(
 
 
 
+
 ````markdown
 # Day 08: Effective Context Management (ADK Layers)
 
@@ -1864,6 +1925,7 @@ async def generate_report(topic: str, tool_context: ToolContext):
 
 # 2026-01-03
 <!-- DAILY_CHECKIN_2026-01-03_START -->
+
 
 
 
@@ -2005,6 +2067,7 @@ BuiltInCodeExecutor
 
 
 
+
 **📅 Day 06 打卡：ADK Ready & Context Engineering**
 
 **📝 核心收获** 今天不写代码，而是“磨刀”。从手搓代码转向了 **Agent 工程化** 思维。
@@ -2034,6 +2097,7 @@ BuiltInCodeExecutor
 
 # 2026-01-01
 <!-- DAILY_CHECKIN_2026-01-01_START -->
+
 
 
 
@@ -2097,6 +2161,7 @@ BuiltInCodeExecutor
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 
 
@@ -2309,6 +2374,7 @@ python day04/deploy.py --create
 
 
 
+
 # **Day 03 学习笔记: Gemini 3 与 神经符号智能体 (Neuro-Symbolic Agents)**
 
 ## **1\. 核心理念: 神经符号 AI (Neuro-Symbolic AI)**
@@ -2434,6 +2500,7 @@ niche\_players = df\[(df\['rating'\] >= 4.5) & (df\['reviews'\] < 100)\]
 
 
 
+
 ````markdown
 # Day 02: Introduction to Declarative Agents (2025-12-29)
 
@@ -2496,6 +2563,7 @@ tools:
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
