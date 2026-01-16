@@ -15,8 +15,45 @@ timezone: UTC+8
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-16
+<!-- DAILY_CHECKIN_2026-01-16_START -->
+今天 Day 20 的内容进入了 A2A（Agent-to-Agent）通信的高级进阶：**Sidecar 模式**。
+
+如果说昨天的内容是关于“如何发布应用”，那么今天则是关于\*\*“如何在 Agent 之间建立深度信任和个性化通信”\*\*。
+
+* * *
+
+### Sidecar 模式
+
+1\. 解决“兼容性”与“扩展性”的矛盾
+
+-   **痛点：** 严格的 A2A 协议保证了通用性，但无法预知每个业务场景需要的特殊字段（如计费代码、VIP 状态）。
+    
+-   **方案：** Sidecar 将这些自定义数据放在 `Extensions` 字段中。不支持该扩展的 Agent 会直接跳过它（忽略），而支持的 Agent 则能提取出更丰富的内容。
+    
+
+2\. 应用：身份与权限校验。
+
+| 字段 | 作用 | 现实类比 |
+| client_id | 声明 Agent 身份标识 | 身份证号 |
+| state | 传递业务上下文（如 tier: Platinum） | 登机牌上的会员等级 |
+| signature | 确保数据未被篡改 | 证件上的防伪水印 |
+
+-   **发送方：** 并不是直接修改消息体，而是通过 `add_secure_passport` 函数将签名后的加密包“挂载”到消息上。
+    
+-   **接收方：** 采用**优雅降级**策略。
+    
+    -   如果有 Passport 且验证通过，执行高级特权逻辑。
+        
+    -   如果没有或验证失败，回退到标准处理流程，**不会导致程序崩溃**。
+        
+
+Sidecar 模式让 Agent 之间不仅能说话，还能互认身份、传递等级、甚至进行复杂的链式计费。
+<!-- DAILY_CHECKIN_2026-01-16_END -->
+
 # 2026-01-15
 <!-- DAILY_CHECKIN_2026-01-15_START -->
+
 -   标准化开发： 使用 `agent-starter-pack`快速搭建符合企业规范的 Agent 项目结构。
     
 -   本地验证（Playground）： 在正式发布前，通过 Streamlit 界面进行实时调试，确保 Agent 的逻辑和输出符合预期。
@@ -38,6 +75,7 @@ timezone: UTC+8
 # 2026-01-13
 <!-- DAILY_CHECKIN_2026-01-13_START -->
 
+
 先补一下  
 
 -   Summary  
@@ -57,6 +95,7 @@ timezone: UTC+8
 
 # 2026-01-09
 <!-- DAILY_CHECKIN_2026-01-09_START -->
+
 
 
 ### 一、Intro
@@ -227,6 +266,7 @@ Agent 不再“生成 SQL 或 API 调用代码”，而是：
 
 
 
+
 长生命周期 Agent 会同时面临两个系统性挑战：
 
 1.  **Latency（延迟）**：上下文越长，请求成本和响应时间越高
@@ -369,6 +409,7 @@ Context Compaction 与 Context Caching 是互补的：
 
 
 
+
 ADK 内置 **Session Rewind** 能力，使 Agent 的会话具备“时间回溯”特性，无需数据库迁移或复杂状态管理，即可恢复到任意历史执行点。
 
 Session 的回溯不仅作用于对话内容，还会 **完整恢复**：
@@ -433,6 +474,7 @@ Session Rewind 可以同时撤销：
 
 # 2026-01-05
 <!-- DAILY_CHECKIN_2026-01-05_START -->
+
 
 
 
@@ -731,6 +773,7 @@ Payment Tool: 才能看到 payment_token
 
 
 
+
 今天有点忙…学习了一下课程里的Retail site agent
 
 明天再补笔记
@@ -738,6 +781,7 @@ Payment Tool: 才能看到 payment_token
 
 # 2026-01-03
 <!-- DAILY_CHECKIN_2026-01-03_START -->
+
 
 
 
@@ -792,6 +836,7 @@ agent = Agent(
 
 
 
+
 昨天忘记了 先补一下昨天的…
 
 A. 第一层：系统行为追踪 (Agent Telemetry)
@@ -820,6 +865,7 @@ B. 第二层：交互与消耗记录 (Prompt-Response Logging)
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 
 
@@ -1016,6 +1062,7 @@ python test_agent.py
 
 
 
+
 -   One liner with Agent Starter Pack
     
 
@@ -1088,6 +1135,7 @@ tools:
 
 
 
+
 ADK 智能体配置功能让你无需编写代码即可构建 ADK 工作流。智能体配置使用 YAML 格式的文本文件，包含智能体的简要描述，允许几乎任何人组装和运行 ADK 智能体。以下是一个基本智能体配置定义的简单示例：
 
 ```
@@ -1100,6 +1148,7 @@ instruction: You are an agent to help answer users' various questions.
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
