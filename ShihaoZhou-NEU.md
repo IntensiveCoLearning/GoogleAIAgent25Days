@@ -15,8 +15,20 @@ Full-Stack Developer
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-18
+<!-- DAILY_CHECKIN_2026-01-18_START -->
+# Day 22
+
+**ADK 通过分层架构将“信任”替换为“验证”：**
+
+-   **开发者层（回调函数 Callbacks）👨‍💻**：在数据离开容器前就阻止泄露 🛑。利用 **ADK 回调函数**在 Agent 执行前（`before_agent`）注入确定性的 Python 逻辑。这充当了中间件的角色——在模型看到提示词之前，就完成敏感信息脱敏 🕵️、校验 Schema 并拦截未经授权的意图。
+    
+-   **基础设施层（Model Armor）🛡️**：我们不能仅依赖开发者的自觉。**Model Armor** 部署在网关级别，检查每一条输入与输出 🔍。它为有毒内容和注入攻击提供了一个全局“一键断电”开关 🔌，确保即使 Agent 代码遭到破坏，安全性依然稳固。
+<!-- DAILY_CHECKIN_2026-01-18_END -->
+
 # 2026-01-17
 <!-- DAILY_CHECKIN_2026-01-17_START -->
+
 # Day 21
 
 黑客松Winners
@@ -24,6 +36,7 @@ Full-Stack Developer
 
 # 2026-01-16
 <!-- DAILY_CHECKIN_2026-01-16_START -->
+
 
 # **Day 20**
 
@@ -42,6 +55,7 @@ Agent-to-Agent (A2A) 协议依赖于严格的格式 📋，以确保来自不同
 
 # 2026-01-15
 <!-- DAILY_CHECKIN_2026-01-15_START -->
+
 
 
 # Day 19
@@ -75,6 +89,7 @@ Agent Starter Pack 让注册过程变得异常简单。注册命令会自动处�
 
 
 
+
 # Day 18
 
 **Vertex AI Agent Builder 工具篇 —— Cloud API Registry 与 ADK 集成**
@@ -101,6 +116,7 @@ Vertex AI Agent Builder 现在与 **Cloud API Registry** 深度集成。这充�
 
 
 
+
 # Day 17
 
 **Google 最快的模型变得更加聪明了。** **Gemini 3 Flash** 结合了旗舰级的推理能力，以及 Flash 系列一贯的高速度和高成本效益。
@@ -114,6 +130,7 @@ Vertex AI Agent Builder 现在与 **Cloud API Registry** 深度集成。这充�
 
 # 2026-01-12
 <!-- DAILY_CHECKIN_2026-01-12_START -->
+
 
 
 
@@ -146,6 +163,7 @@ Agent Starter Pack 中的 `langgraph_base` 模板为你提供了一个生产级�
 
 
 
+
 # Day15
 
 ## **Google Advent of Agents：第 15 天**
@@ -169,6 +187,7 @@ Agent Starter Pack 中的 `langgraph_base` 模板为你提供了一个生产级�
 
 # 2026-01-10
 <!-- DAILY_CHECKIN_2026-01-10_START -->
+
 
 
 
@@ -211,6 +230,7 @@ ADK 让 A2A 的实现变得非常简单：
 
 
 
+
 # Day 13
 
 **AI 开发的格局正从无状态的“请求-响应”循环，转向有状态的多轮 Agent 工作流。** 随着 **Interactions API** 开启测试，Google 提供了一个专为此新时代设计的统一接口——它是连接原始模型与全托管 **Gemini Deep Research Agent** 的单一网关。
@@ -239,6 +259,7 @@ Interactions API 标志着从无状态文本生成到有状态、自主工作流
 
 # 2026-01-08
 <!-- DAILY_CHECKIN_2026-01-08_START -->
+
 
 
 
@@ -294,6 +315,7 @@ Interactions API 标志着从无状态文本生成到有状态、自主工作流
 
 
 
+
 # Day11
 
 ## MCP
@@ -316,6 +338,7 @@ Interactions API 标志着从无状态文本生成到有状态、自主工作流
 
 # 2026-01-06
 <!-- DAILY_CHECKIN_2026-01-06_START -->
+
 
 
 
@@ -384,6 +407,7 @@ app = App(
 
 
 
+
 # Day09
 
 ADK 支持**时光倒流 (Time Travel) 与检查点 (Checkpointing)** 功能了！
@@ -425,6 +449,7 @@ ADK 支持**时光倒流 (Time Travel) 与检查点 (Checkpointing)** 功能了�
 
 # 2026-01-04
 <!-- DAILY_CHECKIN_2026-01-04_START -->
+
 
 
 
@@ -604,6 +629,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 
 
+
 # Day07
 
 ### **通过 ADK 的代码执行器 (Code Executor) 你将获得：**
@@ -623,6 +649,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 # 2026-01-02
 <!-- DAILY_CHECKIN_2026-01-02_START -->
+
 
 
 
@@ -682,6 +709,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 
 
+
 # Day05
 
 **自动配置的两个层级：**
@@ -718,6 +746,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 
 
@@ -801,6 +830,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 # 2025-12-30
 <!-- DAILY_CHECKIN_2025-12-30_START -->
+
 
 
 
@@ -979,6 +1009,7 @@ uvx agent-starter-pack create -y --api-key YOUR\_GEMINI\_API\_KEY
 
 
 
+
 # Day01
 
 准备阶段，环境安装
@@ -1129,6 +1160,7 @@ Add Google Search tool to the agent file by simple adding the tools section.
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
