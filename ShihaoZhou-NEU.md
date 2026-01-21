@@ -15,8 +15,31 @@ Full-Stack Developer
 ## Notes
 
 <!-- Content_START -->
+# 2026-01-21
+<!-- DAILY_CHECKIN_2026-01-21_START -->
+# Day 25
+
+在开发 Agent 时，我们经常争论“低代码的速度”与“代码的可控性”。全新的 Agent Designer 旨在弥合这一差距。
+
+本周，Vertex AI 在 Agent Builder 中推出了 Agent Designer。这是一个低代码的可视化界面，允许你在画布上编排 Agent 和子 Agent，然后将逻辑直接导出到 Agent 开发套件 (ADK) 进行代码级的优化。
+
+-   🖱️ **可视化流程**：以可视化方式设计 Agent、子 Agent 和控制逻辑。
+    
+-   🕹️ **游乐场 (Playground)**：一个用于测试 Agent 流程的聊天界面。
+    
+-   ⬇️ **代码导出**：通过“获取代码”功能，你可以在 UI 中搭建原型，并轻松过渡到你的 IDE（Python ADK）。
+    
+-   🛠️ **原生工具**：预配置了 Google 搜索、URL 上下文和 Vertex AI Search (RAG) 集成。🔍
+    
+-   🔌 **MCP 支持**：实验性地连接到模型上下文协议 (MCP) 服务器。
+    
+
+⚠️ Vertex AI Agent Designer 目前处于预览阶段。考虑到 MCP 认证限制以及对高级 ADK 模式的支持不足，它显然还是“V1”版本。然而，从视觉到代码的工作流以及与 Vertex AI Agent 平台的潜在集成看起来非常有前景。
+<!-- DAILY_CHECKIN_2026-01-21_END -->
+
 # 2026-01-20
 <!-- DAILY_CHECKIN_2026-01-20_START -->
+
 # Day 23
 
 **持久化执行：打造“永不死机”的 Agent 🛡️**
@@ -63,6 +86,7 @@ Full-Stack Developer
 # 2026-01-18
 <!-- DAILY_CHECKIN_2026-01-18_START -->
 
+
 # Day 22
 
 **ADK 通过分层架构将“信任”替换为“验证”：**
@@ -76,6 +100,7 @@ Full-Stack Developer
 <!-- DAILY_CHECKIN_2026-01-17_START -->
 
 
+
 # Day 21
 
 黑客松Winners
@@ -83,6 +108,7 @@ Full-Stack Developer
 
 # 2026-01-16
 <!-- DAILY_CHECKIN_2026-01-16_START -->
+
 
 
 
@@ -103,6 +129,7 @@ Agent-to-Agent (A2A) 协议依赖于严格的格式 📋，以确保来自不同
 
 # 2026-01-15
 <!-- DAILY_CHECKIN_2026-01-15_START -->
+
 
 
 
@@ -140,6 +167,7 @@ Agent Starter Pack 让注册过程变得异常简单。注册命令会自动处�
 
 
 
+
 # Day 18
 
 **Vertex AI Agent Builder 工具篇 —— Cloud API Registry 与 ADK 集成**
@@ -168,6 +196,7 @@ Vertex AI Agent Builder 现在与 **Cloud API Registry** 深度集成。这充�
 
 
 
+
 # Day 17
 
 **Google 最快的模型变得更加聪明了。** **Gemini 3 Flash** 结合了旗舰级的推理能力，以及 Flash 系列一贯的高速度和高成本效益。
@@ -181,6 +210,7 @@ Vertex AI Agent Builder 现在与 **Cloud API Registry** 深度集成。这充�
 
 # 2026-01-12
 <!-- DAILY_CHECKIN_2026-01-12_START -->
+
 
 
 
@@ -217,6 +247,7 @@ Agent Starter Pack 中的 `langgraph_base` 模板为你提供了一个生产级�
 
 
 
+
 # Day15
 
 ## **Google Advent of Agents：第 15 天**
@@ -240,6 +271,7 @@ Agent Starter Pack 中的 `langgraph_base` 模板为你提供了一个生产级�
 
 # 2026-01-10
 <!-- DAILY_CHECKIN_2026-01-10_START -->
+
 
 
 
@@ -286,6 +318,7 @@ ADK 让 A2A 的实现变得非常简单：
 
 
 
+
 # Day 13
 
 **AI 开发的格局正从无状态的“请求-响应”循环，转向有状态的多轮 Agent 工作流。** 随着 **Interactions API** 开启测试，Google 提供了一个专为此新时代设计的统一接口——它是连接原始模型与全托管 **Gemini Deep Research Agent** 的单一网关。
@@ -314,6 +347,7 @@ Interactions API 标志着从无状态文本生成到有状态、自主工作流
 
 # 2026-01-08
 <!-- DAILY_CHECKIN_2026-01-08_START -->
+
 
 
 
@@ -373,6 +407,7 @@ Interactions API 标志着从无状态文本生成到有状态、自主工作流
 
 
 
+
 # Day11
 
 ## MCP
@@ -395,6 +430,7 @@ Interactions API 标志着从无状态文本生成到有状态、自主工作流
 
 # 2026-01-06
 <!-- DAILY_CHECKIN_2026-01-06_START -->
+
 
 
 
@@ -467,6 +503,7 @@ app = App(
 
 
 
+
 # Day09
 
 ADK 支持**时光倒流 (Time Travel) 与检查点 (Checkpointing)** 功能了！
@@ -508,6 +545,7 @@ ADK 支持**时光倒流 (Time Travel) 与检查点 (Checkpointing)** 功能了�
 
 # 2026-01-04
 <!-- DAILY_CHECKIN_2026-01-04_START -->
+
 
 
 
@@ -691,6 +729,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 
 
+
 # Day07
 
 ### **通过 ADK 的代码执行器 (Code Executor) 你将获得：**
@@ -710,6 +749,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 # 2026-01-02
 <!-- DAILY_CHECKIN_2026-01-02_START -->
+
 
 
 
@@ -773,6 +813,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 
 
+
 # Day05
 
 **自动配置的两个层级：**
@@ -809,6 +850,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 # 2025-12-31
 <!-- DAILY_CHECKIN_2025-12-31_START -->
+
 
 
 
@@ -894,6 +936,7 @@ As described in [**Day 3 of our Kaggle 5 Day intensive course**](https://www.kag
 
 # 2025-12-30
 <!-- DAILY_CHECKIN_2025-12-30_START -->
+
 
 
 
@@ -1076,6 +1119,7 @@ uvx agent-starter-pack create -y --api-key YOUR\_GEMINI\_API\_KEY
 
 
 
+
 # Day01
 
 准备阶段，环境安装
@@ -1226,6 +1270,7 @@ Add Google Search tool to the agent file by simple adding the tools section.
 
 # 2025-12-28
 <!-- DAILY_CHECKIN_2025-12-28_START -->
+
 
 
 
