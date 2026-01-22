@@ -189,7 +189,7 @@ Telegram：https://t.me/+3wGYldnFuFZkZjE1
 | [eureka1d2](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/eureka1d2.md) | ⭕️ | ⭕️ | ⭕️ | ❌ | | | | | | | | | | | | | | | | | | | | | |
 | [gpteth](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/gpteth.md) | ⭕️ | ⭕️ | ⭕️ | ❌ | | | | | | | | | | | | | | | | | | | | | |
 | [LiinNs](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/LiinNs.md) | ⭕️ | ⭕️ | ⭕️ | ❌ | | | | | | | | | | | | | | | | | | | | | |
-| [7fpb5574ck-maker](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/7fpb5574ck-maker.md) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⭕️ | ⭕️ | ⭕️ | ⭕️ | ⭕️ |   |
+| [7fpb5574ck-maker](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/7fpb5574ck-maker.md) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⭕️ | ⭕️ | ⭕️ | ⭕️ | ⭕️ | ❌ |
 | [panchengliang407](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/panchengliang407.md) | ⭕️ | ⭕️ | ⭕️ | ❌ | | | | | | | | | | | | | | | | | | | | | |
 | [rabbitponzi](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/rabbitponzi.md) | ⭕️ | ⭕️ | ⭕️ | ❌ | | | | | | | | | | | | | | | | | | | | | |
 | [EY-hungry](https://github.com/IntensiveCoLearning/GoogleAIAgent25Days/blob/main/EY-hungry.md) | ⭕️ | ⭕️ | ⭕️ | ❌ | | | | | | | | | | | | | | | | | | | | | |
@@ -435,13 +435,14 @@ Telegram：https://t.me/+3wGYldnFuFZkZjE1
 
 
 
+
 <!-- STATISTICALDATA_START -->
 ## 统计数据
 
-- 总参与人数: 0
-- 完成人数: 0
-- 完成用户: 
+- 总参与人数: 42
+- 完成人数: 1
+- 完成用户: ShihaoZhou-NEU
 - 全勤用户: 
-- 淘汰人数: 0
-- 淘汰率: 0.00%
+- 淘汰人数: 41
+- 淘汰率: 97.62%
 <!-- STATISTICALDATA_END -->
